@@ -1,4 +1,4 @@
-# Commit Suggestor 🤖✍️
+# Commit Suggester 🤖✍️
 
 Your friendly AI assistant for crafting perfect Git commit messages! This project is a fine-tuned LLM that takes a `git diff` and generates a conventional commit message.
 
