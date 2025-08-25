@@ -1,0 +1,10 @@
+transformers
+datasets
+peft
+accelerate
+bitsandbytes
+torch
+gradio
+tqdm
+python-dotenv
+PyGithub
