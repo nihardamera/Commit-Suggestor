@@ -1,0 +1,60 @@
+{
+  "test_examples": 450,
+  "test_repos": [
+    "encode/django-rest-framework",
+    "pydantic/pydantic",
+    "sphinx-doc/sphinx"
+  ],
+  "base_model": "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit",
+  "scores": {
+    "heuristic": {
+      "rougeL_f1": 13.0,
+      "bleu": 2.26,
+      "exact_match_pct": 0.67,
+      "well_formed_pct": 100.0,
+      "mean_words": 2.0
+    },
+    "base": {
+      "rougeL_f1": 21.09,
+      "bleu": 5.08,
+      "exact_match_pct": 0.0,
+      "well_formed_pct": 92.2,
+      "mean_words": 7.2
+    },
+    "finetuned": {
+      "rougeL_f1": 31.06,
+      "bleu": 8.58,
+      "exact_match_pct": 0.44,
+      "well_formed_pct": 98.9,
+      "mean_words": 4.7
+    }
+  },
+  "rougeL_gain_finetuned_vs_base_95ci": [
+    7.84,
+    12.08
+  ],
+  "seconds_per_example": {
+    "base": 0.62,
+    "finetuned": 0.8
+  },
+  "rougeL_by_repo": {
+    "encode/django-rest-framework": {
+      "n": 119,
+      "heuristic": 12.29,
+      "base": 18.08,
+      "finetuned": 30.96
+    },
+    "pydantic/pydantic": {
+      "n": 74,
+      "heuristic": 11.21,
+      "base": 24.61,
+      "finetuned": 35.24
+    },
+    "sphinx-doc/sphinx": {
+      "n": 257,
+      "heuristic": 13.84,
+      "base": 21.48,
+      "finetuned": 29.9
+    }
+  }
+}
