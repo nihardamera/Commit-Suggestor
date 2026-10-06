@@ -1,26 +1,8 @@
-# Python
+.venv/
+data/
+adapters/
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-pip-selfcheck.json
-
-#.env file
-.env
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IDE
-.idea/
-.vscode/
-
-# Data
-/data/processed_data.jsonl
-/models/
-
-# Hugging Face
-/commit-suggestor-model/
+.DS_Store
+eval/cache/
+train.log

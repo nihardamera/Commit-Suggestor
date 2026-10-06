@@ -1,0 +1,28 @@
+# QLoRA: LoRA adapters trained on top of a 4-bit quantized base model.
+# Run with:  python -m mlx_lm lora --config config/lora.yaml
+model: mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit
+train: true
+data: data/mlx
+fine_tune_type: lora
+# Learn only the commit subject; the prompt and diff are context, not targets.
+mask_prompt: true
+num_layers: 16          # adapt the top 16 of the model's 28 layers
+batch_size: 4
+iters: 600              # ~8 s/step on an M4 (16 GB); see README
+learning_rate: 5.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  arguments: [5.0e-5, 600, 1.0e-6]
+steps_per_report: 25
+steps_per_eval: 100
+val_batches: 25
+save_every: 100
+adapter_path: adapters
+max_seq_length: 1024
+grad_checkpoint: true
+seed: 0
+lora_parameters:
+  rank: 8
+  scale: 20.0
+  dropout: 0.05

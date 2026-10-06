@@ -1,0 +1,10 @@
+#!/bin/sh
+# Git hook: pre-fill the commit message with a suggested subject line.
+# Installed by scripts/install_hook.sh, which fills in __HERE__.
+# Acts only on a plain `git commit` (no -m, merge, squash or amend), and never
+# blocks the commit: if the suggestion fails, the message is left untouched.
+MSG_FILE="$1"; SOURCE="$2"
+[ -n "$SOURCE" ] && exit 0
+SUGGESTION=$(PYTHONPATH="__HERE__" "__HERE__/.venv/bin/python" -m commit_suggestor.suggest 2>/dev/null) || exit 0
+[ -z "$SUGGESTION" ] && exit 0
+{ echo "$SUGGESTION"; cat "$MSG_FILE"; } > "$MSG_FILE.tmp" && mv "$MSG_FILE.tmp" "$MSG_FILE"
