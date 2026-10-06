@@ -115,6 +115,13 @@ class TestPrompt:
         assert clean_reply('"Fix typo in README"\n\nThis fixes...') == "Fix typo in README"
         assert clean_reply("   \n") == ""
 
+    def test_inline_code_at_the_end_of_a_subject_is_kept_whole(self):
+        assert clean_reply("Add note about :dudir:`include`") == "Add note about :dudir:`include`"
+        assert clean_reply("Deprecate `unique_items` in `conlist`") == "Deprecate `unique_items` in `conlist`"
+
+    def test_a_reply_wrapped_in_backticks_is_unwrapped(self):
+        assert clean_reply("`Bump the timeout`") == "Bump the timeout"
+
 
 class TestEvaluationHelpers:
     def test_the_heuristic_baseline_names_the_first_file(self):

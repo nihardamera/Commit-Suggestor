@@ -39,9 +39,19 @@ def build_messages(diff: str) -> list[dict[str, str]]:
 
 
 def clean_reply(text: str) -> str:
-    """Take the first non-empty line of a model reply and tidy it."""
+    """Take the first line of a model reply that is not a code fence, and tidy it.
+
+    Quotes or backticks are removed only when they wrap the whole line. Stripping
+    them from both ends regardless cut the closing backtick off a subject that
+    merely ended in inline code, e.g. "Add note about the `include` directive".
+    """
     for line in text.strip().splitlines():
-        line = line.strip().strip("`").strip().strip('"').strip()
+        line = line.strip()
+        if not line or line.startswith("```"):
+            continue
+        wrap = line[0]
+        if len(line) > 1 and wrap in "`\"'" and line[-1] == wrap and line.count(wrap) == 2:
+            line = line[1:-1].strip()
         if line:
             return line.rstrip(".")
     return ""
