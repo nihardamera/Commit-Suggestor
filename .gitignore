@@ -6,3 +6,6 @@ __pycache__/
 .DS_Store
 eval/cache/
 train.log
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
