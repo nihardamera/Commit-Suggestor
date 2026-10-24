@@ -1,0 +1,554 @@
+{
+  "test_examples": 450,
+  "systems": {
+    "reference": {
+      "hallucinated_pct": {
+        "micro": [
+          4.89,
+          3.11,
+          6.89
+        ],
+        "macro": [
+          5.38,
+          3.08,
+          7.98
+        ]
+      },
+      "names_identifier_pct": {
+        "micro": [
+          32.67,
+          28.44,
+          37.11
+        ],
+        "macro": [
+          34.65,
+          29.7,
+          39.71
+        ]
+      },
+      "specific_pct": {
+        "micro": [
+          74.22,
+          70.0,
+          78.22
+        ],
+        "macro": [
+          76.14,
+          71.75,
+          80.36
+        ]
+      },
+      "generic_pct": {
+        "micro": [
+          5.11,
+          3.11,
+          7.11
+        ],
+        "macro": [
+          3.43,
+          2.08,
+          4.94
+        ]
+      },
+      "imperative_pct": {
+        "micro": [
+          92.67,
+          90.44,
+          94.89
+        ],
+        "macro": [
+          91.81,
+          89.16,
+          94.29
+        ]
+      },
+      "well_formed_pct": {
+        "micro": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "macro": [
+          100.0,
+          100.0,
+          100.0
+        ]
+      },
+      "words": {
+        "micro": [
+          5.94,
+          5.72,
+          6.16
+        ],
+        "macro": [
+          5.84,
+          5.61,
+          6.07
+        ]
+      },
+      "words_quantiles": {
+        "p10": 3.0,
+        "median": 6.0,
+        "p90": 9.0
+      },
+      "hallucinated_among_identifier_subjects": {
+        "n": 147,
+        "hallucinated": 22
+      },
+      "opening_word_top10": [
+        [
+          "fix",
+          88
+        ],
+        [
+          "add",
+          49
+        ],
+        [
+          "update",
+          42
+        ],
+        [
+          "remove",
+          17
+        ],
+        [
+          "test",
+          11
+        ],
+        [
+          "added",
+          11
+        ],
+        [
+          "fixed",
+          7
+        ],
+        [
+          "c++,",
+          6
+        ],
+        [
+          "use",
+          6
+        ],
+        [
+          "latex:",
+          6
+        ]
+      ]
+    },
+    "heuristic": {
+      "hallucinated_pct": {
+        "micro": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "macro": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "names_identifier_pct": {
+        "micro": [
+          82.89,
+          79.56,
+          86.22
+        ],
+        "macro": [
+          88.92,
+          86.48,
+          91.25
+        ]
+      },
+      "specific_pct": {
+        "micro": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "macro": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "generic_pct": {
+        "micro": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "macro": [
+          100.0,
+          100.0,
+          100.0
+        ]
+      },
+      "imperative_pct": {
+        "micro": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "macro": [
+          100.0,
+          100.0,
+          100.0
+        ]
+      },
+      "well_formed_pct": {
+        "micro": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "macro": [
+          100.0,
+          100.0,
+          100.0
+        ]
+      },
+      "words": {
+        "micro": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "macro": [
+          2.0,
+          2.0,
+          2.0
+        ]
+      },
+      "words_quantiles": {
+        "p10": 2.0,
+        "median": 2.0,
+        "p90": 2.0
+      },
+      "hallucinated_among_identifier_subjects": {
+        "n": 373,
+        "hallucinated": 0
+      },
+      "opening_word_top10": [
+        [
+          "update",
+          450
+        ]
+      ]
+    },
+    "base": {
+      "hallucinated_pct": {
+        "micro": [
+          0.44,
+          0.0,
+          1.11
+        ],
+        "macro": [
+          0.56,
+          0.0,
+          1.4
+        ]
+      },
+      "names_identifier_pct": {
+        "micro": [
+          36.0,
+          31.78,
+          40.44
+        ],
+        "macro": [
+          40.51,
+          35.38,
+          45.67
+        ]
+      },
+      "specific_pct": {
+        "micro": [
+          92.44,
+          90.0,
+          94.89
+        ],
+        "macro": [
+          93.25,
+          90.61,
+          95.62
+        ]
+      },
+      "generic_pct": {
+        "micro": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "macro": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "imperative_pct": {
+        "micro": [
+          97.11,
+          95.56,
+          98.44
+        ],
+        "macro": [
+          97.54,
+          95.95,
+          98.86
+        ]
+      },
+      "well_formed_pct": {
+        "micro": [
+          92.22,
+          89.56,
+          94.67
+        ],
+        "macro": [
+          91.05,
+          87.77,
+          94.04
+        ]
+      },
+      "words": {
+        "micro": [
+          7.18,
+          6.98,
+          7.38
+        ],
+        "macro": [
+          7.22,
+          6.98,
+          7.48
+        ]
+      },
+      "words_quantiles": {
+        "p10": 5.0,
+        "median": 7.0,
+        "p90": 10.0
+      },
+      "hallucinated_among_identifier_subjects": {
+        "n": 162,
+        "hallucinated": 2
+      },
+      "opening_word_top10": [
+        [
+          "update",
+          261
+        ],
+        [
+          "fix",
+          69
+        ],
+        [
+          "add",
+          51
+        ],
+        [
+          "refactor",
+          19
+        ],
+        [
+          "remove",
+          6
+        ],
+        [
+          "fixes",
+          6
+        ],
+        [
+          "implement",
+          3
+        ],
+        [
+          "updated",
+          3
+        ],
+        [
+          "prepare",
+          3
+        ],
+        [
+          "initialize",
+          2
+        ]
+      ]
+    },
+    "finetuned": {
+      "hallucinated_pct": {
+        "micro": [
+          0.44,
+          0.0,
+          1.11
+        ],
+        "macro": [
+          0.26,
+          0.0,
+          0.65
+        ]
+      },
+      "names_identifier_pct": {
+        "micro": [
+          39.11,
+          34.67,
+          43.78
+        ],
+        "macro": [
+          40.29,
+          35.15,
+          45.55
+        ]
+      },
+      "specific_pct": {
+        "micro": [
+          80.67,
+          77.11,
+          84.22
+        ],
+        "macro": [
+          81.71,
+          77.64,
+          85.58
+        ]
+      },
+      "generic_pct": {
+        "micro": [
+          6.22,
+          4.0,
+          8.67
+        ],
+        "macro": [
+          6.25,
+          3.9,
+          8.85
+        ]
+      },
+      "imperative_pct": {
+        "micro": [
+          98.89,
+          97.78,
+          99.78
+        ],
+        "macro": [
+          99.05,
+          98.08,
+          99.87
+        ]
+      },
+      "well_formed_pct": {
+        "micro": [
+          98.89,
+          97.78,
+          99.78
+        ],
+        "macro": [
+          98.71,
+          97.23,
+          99.87
+        ]
+      },
+      "words": {
+        "micro": [
+          4.71,
+          4.54,
+          4.89
+        ],
+        "macro": [
+          4.72,
+          4.52,
+          4.92
+        ]
+      },
+      "words_quantiles": {
+        "p10": 2.0,
+        "median": 4.0,
+        "p90": 7.0
+      },
+      "hallucinated_among_identifier_subjects": {
+        "n": 176,
+        "hallucinated": 2
+      },
+      "opening_word_top10": [
+        [
+          "add",
+          137
+        ],
+        [
+          "fix",
+          128
+        ],
+        [
+          "update",
+          62
+        ],
+        [
+          "remove",
+          46
+        ],
+        [
+          "use",
+          14
+        ],
+        [
+          "move",
+          10
+        ],
+        [
+          "added",
+          4
+        ],
+        [
+          "deprecate",
+          4
+        ],
+        [
+          "ci:",
+          4
+        ],
+        [
+          "clarify",
+          2
+        ]
+      ]
+    }
+  },
+  "finetuned_minus_base": {
+    "hallucinated_pct": [
+      0.0,
+      -0.89,
+      0.89
+    ],
+    "names_identifier_pct": [
+      3.11,
+      -2.22,
+      8.44
+    ],
+    "specific_pct": [
+      -11.78,
+      -16.0,
+      -7.78
+    ],
+    "generic_pct": [
+      6.22,
+      4.0,
+      8.67
+    ],
+    "imperative_pct": [
+      1.78,
+      0.0,
+      3.56
+    ],
+    "well_formed_pct": [
+      6.67,
+      4.22,
+      9.11
+    ],
+    "words": [
+      -2.47,
+      -2.71,
+      -2.24
+    ]
+  }
+}

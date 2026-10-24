@@ -20,6 +20,7 @@ mlx = [
     "huggingface-hub==1.33.0",
 ]
 eval = [
+    "numpy>=2.0",
     "rouge-score==0.1.2",
     "sacrebleu==2.6.0",
 ]
@@ -33,6 +34,8 @@ dev = [
     "ruff==0.17.2",
     "mypy==2.4.0",
     "pre-commit==4.7.0",
+    # Only to cross-check commit_suggestor.stats in the tests.
+    "scipy>=1.14",
 ]
 
 [build-system]
@@ -56,8 +59,20 @@ extend-exclude = ["notebooks"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+# Word lists read better as one split string than as a 100-line list.
+ignore = ["SIM905"]
 
 [tool.mypy]
 python_version = "3.12"
 packages = ["commit_suggestor"]
 ignore_missing_imports = true
+
+# Modules written for v2 are checked strictly; v1 modules with the defaults.
+[[tool.mypy.overrides]]
+module = ["commit_suggestor.metrics", "commit_suggestor.stats"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_any_generics = true
+check_untyped_defs = true
+warn_return_any = true
