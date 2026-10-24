@@ -81,12 +81,12 @@ was never run; this version replaces it with one that was.
 
 ## Use it
 
-Needs an Apple Silicon Mac (MLX) and Python 3.12.
+Needs an Apple Silicon Mac (MLX), Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 git clone https://github.com/nihardamera/Commit-Suggestor.git
 cd Commit-Suggestor
-python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
+uv sync --extra mlx
 scripts/get_adapter.sh                      # downloads the trained adapter
 
 # in any repository, after staging changes:
@@ -103,12 +103,17 @@ The first run downloads the 1 GB base model from Hugging Face.
 ## Reproduce
 
 ```bash
-python -m commit_suggestor.mine --out data/raw          # clone and mine
-python -m commit_suggestor.prepare --raw data/raw --out data/mlx
-python -m mlx_lm lora --config config/lora.yaml         # train
-python -m commit_suggestor.evaluate --data data/mlx --adapter adapters
-python -m pytest tests
+uv sync --extra mlx --extra eval
+uv run python -m commit_suggestor.mine --out data/raw          # clone and mine
+uv run python -m commit_suggestor.prepare --raw data/raw --out data/mlx
+uv run python -m mlx_lm lora --config config/lora.yaml         # train
+uv run python -m commit_suggestor.evaluate --data data/mlx --adapter adapters
+uv run pytest
 ```
+
+The tests include a check that every number in `eval/results.json` recomputes
+from `eval/predictions.jsonl`. They run in CI on every push, with ruff, mypy
+and a gitleaks secret scan. For local hooks, run `uv run pre-commit install`.
 
 ## Limitations
 
