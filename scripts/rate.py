@@ -7,6 +7,7 @@ You see a diff and two suggestions, A and B, in random order per example. You
 never see which is which; the key lives in eval/ab_key.jsonl and is read only
 by --score. Ratings are saved after every answer.
 """
+
 from __future__ import annotations
 
 import argparse

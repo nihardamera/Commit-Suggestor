@@ -4,6 +4,7 @@ If the model is trained on one wording and asked with another at inference
 time, any difference in quality is partly a prompt mismatch rather than the
 fine-tune. Keeping a single builder rules that out.
 """
+
 from __future__ import annotations
 
 SYSTEM = "You write concise, accurate git commit messages."

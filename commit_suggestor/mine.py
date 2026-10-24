@@ -12,6 +12,7 @@ tree; the size filter in `prepare.py` drops it.
 Usage:
     python -m commit_suggestor.mine --out data/raw --depth 4000
 """
+
 from __future__ import annotations
 
 import argparse
@@ -25,15 +26,24 @@ from pathlib import Path
 #: never saw during training, which is the honest way to measure it.
 REPOS: dict[str, list[str]] = {
     "train": [
-        "psf/requests", "pallets/flask", "pallets/click", "pallets/jinja",
-        "pallets/werkzeug", "encode/httpx", "encode/starlette",
-        "Textualize/rich", "pytest-dev/pytest", "psf/black", "pypa/pip",
-        "pre-commit/pre-commit", "python-poetry/poetry",
-        "marshmallow-code/marshmallow", "aio-libs/aiohttp",
+        "psf/requests",
+        "pallets/flask",
+        "pallets/click",
+        "pallets/jinja",
+        "pallets/werkzeug",
+        "encode/httpx",
+        "encode/starlette",
+        "Textualize/rich",
+        "pytest-dev/pytest",
+        "psf/black",
+        "pypa/pip",
+        "pre-commit/pre-commit",
+        "python-poetry/poetry",
+        "marshmallow-code/marshmallow",
+        "aio-libs/aiohttp",
     ],
     "valid": ["python-attrs/attrs", "fastapi/typer"],
-    "test": ["sphinx-doc/sphinx", "encode/django-rest-framework",
-             "pydantic/pydantic"],
+    "test": ["sphinx-doc/sphinx", "encode/django-rest-framework", "pydantic/pydantic"],
 }
 
 # Field and record separators that never appear in commit text or diffs.
@@ -53,8 +63,17 @@ def clone(slug: str, cache: Path, depth: int, attempts: int = 3) -> Path | None:
             return target
         shutil.rmtree(target, ignore_errors=True)
         result = subprocess.run(
-            ["git", "clone", "--quiet", "--single-branch", "--no-tags",
-             f"--depth={depth}", f"https://github.com/{slug}.git", str(target)])
+            [
+                "git",
+                "clone",
+                "--quiet",
+                "--single-branch",
+                "--no-tags",
+                f"--depth={depth}",
+                f"https://github.com/{slug}.git",
+                str(target),
+            ]
+        )
         if result.returncode == 0:
             return target
         print(f"  clone of {slug} failed (attempt {attempt}/{attempts})", flush=True)
@@ -65,16 +84,35 @@ def clone(slug: str, cache: Path, depth: int, attempts: int = 3) -> Path | None:
 def commits(repo_dir: Path) -> list[dict[str, str]]:
     """Every non-merge commit with its patch, newest first."""
     out = subprocess.run(
-        ["git", "-C", str(repo_dir), "log", "--no-merges", "-p", "--no-color",
-         "--unified=3", "-M", f"--format={_FORMAT}"],
-        check=True, capture_output=True)
+        [
+            "git",
+            "-C",
+            str(repo_dir),
+            "log",
+            "--no-merges",
+            "-p",
+            "--no-color",
+            "--unified=3",
+            "-M",
+            f"--format={_FORMAT}",
+        ],
+        check=True,
+        capture_output=True,
+    )
     text = out.stdout.decode("utf-8", errors="replace")
     records = []
     for chunk in text.split(_RECORD)[1:]:
         header, _, patch = chunk.partition(_END)
-        sha, author, email, subject = (header.split(_FIELD) + ["", "", "", ""])[:4]
-        records.append({"sha": sha, "author": author, "email": email,
-                        "subject": subject, "diff": patch.strip("\n")})
+        sha, author, email, subject = [*header.split(_FIELD), "", "", "", ""][:4]
+        records.append(
+            {
+                "sha": sha,
+                "author": author,
+                "email": email,
+                "subject": subject,
+                "diff": patch.strip("\n"),
+            }
+        )
     return records
 
 

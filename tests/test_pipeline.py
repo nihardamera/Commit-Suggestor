@@ -2,6 +2,7 @@
 
 None of these need the model, so they run in a second.
 """
+
 from __future__ import annotations
 
 from commit_suggestor.evaluate import heuristic, normalise, paired_bootstrap, well_formed
@@ -33,8 +34,12 @@ index 1111111..2222222 100644
 +version = 2"""
 
 
-def row(subject: str = "Raise the default timeout to 30 seconds", diff: str = SMALL_DIFF,
-        author: str = "Jane Dev", email: str = "jane@example.com") -> dict:
+def row(
+    subject: str = "Raise the default timeout to 30 seconds",
+    diff: str = SMALL_DIFF,
+    author: str = "Jane Dev",
+    email: str = "jane@example.com",
+) -> dict:
     return {"subject": subject, "diff": diff, "author": author, "email": email}
 
 
@@ -47,13 +52,21 @@ class TestSubjects:
 
     def test_ci_tags_and_trailing_period_go(self):
         assert clean_subject("[skip ci] Update docs.") == "Update docs"
-        assert clean_subject("[svn r63149] always have a default chdir") == "always have a default chdir"
+        assert (
+            clean_subject("[svn r63149] always have a default chdir")
+            == "always have a default chdir"
+        )
 
     def test_merges_releases_and_bumps_are_rejected(self):
-        for subject in ("Merge branch 'main' into dev", "Release 2.31.0",
-                        "Bump urllib3 from 1.26 to 2.0", "Revert \"Add cache\"",
-                        "fixup! tidy imports", "2.31.0"):
-            ok, why = keep(row(subject=subject))
+        for subject in (
+            "Merge branch 'main' into dev",
+            "Release 2.31.0",
+            "Bump urllib3 from 1.26 to 2.0",
+            'Revert "Add cache"',
+            "fixup! tidy imports",
+            "2.31.0",
+        ):
+            ok, _ = keep(row(subject=subject))
             assert not ok, subject
 
     def test_bots_are_rejected(self):
@@ -117,7 +130,8 @@ class TestPrompt:
 
     def test_inline_code_at_the_end_of_a_subject_is_kept_whole(self):
         assert clean_reply("Add note about :dudir:`include`") == "Add note about :dudir:`include`"
-        assert clean_reply("Deprecate `unique_items` in `conlist`") == "Deprecate `unique_items` in `conlist`"
+        subject = "Deprecate `unique_items` in `conlist`"
+        assert clean_reply(subject) == subject
 
     def test_a_reply_wrapped_in_backticks_is_unwrapped(self):
         assert clean_reply("`Bump the timeout`") == "Bump the timeout"
