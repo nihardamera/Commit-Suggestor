@@ -15,5 +15,7 @@ committed file that proves it.
 | Judge calibrated to my labels, Cohen's κ = … | — | pending (M1) |
 | SFT-v2 vs v1 vs base with CIs | — | pending (M2) |
 | DPO on … judge-labelled pairs; win rate … vs SFT | — | pending (M3) |
-| Hallucinated identifiers / specificity … → … | — | pending (M1–M3) |
+| v1 names an identifier absent from the diff in 0.4% of subjects (same as base; human references 4.9%) | `eval/metrics_v1.json`; `tests/test_metrics.py` recomputes it | v1, measured (rule-based; precision not yet checked by hand) |
+| v1 vs base: specific −11.8 pts [−16.0, −7.8], generic +6.2 pts [4.0, 8.7] | `eval/metrics_v1.json` | v1, measured (proxy metrics) |
+| Hallucinated identifiers / specificity after DPO … → … | — | pending (M3) |
 | Model and live demo on Hugging Face | — | pending (M4) |

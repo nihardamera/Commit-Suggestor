@@ -38,9 +38,40 @@ properly with `metrics.py` and committed under `eval/`)
   pytest. Fixed with `pythonpath = ["."]` in the pytest config. When the CLI
   is packaged (Day 7), test the `pipx` install from outside the repo.
 
+**Done later the same day**
+- `eval/test.jsonl`: the 450 test diffs, rebuilt from their source commits
+  (`scripts/rebuild_test_set.py`). All 50 diffs in `eval/ab_sample.jsonl`
+  match exactly. The diff driver comes from each repo's `.gitattributes`
+  (sphinx sets `*.py diff=python`), which changes the `@@` hunk headers, so
+  the rebuild checks that file out.
+- `commit_suggestor/metrics.py` + `stats.py` (strict mypy, 56 tests).
+  `eval/metrics_v1.json`, micro with 95% CI, n = 450:
+
+  | | hallucinated | specific | generic | imperative | well-formed | words |
+  |---|---|---|---|---|---|---|
+  | reference | 4.9 | 74.2 | 5.1 | 92.7 | 100 | 5.9 |
+  | base | 0.4 | 92.4 | 0.0 | 97.1 | 92.2 | 7.2 |
+  | v1 | 0.4 | 80.7 | 6.2 | 98.9 | 98.9 | 4.7 |
+  | v1 − base | 0.0 [−0.9, 0.9] | −11.8 [−16.0, −7.8] | +6.2 [4.0, 8.7] | +1.8 | +6.7 | −2.5 |
+
+  Reading: v1 is shorter, *less specific and more generic* than base, and
+  close to the human references on both. Hallucination is not a problem
+  for either model; the references "hallucinate" most, because authors know
+  context the diff doesn't show. "Specific" favours longer subjects (more
+  words, more chances to match), so check it against the human "vague" flags.
+- `scripts/rate_v2.py` (100 new diffs; base / v1 / reference blind) and a
+  one-key `scripts/rate.py`. `eval/human/split.json` fixes the judge's
+  dev/held-out labels in advance (A/B 33/17, v2 67/33).
+- The venv and data now live in `.venv.nosync` / `data.nosync` behind
+  symlinks: iCloud Drive syncs ~/Desktop and kept hiding the venv's files.
+
 **Next**
-1. Nihar: rate the 50 A/B pairs: `uv run python scripts/rate.py`, then `--score`.
-2. Me: `commit_suggestor/metrics.py` (hallucinated identifiers, grounded
-   specificity, generic rate, format, length, opening verb) with tests;
-   `stats.py`; `scripts/rate_v2.py`.
-3. Price the judge candidates (≤ $5 total); ask before the first paid call.
+1. Nihar: rate the 50 A/B pairs (`uv run python scripts/rate.py`, ~20 min),
+   then the 100 v2 items (`uv run python scripts/rate_v2.py`, ~1.5 h, in
+   sittings). On or after 26 Oct: `--rerate` (30 items, ~20 min). Don't
+   open `eval/ab_key.jsonl`, `eval/human/v2_key.jsonl` or run `--score`
+   until all rating is done.
+2. Me: price judge candidates (non-Qwen, ≤ $5 total, batch + caching), then
+   `commit_suggestor/judge.py` with a cache, a cost dry-run and a mock.
+   Ask before the first paid call.
+3. Then `eval/rouge_vs_human.md` and the M1 explain-back gate.
