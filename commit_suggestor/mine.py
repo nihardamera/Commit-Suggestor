@@ -81,8 +81,13 @@ def clone(slug: str, cache: Path, depth: int, attempts: int = 3) -> Path | None:
     return None
 
 
-def commits(repo_dir: Path) -> list[dict[str, str]]:
-    """Every non-merge commit with its patch, newest first."""
+def commits(repo_dir: Path, shas: list[str] | None = None) -> list[dict[str, str]]:
+    """Every non-merge commit with its patch, newest first.
+
+    With `shas`, only those commits, with the same patch options, so a known
+    set of examples can be rebuilt exactly as it was first mined.
+    """
+    revs = ["--no-walk", *shas] if shas else []
     out = subprocess.run(
         [
             "git",
@@ -95,6 +100,7 @@ def commits(repo_dir: Path) -> list[dict[str, str]]:
             "--unified=3",
             "-M",
             f"--format={_FORMAT}",
+            *revs,
         ],
         check=True,
         capture_output=True,

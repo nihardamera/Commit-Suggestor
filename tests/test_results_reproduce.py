@@ -37,6 +37,14 @@ def test_the_test_set_is_the_one_reported(committed):
     assert sorted({r["repo"] for r in rows}) == results["test_repos"]
 
 
+def test_the_committed_test_set_lines_up_with_the_predictions(committed):
+    rows, _ = committed
+    examples = [json.loads(line) for line in (EVAL / "test.jsonl").open()]
+    assert [(e["sha"], e["subject"]) for e in examples] == [
+        (r["sha"], r["reference"]) for r in rows
+    ]
+
+
 @pytest.mark.parametrize("name", SYSTEMS)
 def test_headline_scores_recompute_exactly(committed, rescored, name):
     _, results = committed
