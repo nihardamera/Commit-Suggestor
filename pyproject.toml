@@ -69,7 +69,7 @@ ignore_missing_imports = true
 
 # Modules written for v2 are checked strictly; v1 modules with the defaults.
 [[tool.mypy.overrides]]
-module = ["commit_suggestor.metrics", "commit_suggestor.stats"]
+module = ["commit_suggestor.human", "commit_suggestor.metrics", "commit_suggestor.stats"]
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 disallow_untyped_calls = true

@@ -1,0 +1,242 @@
+{
+  "pairs": 150,
+  "preference": {
+    "ab": {
+      "finetuned": 23,
+      "base": 24,
+      "tie": 3,
+      "finetuned_win_rate_excl_ties_pct": [
+        48.9,
+        35.3,
+        62.8
+      ]
+    },
+    "v2": {
+      "finetuned": 54,
+      "base": 33,
+      "tie": 13,
+      "finetuned_win_rate_excl_ties_pct": [
+        62.1,
+        51.6,
+        71.5
+      ]
+    },
+    "all": {
+      "finetuned": 77,
+      "base": 57,
+      "tie": 16,
+      "finetuned_win_rate_excl_ties_pct": [
+        57.5,
+        49.0,
+        65.5
+      ]
+    }
+  },
+  "rouge_picks_my_winner_pct": [
+    60.0,
+    51.1,
+    68.3
+  ],
+  "rouge_pairs_compared": 120,
+  "v2_score_vs_rougeL": {
+    "spearman": [
+      0.388,
+      0.27,
+      0.498
+    ],
+    "kendall_tau_b": 0.291,
+    "subjects": 200
+  },
+  "v2_score_vs_words_spearman": [
+    0.017,
+    -0.126,
+    0.156
+  ],
+  "v2_mean_score": {
+    "base": [
+      2.49,
+      2.23,
+      2.76
+    ],
+    "finetuned": [
+      3.02,
+      2.77,
+      3.27
+    ],
+    "reference": [
+      3.64,
+      3.4,
+      3.87
+    ]
+  },
+  "v2_score_finetuned_minus_base": [
+    0.53,
+    0.15,
+    0.9
+  ],
+  "reference_rated_1_or_2_pct": [
+    21.0,
+    14.2,
+    30.0
+  ],
+  "score_vs_reference": {
+    "base": {
+      "higher": 24,
+      "equal": 6,
+      "lower": 70
+    },
+    "finetuned": {
+      "higher": 29,
+      "equal": 13,
+      "lower": 58
+    }
+  },
+  "best_of_three": {
+    "reference": 52,
+    "base": 18,
+    "none": 3,
+    "finetuned": 27
+  },
+  "reasons": {
+    "base": {
+      "i": 49,
+      "v": 9,
+      "f": 1
+    },
+    "finetuned": {
+      "v": 16,
+      "i": 21,
+      "f": 1
+    },
+    "reference": {
+      "i": 11,
+      "v": 9,
+      "f": 1
+    }
+  },
+  "metrics_vs_my_reasons": {
+    "subjects": 300,
+    "my_vague_flags": 34,
+    "metric_specific_on_my_vague_pct": 82.4,
+    "metric_specific_on_rest_pct": 80.8,
+    "metric_hallucinated": 2,
+    "metric_hallucinated_that_i_flagged_inaccurate": 1,
+    "my_inaccurate_flags": 81,
+    "mean_score_specific_vs_not": [
+      3.02,
+      3.16
+    ]
+  },
+  "largest_disagreements": [
+    {
+      "set": "v2",
+      "id": 248,
+      "repo": "sphinx-doc/sphinx",
+      "my_pick": "base",
+      "reference": "Add lower-bounds to the ``sphinxcontrib-*`` dependencies",
+      "finetuned": "Add lower bounds to sphinxcontrib-*",
+      "base": "Update dependencies for Sphinx extensions",
+      "rougeL_finetuned": 83.3,
+      "rougeL_base": 16.7
+    },
+    {
+      "set": "ab",
+      "id": 230,
+      "repo": "sphinx-doc/sphinx",
+      "my_pick": "base",
+      "reference": "#5186 add tests for `getQueryParameters()`",
+      "finetuned": "Add tests for query param object creation",
+      "base": "Fix URL decoding and query parameter parsing in doctools.js",
+      "rougeL_finetuned": 50.0,
+      "rougeL_base": 0.0
+    },
+    {
+      "set": "v2",
+      "id": 174,
+      "repo": "sphinx-doc/sphinx",
+      "my_pick": "finetuned",
+      "reference": "Declare support for Python 3.11",
+      "finetuned": "Add py311 to tox.ini",
+      "base": "Update tox.ini for Python 3.11 and docutils 19",
+      "rougeL_finetuned": 0.0,
+      "rougeL_base": 50.0
+    },
+    {
+      "set": "v2",
+      "id": 18,
+      "repo": "sphinx-doc/sphinx",
+      "my_pick": "base",
+      "reference": "Clear ``docutils.conf`` in ``SphinxTestApp.cleanup()``",
+      "finetuned": "Fix docutils.conf cleanup",
+      "base": "Update docutils configuration file and remove it if not found",
+      "rougeL_finetuned": 60.0,
+      "rougeL_base": 12.5
+    },
+    {
+      "set": "ab",
+      "id": 433,
+      "repo": "encode/django-rest-framework",
+      "my_pick": "base",
+      "reference": "Add support for ipaddress objects in JSONEncoder",
+      "finetuned": "Add support for encoding ipaddress objects",
+      "base": "Update JSONEncoder to handle ipaddress objects",
+      "rougeL_finetuned": 76.9,
+      "rougeL_base": 30.8
+    },
+    {
+      "set": "ab",
+      "id": 194,
+      "repo": "sphinx-doc/sphinx",
+      "my_pick": "base",
+      "reference": "C++, allow empty template argument lists",
+      "finetuned": "Allow empty template argument lists",
+      "base": "Add support for empty template argument lists in C++ documentation",
+      "rougeL_finetuned": 90.9,
+      "rougeL_base": 50.0
+    },
+    {
+      "set": "ab",
+      "id": 253,
+      "repo": "encode/django-rest-framework",
+      "my_pick": "base",
+      "reference": "Remove Django 1.5 clean_manytomany_helptext fallback",
+      "finetuned": "Remove unused clean_manytomany_helptext function",
+      "base": "Fixes #1712: Clean many-to-many help text for Django 1.6 compatibility",
+      "rougeL_finetuned": 57.1,
+      "rougeL_base": 19.0
+    },
+    {
+      "set": "v2",
+      "id": 289,
+      "repo": "encode/django-rest-framework",
+      "my_pick": "base",
+      "reference": "Fixed the Django 1.3 compat",
+      "finetuned": "Fix Django 1.3 compatibility",
+      "base": "Update Response class to support Django 1.3 compatibility",
+      "rougeL_finetuned": 90.9,
+      "rougeL_base": 53.3
+    },
+    {
+      "set": "v2",
+      "id": 6,
+      "repo": "sphinx-doc/sphinx",
+      "my_pick": "finetuned",
+      "reference": "Correct the default value for ``html_last_updated_fmt``",
+      "finetuned": "Fix typo in configuration.rst",
+      "base": "Update HTML last updated format to None",
+      "rougeL_finetuned": 0.0,
+      "rougeL_base": 37.5
+    },
+    {
+      "set": "ab",
+      "id": 13,
+      "repo": "encode/django-rest-framework",
+      "my_pick": "finetuned",
+      "reference": "doc: fix documentation for Request._authenticate",
+      "finetuned": "Remove unused comment",
+      "base": "Authenticate request using each authenticator",
+      "rougeL_finetuned": 0.0,
+      "rougeL_base": 36.4
+    }
+  ]
+}
