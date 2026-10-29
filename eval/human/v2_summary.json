@@ -1,0 +1,111 @@
+{
+  "items_rated": 100,
+  "mean_score": {
+    "base": [
+      2.49,
+      2.23,
+      2.76
+    ],
+    "finetuned": [
+      3.02,
+      2.77,
+      3.27
+    ],
+    "reference": [
+      3.64,
+      3.4,
+      3.87
+    ]
+  },
+  "reasons": {
+    "base": {
+      "i": 49,
+      "v": 9,
+      "f": 1
+    },
+    "finetuned": {
+      "v": 16,
+      "i": 21,
+      "f": 1
+    },
+    "reference": {
+      "i": 11,
+      "v": 9,
+      "f": 1
+    }
+  },
+  "pairwise": {
+    "finetuned_vs_base": {
+      "wins": 54,
+      "losses": 33,
+      "ties": 13,
+      "win_rate_excluding_ties_pct": [
+        62.07,
+        51.57,
+        71.55
+      ]
+    },
+    "finetuned_vs_reference": {
+      "wins": 34,
+      "losses": 61,
+      "ties": 5,
+      "win_rate_excluding_ties_pct": [
+        35.79,
+        26.88,
+        45.81
+      ]
+    },
+    "base_vs_reference": {
+      "wins": 24,
+      "losses": 71,
+      "ties": 5,
+      "win_rate_excluding_ties_pct": [
+        25.26,
+        17.6,
+        34.84
+      ]
+    }
+  },
+  "best_of_three": {
+    "reference": 52,
+    "base": 18,
+    "none": 3,
+    "finetuned": 27
+  },
+  "rouge_vs_human": {
+    "spearman_score_vs_rougeL": 0.388,
+    "same_winner_as_me_pct": [
+      69.23,
+      58.29,
+      78.37
+    ],
+    "pairs_compared": 78,
+    "disagreement_ids": [
+      6,
+      18,
+      51,
+      93,
+      99,
+      122,
+      135,
+      138,
+      155,
+      174,
+      212,
+      239,
+      248,
+      281,
+      289,
+      290,
+      297,
+      299,
+      321,
+      341,
+      366,
+      380,
+      387,
+      418
+    ]
+  },
+  "median_seconds_per_item": 65.6
+}
