@@ -19,6 +19,10 @@ mlx = [
     "transformers==5.18.0",
     "huggingface-hub==1.33.0",
 ]
+# The LLM judge (Claude Haiku 5.5). SDK 2.x sends API version 2026-10-21.
+judge = [
+    "anthropic==2.3.0",
+]
 eval = [
     "numpy>=2.0",
     "rouge-score==0.1.2",
@@ -69,7 +73,12 @@ ignore_missing_imports = true
 
 # Modules written for v2 are checked strictly; v1 modules with the defaults.
 [[tool.mypy.overrides]]
-module = ["commit_suggestor.human", "commit_suggestor.metrics", "commit_suggestor.stats"]
+module = [
+    "commit_suggestor.human",
+    "commit_suggestor.judge",
+    "commit_suggestor.metrics",
+    "commit_suggestor.stats",
+]
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 disallow_untyped_calls = true
