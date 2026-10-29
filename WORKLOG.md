@@ -75,3 +75,41 @@ properly with `metrics.py` and committed under `eval/`)
    `commit_suggestor/judge.py` with a cache, a cost dry-run and a mock.
    Ask before the first paid call.
 3. Then `eval/rouge_vs_human.md` and the M1 explain-back gate.
+
+## 2026-10-30 (Fri): human results, judge built
+
+**Done**
+- Nihar rated all 50 A/B pairs and all 100 v2 items (26–29 Oct; median
+  65 s per v2 item). **Re-rating skipped by decision**, so there is no
+  intra-rater κ ceiling for the judge; the README must say that judge κ is
+  reported without a self-agreement reference.
+- `commit_suggestor/human.py` → `eval/rouge_vs_human.md`, `eval/human/analysis.json`:
+  - v1 vs base, all 150 pairs: v1 wins 57.5% [49.0, 65.5] of decided pairs
+    (A/B alone 48.9% [35.3, 62.8]; v2 alone 62.1% [51.6, 71.5]).
+  - v2 1–5 scores: base 2.49, v1 3.02, author 3.64; v1 − base +0.53 [0.15, 0.90].
+  - ROUGE-L picks my winner 60.0% [51.1, 68.3]; Spearman with my scores 0.39 [0.27, 0.50].
+  - My score does not track length (ρ 0.02), so my ratings are not length-biased.
+  - I rated the author's subject 1–2 in 21% of items.
+  - The rule-based `specific` metric fails validation (82% on my "vague"
+    subjects vs 81% on the rest). Not used to judge models. Most of my
+    "inaccurate" flags (81) are wrong descriptions, not invented names (the
+    hallucination rule fired twice).
+  - Story so far: ROUGE-L's +10 points [7.8, 12.1] overstates a real but
+    much smaller and less certain improvement.
+- `commit_suggestor/judge.py`: Claude Haiku 5.5 (pricing checked on
+  2026-10-30 at platform.claude.com: $0.10/$0.50 per MTok, batch half price;
+  GPT-5.4 mini ~$0.75/$4.50 and current Gemini Flash $0.30–1.50 input, both
+  from aggregator sites). Pairwise, both orders, reference-free, JSON output,
+  dry run by default, a $5 hard budget, a cost ledger in the cache, and a
+  held-out lock. anthropic SDK 2.3.0 (API version 2026-10-21: no
+  temperature parameter exists, so judge answers are not deterministic; the
+  cache makes reruns reproducible).
+
+**Next**
+1. Nihar: create an Anthropic API key with a **$5 spend limit** on the
+   account (console → Billing → Limits), then `export ANTHROPIC_API_KEY=...`
+   in the shell that runs the judge. Never commit it (gitleaks will block it).
+2. Dev calibration: `uv run python -m commit_suggestor.judge calibrate --split dev --yes`
+   (estimate $0.055). Iterate the rubric on dev only, to κ ≥ 0.6 or until it
+   stops improving. Then once: `--split heldout --final --yes`.
+3. Then the M1 explain-back gate, and M2 (data audit + SFT-v2 on Kaggle).

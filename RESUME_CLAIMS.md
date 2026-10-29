@@ -11,7 +11,8 @@ committed file that proves it.
 | ROUGE-L 31.1 vs 21.1 for the base model on 3 held-out projects | `eval/results.json`; recomputed by `tests/test_results_reproduce.py` | v1, verified |
 | Gain over base 10.0 ROUGE-L points, 95% paired-bootstrap CI [7.8, 12.1] | `eval/results.json`; `tests/test_results_reproduce.py` | v1, verified |
 | Gain holds in each held-out project | `eval/results.json` `rougeL_by_repo` | v1, verified |
-| Human preference: fine-tuned vs base | `eval/ab_ratings.jsonl` (not yet rated) | pending (M1) |
+| Blind human preference, fine-tuned vs base, 150 pairs: 57.5% [49.0, 65.5]; 1-5 score +0.53 [0.15, 0.90] | `eval/rouge_vs_human.md`, `eval/human/analysis.json`; `tests/test_human.py` recomputes them | measured (one rater: me) |
+| ROUGE-L picks the human winner only 60.0% [51.1, 68.3] of the time | `eval/rouge_vs_human.md` | measured |
 | Judge calibrated to my labels, Cohen's κ = … | — | pending (M1) |
 | SFT-v2 vs v1 vs base with CIs | — | pending (M2) |
 | DPO on … judge-labelled pairs; win rate … vs SFT | — | pending (M3) |
