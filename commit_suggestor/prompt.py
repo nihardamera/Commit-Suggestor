@@ -31,11 +31,28 @@ def truncate_diff(diff: str, limit: int = MAX_DIFF_CHARS) -> str:
     return cut + "\n... (diff truncated)"
 
 
-def build_messages(diff: str) -> list[dict[str, str]]:
+#: 1: the diff alone (v1). 2: optionally preceded by the repository's recent
+#: subjects. Without them, version 2 builds exactly the version 1 prompt.
+PROMPT_VERSION = 2
+
+CONTEXT_INTRO = (
+    "Recent commit subjects in this repository, newest first. Follow their style, "
+    "but describe only the diff below:"
+)
+
+
+def build_messages(diff: str, recent_subjects: list[str] | None = None) -> list[dict[str, str]]:
     """Chat messages for one diff, without the answer."""
+    context = ""
+    if recent_subjects:
+        listed = "\n".join(f"- {s}" for s in recent_subjects)
+        context = f"{CONTEXT_INTRO}\n{listed}\n\n"
     return [
         {"role": "system", "content": SYSTEM},
-        {"role": "user", "content": f"{INSTRUCTION}\n\n```diff\n{truncate_diff(diff)}\n```"},
+        {
+            "role": "user",
+            "content": f"{INSTRUCTION}\n\n{context}```diff\n{truncate_diff(diff)}\n```",
+        },
     ]
 
 
