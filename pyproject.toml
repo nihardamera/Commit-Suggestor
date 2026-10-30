@@ -34,7 +34,7 @@ eval = [
 ]
 
 [project.scripts]
-commit-suggestor = "commit_suggestor.suggest:main"
+commit-suggestor = "commit_suggestor.cli:main"
 
 [dependency-groups]
 dev = [
