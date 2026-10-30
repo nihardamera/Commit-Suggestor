@@ -48,7 +48,9 @@ REPOS: dict[str, list[str]] = {
 
 # Field and record separators that never appear in commit text or diffs.
 _FIELD, _RECORD, _END = "\x1f", "\x1e", "\x1d"
-_FORMAT = f"{_RECORD}%H{_FIELD}%an{_FIELD}%ae{_FIELD}%s{_END}"
+# Author date (ISO 8601) and parent SHAs come after the subject, so that v2's
+# repo-style context can take the commits that came before each one.
+_FORMAT = f"{_RECORD}%H{_FIELD}%an{_FIELD}%ae{_FIELD}%s{_FIELD}%aI{_FIELD}%P{_END}"
 
 
 def clone(slug: str, cache: Path, depth: int, attempts: int = 3) -> Path | None:
@@ -109,13 +111,15 @@ def commits(repo_dir: Path, shas: list[str] | None = None) -> list[dict[str, str
     records = []
     for chunk in text.split(_RECORD)[1:]:
         header, _, patch = chunk.partition(_END)
-        sha, author, email, subject = [*header.split(_FIELD), "", "", "", ""][:4]
+        sha, author, email, subject, date, parents = [*header.split(_FIELD), *[""] * 6][:6]
         records.append(
             {
                 "sha": sha,
                 "author": author,
                 "email": email,
                 "subject": subject,
+                "date": date,
+                "parents": parents,
                 "diff": patch.strip("\n"),
             }
         )
