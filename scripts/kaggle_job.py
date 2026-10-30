@@ -1,6 +1,6 @@
 """Upload the v2 data to Kaggle, run the GPU jobs in notebooks/, fetch the results.
 
-    uv run python scripts/kaggle_job.py dataset                         # private dataset
+    uv run python scripts/kaggle_job.py dataset [--which pairs]         # private datasets
     uv run python scripts/kaggle_job.py push --job sft --mode smoke     # a short run first
     uv run python scripts/kaggle_job.py status --job sft
     uv run python scripts/kaggle_job.py output --job sft --mode full
@@ -22,10 +22,12 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 USER = "nihardamera"
 DATASET = f"{USER}/commit-suggestor-v2-data"
+PAIRS_DATASET = f"{USER}/commit-suggestor-dpo-pairs"
 STAGE = ROOT / "data" / "kaggle"
 KAGGLE = ["uvx", "--quiet", "kaggle@2.2.5"]
 
@@ -52,44 +54,67 @@ def kaggle(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
     return result
 
 
-def dataset(_: argparse.Namespace) -> None:
-    stage = STAGE / "dataset"
+def upload(slug: str, title: str, files: dict[str, Path]) -> None:
+    """Create the private dataset `slug`, or add a new version of it."""
+    stage = STAGE / slug.split("/", 1)[1]
     shutil.rmtree(stage, ignore_errors=True)
     stage.mkdir(parents=True)
-    for name in ("train.jsonl", "valid.jsonl", "valid.meta.jsonl"):
-        shutil.copy(ROOT / "data" / "v2" / name, stage / name)
-    for name in ("test.jsonl", "test_context.jsonl"):
-        shutil.copy(ROOT / "eval" / name, stage / name)
-    # The training job builds generation prompts with the repository's own code.
-    shutil.copy(ROOT / "commit_suggestor" / "prompt.py", stage / "prompt.py")
+    for name, source in files.items():
+        shutil.copy(source, stage / name)
     (stage / "dataset-metadata.json").write_text(
-        json.dumps(
-            {
-                "title": "Commit Suggestor v2 data",
-                "id": DATASET,
-                "licenses": [{"name": "other"}],
-            },
-            indent=2,
-        )
+        json.dumps({"title": title, "id": slug, "licenses": [{"name": "other"}]}, indent=2)
     )
-    exists = kaggle("datasets", "status", DATASET, check=False).returncode == 0
-    if exists:
-        kaggle("datasets", "version", "-p", str(stage), "-m", "Rebuilt v2 data")
+    if kaggle("datasets", "status", slug, check=False).returncode == 0:
+        kaggle("datasets", "version", "-p", str(stage), "-m", "Rebuilt")
     else:
         kaggle("datasets", "create", "-p", str(stage))  # private unless --public
 
 
-#: Each Kaggle job: its script, its kernel, and the outputs of earlier jobs it reads.
-JOBS: dict[str, dict[str, object]] = {
-    "sft": {"code": "sft_v2.py", "kernel": f"{USER}/commit-suggestor-sft-v2", "after": []},
+def dataset(args: argparse.Namespace) -> None:
+    # The jobs import the repository's own code, so it ships with the data: a
+    # Kaggle script job uploads only the script.
+    if args.which == "v2":
+        upload(
+            DATASET,
+            "Commit Suggestor v2 data",
+            {
+                **{
+                    n: ROOT / "data" / "v2" / n
+                    for n in ("train.jsonl", "valid.jsonl", "valid.meta.jsonl")
+                },
+                **{n: ROOT / "eval" / n for n in ("test.jsonl", "test_context.jsonl")},
+                "prompt.py": ROOT / "commit_suggestor" / "prompt.py",
+            },
+        )
+    else:
+        upload(
+            PAIRS_DATASET,
+            "Commit Suggestor DPO pairs",
+            {
+                "pairs.jsonl": ROOT / "data" / "dpo" / "pairs.jsonl",
+                "dpo.py": ROOT / "commit_suggestor" / "dpo.py",
+            },
+        )
+
+
+#: Each Kaggle job: its script, its kernel, the datasets and earlier jobs it reads.
+JOBS: dict[str, dict[str, Any]] = {
+    "sft": {
+        "code": "sft_v2.py",
+        "kernel": f"{USER}/commit-suggestor-sft-v2",
+        "datasets": [DATASET],
+        "after": [],
+    },
     "sample": {
         "code": "dpo_sample.py",
         "kernel": f"{USER}/commit-suggestor-dpo-sample",
+        "datasets": [DATASET],
         "after": [f"{USER}/commit-suggestor-sft-v2"],
     },
     "dpo": {
         "code": "dpo_train.py",
         "kernel": f"{USER}/commit-suggestor-dpo-train",
+        "datasets": [DATASET, PAIRS_DATASET],
         "after": [f"{USER}/commit-suggestor-sft-v2"],
     },
 }
@@ -97,7 +122,7 @@ JOBS: dict[str, dict[str, object]] = {
 
 def push(args: argparse.Namespace) -> None:
     job = JOBS[args.job]
-    code = str(job["code"])
+    code = job["code"]
     stage = STAGE / f"kernel-{args.job}"
     shutil.rmtree(stage, ignore_errors=True)
     stage.mkdir(parents=True)
@@ -106,14 +131,11 @@ def push(args: argparse.Namespace) -> None:
     if marker not in source:
         sys.exit(f"notebooks/{code} no longer sets MODE as expected")
     (stage / code).write_text(source.replace(marker, f'MODE = "{args.mode}"', 1))
-    for extra in args.extra_file or []:
-        shutil.copy(extra, stage / Path(extra).name)
-    kernel = str(job["kernel"])
     (stage / "kernel-metadata.json").write_text(
         json.dumps(
             {
-                "id": kernel,
-                "title": kernel.split("/", 1)[1],
+                "id": job["kernel"],
+                "title": job["kernel"].split("/", 1)[1],
                 "code_file": code,
                 "language": "python",
                 "kernel_type": "script",
@@ -121,7 +143,7 @@ def push(args: argparse.Namespace) -> None:
                 "enable_gpu": True,
                 "enable_internet": True,
                 "machine_shape": "NvidiaTeslaT4",
-                "dataset_sources": [DATASET, *args.dataset],
+                "dataset_sources": job["datasets"],
                 "kernel_sources": job["after"],
             },
             indent=2,
@@ -144,17 +166,12 @@ def output(args: argparse.Namespace) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("dataset").set_defaults(run=dataset)
+    d = sub.add_parser("dataset")
+    d.add_argument("--which", choices=["v2", "pairs"], default="v2")
+    d.set_defaults(run=dataset)
     p = sub.add_parser("push")
     p.add_argument("--job", choices=sorted(JOBS), default="sft")
     p.add_argument("--mode", choices=["smoke", "full"], required=True)
-    p.add_argument(
-        "--dataset",
-        action="append",
-        default=[],
-        help="another private dataset the job reads, user/slug",
-    )
-    p.add_argument("--extra-file", action="append", help="a file to ship next to the script")
     p.set_defaults(run=push)
     st = sub.add_parser("status")
     st.add_argument("--job", choices=sorted(JOBS), default="sft")

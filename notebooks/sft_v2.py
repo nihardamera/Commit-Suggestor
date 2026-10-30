@@ -40,9 +40,19 @@ MODE = "smoke"  # replaced by scripts/kaggle_job.py: "smoke" or "full"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 subprocess.run(
-    [sys.executable, "-m", "pip", "install", "-q", "--no-warn-conflicts",
-     "transformers==5.22.1", "trl==1.17.0", "peft==0.21.2", "accelerate==1.15.0",
-     "datasets==5.1.0"],
+    [
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "-q",
+        "--no-warn-conflicts",
+        "transformers==5.22.1",
+        "trl==1.17.0",
+        "peft==0.21.2",
+        "accelerate==1.15.0",
+        "datasets==5.1.0",
+    ],
     check=True,
 )
 # Kaggle's image ships torchao 0.10, and PEFT 0.21 refuses to load LoRA layers
@@ -158,13 +168,17 @@ def generate(peft_model, prompts: list[list[dict]], batch: int = 32) -> list[str
     peft_model.eval()
     replies = []
     for i in range(0, len(prompts), batch):
-        texts = [tokenizer.apply_chat_template(p, add_generation_prompt=True, tokenize=False)
-                 for p in prompts[i:i + batch]]
+        texts = [
+            tokenizer.apply_chat_template(p, add_generation_prompt=True, tokenize=False)
+            for p in prompts[i : i + batch]
+        ]
         enc = tokenizer(texts, return_tensors="pt", padding=True).to(peft_model.device)
-        out = peft_model.generate(**enc, max_new_tokens=40, do_sample=False,
-                                  pad_token_id=tokenizer.pad_token_id)
-        replies += tokenizer.batch_decode(out[:, enc["input_ids"].shape[1]:],
-                                          skip_special_tokens=True)
+        out = peft_model.generate(
+            **enc, max_new_tokens=40, do_sample=False, pad_token_id=tokenizer.pad_token_id
+        )
+        replies += tokenizer.batch_decode(
+            out[:, enc["input_ids"].shape[1] :], skip_special_tokens=True
+        )
     return replies
 
 
@@ -175,8 +189,9 @@ from prompt import build_messages, clean_reply  # noqa: E402
 # Remove the trained LoRA layers, then load each saved adapter onto the clean base.
 base_model = trainer.model.unload()
 valid_meta = load("valid.meta.jsonl")[: len(valid_rows)]
-valid_prompts = [build_messages(m["diff"], m["context"] if m["with_context"] else None)
-                 for m in valid_meta]
+valid_prompts = [
+    build_messages(m["diff"], m["context"] if m["with_context"] else None) for m in valid_meta
+]
 tests = load("test.jsonl")
 contexts = {c["sha"]: c["context"] for c in load("test_context.jsonl")}
 if MODE == "smoke":
@@ -189,20 +204,38 @@ with (OUT / "predictions_valid.jsonl").open("w") as fh:
             continue
         peft_model = PeftModel.from_pretrained(base_model, path)
         for meta, reply in zip(valid_meta, generate(peft_model, valid_prompts), strict=True):
-            fh.write(json.dumps({"checkpoint": name, "sha": meta["sha"], "repo": meta["repo"],
-                                 "reference": meta["subject"],
-                                 "prediction": clean_reply(reply)}) + "\n")
+            fh.write(
+                json.dumps(
+                    {
+                        "checkpoint": name,
+                        "sha": meta["sha"],
+                        "repo": meta["repo"],
+                        "reference": meta["subject"],
+                        "prediction": clean_reply(reply),
+                    }
+                )
+                + "\n"
+            )
         base_model = peft_model.unload()
 
 final = PeftModel.from_pretrained(base_model, OUT / "adapters" / "final")
 with (OUT / "predictions_test.jsonl").open("w") as fh:
     for use_context in (False, True):
-        prompts = [build_messages(t["diff"], contexts[t["sha"]] if use_context else None)
-                   for t in tests]
+        prompts = [
+            build_messages(t["diff"], contexts[t["sha"]] if use_context else None) for t in tests
+        ]
         for test, reply in zip(tests, generate(final, prompts), strict=True):
-            fh.write(json.dumps({"sha": test["sha"], "repo": test["repo"],
-                                 "with_context": use_context,
-                                 "prediction": clean_reply(reply)}) + "\n")
+            fh.write(
+                json.dumps(
+                    {
+                        "sha": test["sha"],
+                        "repo": test["repo"],
+                        "with_context": use_context,
+                        "prediction": clean_reply(reply),
+                    }
+                )
+                + "\n"
+            )
 
 merged = final.merge_and_unload()
 merged.save_pretrained(OUT / "merged", safe_serialization=True)
@@ -212,8 +245,9 @@ info = {
     "mode": MODE,
     "base": BASE,
     "gpu": torch.cuda.get_device_name(0),
-    "versions": {p: __import__(p).__version__
-                 for p in ("torch", "transformers", "trl", "peft", "datasets")},
+    "versions": {
+        p: __import__(p).__version__ for p in ("torch", "transformers", "trl", "peft", "datasets")
+    },
     "train_examples": len(train_rows),
     "dropped_over_max_length": {"train": train_dropped, "valid": valid_dropped},
     "trainable_parameters": trainable,

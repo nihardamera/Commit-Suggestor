@@ -22,8 +22,17 @@ MODE = "smoke"  # replaced by scripts/kaggle_job.py: "smoke" or "full"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # one GPU; see sft_v2.py
 
 subprocess.run(
-    [sys.executable, "-m", "pip", "install", "-q", "--no-warn-conflicts",
-     "transformers==5.22.1", "peft==0.21.2", "accelerate==1.15.0"],
+    [
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "-q",
+        "--no-warn-conflicts",
+        "transformers==5.22.1",
+        "peft==0.21.2",
+        "accelerate==1.15.0",
+    ],
     check=True,
 )
 subprocess.run([sys.executable, "-m", "pip", "uninstall", "-q", "-y", "torchao"], check=True)
@@ -55,25 +64,54 @@ model = PeftModel.from_pretrained(base, ADAPTER).eval()
 
 with (OUT / "dpo_samples.jsonl").open("w") as fh, torch.no_grad():
     for i in range(0, len(rows), 16):
-        batch = rows[i:i + 16]
-        prompts = [build_messages(r["diff"], r["context"] if r["with_context"] else None)
-                   for r in batch]
-        texts = [tokenizer.apply_chat_template(p, add_generation_prompt=True, tokenize=False)
-                 for p in prompts]
+        batch = rows[i : i + 16]
+        prompts = [
+            build_messages(r["diff"], r["context"] if r["with_context"] else None) for r in batch
+        ]
+        texts = [
+            tokenizer.apply_chat_template(p, add_generation_prompt=True, tokenize=False)
+            for p in prompts
+        ]
         enc = tokenizer(texts, return_tensors="pt", padding=True).to(model.device)
-        out = model.generate(**enc, max_new_tokens=40, do_sample=True, temperature=TEMPERATURE,
-                             top_p=TOP_P, num_return_sequences=N_SAMPLES,
-                             pad_token_id=tokenizer.pad_token_id)
-        decoded = tokenizer.batch_decode(out[:, enc["input_ids"].shape[1]:],
-                                         skip_special_tokens=True)
+        out = model.generate(
+            **enc,
+            max_new_tokens=40,
+            do_sample=True,
+            temperature=TEMPERATURE,
+            top_p=TOP_P,
+            num_return_sequences=N_SAMPLES,
+            pad_token_id=tokenizer.pad_token_id,
+        )
+        decoded = tokenizer.batch_decode(
+            out[:, enc["input_ids"].shape[1] :], skip_special_tokens=True
+        )
         for j, (row, prompt) in enumerate(zip(batch, prompts, strict=True)):
-            samples = [clean_reply(t) for t in decoded[j * N_SAMPLES:(j + 1) * N_SAMPLES]]
-            fh.write(json.dumps({"sha": row["sha"], "repo": row["repo"],
-                                 "with_context": row["with_context"], "prompt": prompt,
-                                 "samples": samples}) + "\n")
+            samples = [clean_reply(t) for t in decoded[j * N_SAMPLES : (j + 1) * N_SAMPLES]]
+            fh.write(
+                json.dumps(
+                    {
+                        "sha": row["sha"],
+                        "repo": row["repo"],
+                        "with_context": row["with_context"],
+                        "prompt": prompt,
+                        "samples": samples,
+                    }
+                )
+                + "\n"
+            )
         print(f"{i + len(batch)}/{len(rows)}", flush=True)
 
-(OUT / "sample_info.json").write_text(json.dumps({
-    "mode": MODE, "diffs": len(rows), "samples_per_diff": N_SAMPLES,
-    "temperature": TEMPERATURE, "top_p": TOP_P, "seed": SEED, "adapter": str(ADAPTER),
-}, indent=2))
+(OUT / "sample_info.json").write_text(
+    json.dumps(
+        {
+            "mode": MODE,
+            "diffs": len(rows),
+            "samples_per_diff": N_SAMPLES,
+            "temperature": TEMPERATURE,
+            "top_p": TOP_P,
+            "seed": SEED,
+            "adapter": str(ADAPTER),
+        },
+        indent=2,
+    )
+)
