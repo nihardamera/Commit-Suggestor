@@ -4,7 +4,8 @@
 but not the diff, which lived in the ignored `data/` folder. This fetches the
 same commits from the three test projects, cleans them with the same code as
 training, checks the result against the 50 diffs already committed in
-`eval/ab_sample.jsonl`, and writes `eval/test.jsonl`.
+`eval/ab_sample.jsonl`, and writes `eval/test.jsonl`, plus each example's
+repo-style context (the five commits before it) to `eval/test_context.jsonl`.
 
 The three projects are BSD or MIT licensed; the file keeps each commit's
 repository and SHA so every example can be traced to its source.
@@ -18,6 +19,7 @@ import json
 import subprocess
 from pathlib import Path
 
+from commit_suggestor.context import recent_subjects
 from commit_suggestor.mine import commits
 from commit_suggestor.prepare import clean_diff, clean_subject
 
@@ -85,6 +87,15 @@ def main() -> None:
         for p in predictions:  # same order as predictions.jsonl
             fh.write(json.dumps(rebuilt[p["sha"]]) + "\n")
     print(f"wrote {len(predictions)} examples to eval/test.jsonl")
+
+    # v2's repo-style context: the five non-merge commits before each test
+    # commit, from full history, cleaned the same way as in training.
+    with (EVAL / "test_context.jsonl").open("w") as fh:
+        for p in predictions:
+            clone_dir = CLONES / p["repo"].replace("/", "__")
+            context = recent_subjects(clone_dir, p["sha"], include_before=False)
+            fh.write(json.dumps({"sha": p["sha"], "context": context}) + "\n")
+    print("wrote the repo context of each example to eval/test_context.jsonl")
 
 
 if __name__ == "__main__":

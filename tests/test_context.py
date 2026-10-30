@@ -90,3 +90,9 @@ def test_for_an_existing_commit_only_earlier_ones_count(repo):
 def test_no_history_gives_no_context(tmp_path):
     subprocess.run(["git", "-C", str(tmp_path), "init", "-q"], check=True)
     assert recent_subjects(tmp_path) == []
+
+
+def test_long_context_subjects_are_cut_at_a_word():
+    long = "Fix the handling of nested lists " * 6
+    (short,) = clean_context([long])
+    assert len(short) <= 104 and short.endswith(" ...") and "  " not in short

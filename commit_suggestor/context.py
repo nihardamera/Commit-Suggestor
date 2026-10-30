@@ -8,7 +8,8 @@ The same rules apply everywhere the context is built, so that training,
 evaluation and the CLI agree:
   - only commits *before* the one being described (no peeking at the answer),
   - merges excluded (`git log --no-merges`), newest first,
-  - each subject cleaned like a training target (PR numbers and CI tags removed).
+  - each subject cleaned like a training target (PR numbers and CI tags removed)
+    and cut to at most 100 characters.
 """
 
 from __future__ import annotations
@@ -20,11 +21,20 @@ from pathlib import Path
 from commit_suggestor.prepare import clean_subject
 
 N_RECENT = 5
+#: Some projects write paragraph-long subjects; five of those would crowd out
+#: the diff. Each is cut at a word boundary to at most this many characters.
+MAX_CONTEXT_CHARS = 100
+
+
+def _shorten(subject: str, limit: int = MAX_CONTEXT_CHARS) -> str:
+    if len(subject) <= limit:
+        return subject
+    return subject[:limit].rsplit(" ", 1)[0] + " ..."
 
 
 def clean_context(subjects: Sequence[str], n: int = N_RECENT) -> list[str]:
-    """The first `n` non-empty subjects, cleaned. Input is newest first."""
-    cleaned = (clean_subject(s) for s in subjects)
+    """The first `n` non-empty subjects, cleaned and shortened. Input is newest first."""
+    cleaned = (_shorten(clean_subject(s)) for s in subjects)
     return [s for s in cleaned if s][:n]
 
 
