@@ -1,9 +1,12 @@
-"""Upload the v2 data to Kaggle, run notebooks/sft_v2.py on a GPU, fetch the results.
+"""Upload the v2 data to Kaggle, run the GPU jobs in notebooks/, fetch the results.
 
-    uv run python scripts/kaggle_job.py dataset            # create or update the private dataset
-    uv run python scripts/kaggle_job.py push --mode smoke  # 20 steps, to catch errors cheaply
-    uv run python scripts/kaggle_job.py status
-    uv run python scripts/kaggle_job.py output --mode smoke
+    uv run python scripts/kaggle_job.py dataset                         # private dataset
+    uv run python scripts/kaggle_job.py push --job sft --mode smoke     # a short run first
+    uv run python scripts/kaggle_job.py status --job sft
+    uv run python scripts/kaggle_job.py output --job sft --mode full
+
+Jobs: sft (notebooks/sft_v2.py), sample (dpo_sample.py: candidates for DPO
+pairs) and dpo (dpo_train.py). `--job` defaults to sft.
 
 The Kaggle token is read from the macOS Keychain (service "kaggle-api-token")
 or from KAGGLE_API_TOKEN, and passed to the CLI in its environment only.
@@ -23,7 +26,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 USER = "nihardamera"
 DATASET = f"{USER}/commit-suggestor-v2-data"
-KERNEL = f"{USER}/commit-suggestor-sft-v2"
 STAGE = ROOT / "data" / "kaggle"
 KAGGLE = ["uvx", "--quiet", "kaggle@2.2.5"]
 
@@ -77,28 +79,50 @@ def dataset(_: argparse.Namespace) -> None:
         kaggle("datasets", "create", "-p", str(stage))  # private unless --public
 
 
+#: Each Kaggle job: its script, its kernel, and the outputs of earlier jobs it reads.
+JOBS: dict[str, dict[str, object]] = {
+    "sft": {"code": "sft_v2.py", "kernel": f"{USER}/commit-suggestor-sft-v2", "after": []},
+    "sample": {
+        "code": "dpo_sample.py",
+        "kernel": f"{USER}/commit-suggestor-dpo-sample",
+        "after": [f"{USER}/commit-suggestor-sft-v2"],
+    },
+    "dpo": {
+        "code": "dpo_train.py",
+        "kernel": f"{USER}/commit-suggestor-dpo-train",
+        "after": [f"{USER}/commit-suggestor-sft-v2"],
+    },
+}
+
+
 def push(args: argparse.Namespace) -> None:
-    stage = STAGE / "kernel"
+    job = JOBS[args.job]
+    code = str(job["code"])
+    stage = STAGE / f"kernel-{args.job}"
     shutil.rmtree(stage, ignore_errors=True)
     stage.mkdir(parents=True)
-    source = (ROOT / "notebooks" / "sft_v2.py").read_text()
+    source = (ROOT / "notebooks" / code).read_text()
     marker = 'MODE = "smoke"'
     if marker not in source:
-        sys.exit("notebooks/sft_v2.py no longer sets MODE as expected")
-    (stage / "sft_v2.py").write_text(source.replace(marker, f'MODE = "{args.mode}"', 1))
+        sys.exit(f"notebooks/{code} no longer sets MODE as expected")
+    (stage / code).write_text(source.replace(marker, f'MODE = "{args.mode}"', 1))
+    for extra in args.extra_file or []:
+        shutil.copy(extra, stage / Path(extra).name)
+    kernel = str(job["kernel"])
     (stage / "kernel-metadata.json").write_text(
         json.dumps(
             {
-                "id": KERNEL,
-                "title": "commit-suggestor-sft-v2",
-                "code_file": "sft_v2.py",
+                "id": kernel,
+                "title": kernel.split("/", 1)[1],
+                "code_file": code,
                 "language": "python",
                 "kernel_type": "script",
                 "is_private": True,
                 "enable_gpu": True,
                 "enable_internet": True,
                 "machine_shape": "NvidiaTeslaT4",
-                "dataset_sources": [DATASET],
+                "dataset_sources": [DATASET, *args.dataset],
+                "kernel_sources": job["after"],
             },
             indent=2,
         )
@@ -106,14 +130,14 @@ def push(args: argparse.Namespace) -> None:
     kaggle("kernels", "push", "-p", str(stage))
 
 
-def status(_: argparse.Namespace) -> None:
-    kaggle("kernels", "status", KERNEL)
+def status(args: argparse.Namespace) -> None:
+    kaggle("kernels", "status", str(JOBS[args.job]["kernel"]))
 
 
 def output(args: argparse.Namespace) -> None:
-    target = ROOT / "data" / "kaggle-output" / args.mode
+    target = ROOT / "data" / "kaggle-output" / args.job / args.mode
     target.mkdir(parents=True, exist_ok=True)
-    kaggle("kernels", "output", KERNEL, "-p", str(target), "-o")
+    kaggle("kernels", "output", str(JOBS[args.job]["kernel"]), "-p", str(target), "-o")
     print(f"downloaded to {target.relative_to(ROOT)}")
 
 
@@ -122,10 +146,21 @@ def main() -> None:
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("dataset").set_defaults(run=dataset)
     p = sub.add_parser("push")
+    p.add_argument("--job", choices=sorted(JOBS), default="sft")
     p.add_argument("--mode", choices=["smoke", "full"], required=True)
+    p.add_argument(
+        "--dataset",
+        action="append",
+        default=[],
+        help="another private dataset the job reads, user/slug",
+    )
+    p.add_argument("--extra-file", action="append", help="a file to ship next to the script")
     p.set_defaults(run=push)
-    sub.add_parser("status").set_defaults(run=status)
+    st = sub.add_parser("status")
+    st.add_argument("--job", choices=sorted(JOBS), default="sft")
+    st.set_defaults(run=status)
     o = sub.add_parser("output")
+    o.add_argument("--job", choices=sorted(JOBS), default="sft")
     o.add_argument("--mode", choices=["smoke", "full"], required=True)
     o.set_defaults(run=output)
     args = parser.parse_args()
