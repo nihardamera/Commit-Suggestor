@@ -48,22 +48,37 @@ def _load(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.open()]
 
 
+#: Validation diffs used for every choice made in v2 (repo context, DPO beta),
+#: so that the test set is only ever reported, never tuned on.
+N_SELECT = 300
+
+
 def test_set() -> tuple[list[dict[str, Any]], dict[str, list[str]]]:
     tests = _load(EVAL / "test.jsonl")
     contexts = {c["sha"]: c["context"] for c in _load(EVAL / "test_context.jsonl")}
     return tests, contexts
 
 
-def predictions(name: str) -> list[str]:
-    """One subject per test example, in eval/test.jsonl order."""
-    tests, _ = test_set()
-    if name in FROM_V1:
+def split_set(split: str) -> tuple[list[dict[str, Any]], dict[str, list[str]]]:
+    if split == "test":
+        return test_set()
+    rows = _load(OUT / "valid_set.jsonl")[:N_SELECT]
+    return rows, {r["sha"]: r["context"] for r in rows}
+
+
+def pred_path(name: str, split: str) -> Path:
+    return OUT / (f"pred_{name}.jsonl" if split == "test" else f"valid_pred_{name}.jsonl")
+
+
+def predictions(name: str, split: str = "test") -> list[str]:
+    """One subject per example of the split, in its file order."""
+    rows_in_order, _ = split_set(split)
+    if name in FROM_V1 and split == "test":
         rows = _load(EVAL / "predictions.jsonl")
-        assert [r["sha"] for r in rows] == [t["sha"] for t in tests]
+        assert [r["sha"] for r in rows] == [t["sha"] for t in rows_in_order]
         return [r[FROM_V1[name]] for r in rows]
-    rows = _load(OUT / f"pred_{name}.jsonl")
-    by_sha = {r["sha"]: r["prediction"] for r in rows}
-    return [by_sha[t["sha"]] for t in tests]
+    by_sha = {r["sha"]: r["prediction"] for r in _load(pred_path(name, split))}
+    return [by_sha[t["sha"]] for t in rows_in_order]
 
 
 def generate(args: argparse.Namespace) -> None:
@@ -71,12 +86,12 @@ def generate(args: argparse.Namespace) -> None:
     from mlx_lm import load
     from mlx_lm.sample_utils import make_sampler
 
-    tests, contexts = test_set()
+    tests, contexts = split_set(args.split)
     model, tokenizer = load(str(args.model))[:2]
     greedy = make_sampler(temp=0.0)
     OUT.mkdir(parents=True, exist_ok=True)
     started = time.time()
-    with (OUT / f"pred_{args.name}.jsonl").open("w") as fh:
+    with pred_path(args.name, args.split).open("w") as fh:
         for i, t in enumerate(tests, 1):
             messages = build_messages(t["diff"], contexts[t["sha"]] if args.context else None)
             prompt = tokenizer.apply_chat_template(
@@ -256,8 +271,8 @@ def markdown(r: dict[str, Any]) -> str:
 
 
 def judge(args: argparse.Namespace) -> None:
-    """Judge system a against b on all test diffs, with the frozen calibrated judge."""
-    tests, _ = test_set()
+    """Judge system a against b on a split's diffs, with the frozen calibrated judge."""
+    tests, _ = split_set(args.split)
     frozen = json.loads(HELDOUT_LOCK.read_text())
     cache = Cache(CACHE)
     j = Judge(
@@ -269,7 +284,9 @@ def judge(args: argparse.Namespace) -> None:
     )
     items = [
         (t["diff"], a, b)
-        for t, a, b in zip(tests, predictions(args.a), predictions(args.b), strict=True)
+        for t, a, b in zip(
+            tests, predictions(args.a, args.split), predictions(args.b, args.split), strict=True
+        )
     ]
     todo = j.uncached(items)
     cost, spent = estimate_usd(todo), cache.spent_usd()
@@ -289,6 +306,7 @@ def judge(args: argparse.Namespace) -> None:
     out = {
         "a": args.a,
         "b": args.b,
+        "split": args.split,
         "pairs": len(items),
         "a_wins": a_wins,
         "b_wins": b_wins,
@@ -301,8 +319,37 @@ def judge(args: argparse.Namespace) -> None:
         "spent_usd_total": round(cache.spent_usd(), 4),
     }
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / f"judge_{args.a}_vs_{args.b}.json").write_text(json.dumps(out, indent=2) + "\n")
+    prefix = "judge" if args.split == "test" else "valid_judge"  # the report reads judge_*
+    (OUT / f"{prefix}_{args.a}_vs_{args.b}.json").write_text(json.dumps(out, indent=2) + "\n")
     print(json.dumps(out, indent=2))
+
+
+def decide_context(_: argparse.Namespace) -> None:
+    """Ship repo context or not, by a rule fixed before the validation results were seen.
+
+    Ship with context only if, on the N_SELECT validation diffs, the judge
+    prefers it (win rate excluding ties above 50%) and its rate of names not
+    in the diff is at most 1 point higher. Otherwise ship without: simpler.
+    """
+    verdict = json.loads((OUT / "valid_judge_sft_v2_ctx_vs_sft_v2.json").read_text())
+    rows, _ = split_set("valid")
+    diffs = [r["diff"] for r in rows]
+    invented = {
+        name: 100
+        * sum(per_example(predictions(name, "valid"), diffs)["hallucinated_pct"])
+        / len(rows)
+        for name in ("sft_v2", "sft_v2_ctx")
+    }
+    win_rate = verdict["a_win_rate_excl_ties_pct"][0]
+    ship = win_rate > 50 and invented["sft_v2_ctx"] - invented["sft_v2"] <= 1
+    decision = {
+        "rule": (decide_context.__doc__ or "").split("\n\n")[1].split("\n\n")[0],
+        "judge_win_rate_ctx_vs_none": verdict["a_win_rate_excl_ties_pct"],
+        "invented_names_pct": {k: round(v, 2) for k, v in invented.items()},
+        "ship_with_context": ship,
+    }
+    (OUT / "context_decision.json").write_text(json.dumps(decision, indent=2) + "\n")
+    print(json.dumps(decision, indent=2))
 
 
 CURVE_POINTS = (("step-600", 2400), ("step-2500", 10000), ("final", 27346))
@@ -367,17 +414,22 @@ def main(argv: list[str] | None = None) -> None:
     g.add_argument("--model", type=Path, required=True)
     g.add_argument("--name", required=True)
     g.add_argument("--context", action="store_true")
+    g.add_argument("--split", choices=["test", "valid"], default="test")
     g.set_defaults(run=generate)
     k = sub.add_parser("import-kaggle")
     k.add_argument("--path", required=True)
     k.set_defaults(run=import_kaggle)
     sub.add_parser("report").set_defaults(run=report)
     sub.add_parser("curve", help="SFT-v2 checkpoints on validation").set_defaults(run=curve)
+    sub.add_parser(
+        "decide-context", help="ship repo context or not (validation only)"
+    ).set_defaults(run=decide_context)
     jp = sub.add_parser("judge")
     jp.add_argument("--a", required=True)
     jp.add_argument("--b", required=True)
     jp.add_argument("--yes", action="store_true")
     jp.add_argument("--max-usd", type=float, default=0.50)
+    jp.add_argument("--split", choices=["test", "valid"], default="test")
     jp.set_defaults(run=judge)
     args = parser.parse_args(argv)
     args.run(args)
