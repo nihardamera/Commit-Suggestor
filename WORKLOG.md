@@ -137,6 +137,36 @@ toward brevity, partly caused by rubric v1's "prefer the shorter"; same-family
 self-preference was designed out; and tuning on the 36 held-out pairs would
 leak the test set: more labels must be new labels.
 
-**Next**
-1. M2: data audit + SFT-v2 on Kaggle. Check the Kaggle GPU quota and
-   the Unsloth/TRL versions first.
+**Done later the same day: M2 data + jobs, M3 prepared**
+- Pushed `v2`; CI green (`checks` + `secrets`). gitleaks false positive fixed with
+  a narrow allowlist (`.gitleaks.toml`: cache-file request hashes only); CI pinned
+  to gitleaks 8.30.1. The local pre-commit hook is now installed (it was not).
+  The `gitleaks` on PATH (`~/.local/bin`) is an old build from another project
+  that ignores allowlists; pre-commit uses its own 8.30.1.
+- Kaggle: token in Keychain (`kaggle-api-token`), user `nihardamera`; GPU and
+  internet work. Private datasets: `commit-suggestor-v2-data` (+ `-dpo-pairs`
+  later). Jobs are driven by `scripts/kaggle_job.py` (sft | sample | dpo).
+- Re-mined 122,935 commits with date + parents (`mine.py`). `data_v2.py` →
+  27,356 train / 600 valid, 0 copies of test diffs; `docs/DATA_CARD.md`.
+  Repo-style context (`context.py`; prompt v2, v1 prompt unchanged).
+- SFT-v2 job (`notebooks/sft_v2.py`): v1's exact LoRA setup (r 8, alpha 160,
+  top 16 layers, 7 modules, lr 5e-5, batch 4) for one epoch. Smoke passed after
+  three fixes: torchao clash, two GPUs → DataParallel, (and the mode marker).
+  5,275,648 trainable params; 1.77 s/step on T4; full run ≈ 4 h, **launched
+  2026-10-30 ~20:45 IST** (kernel version 4).
+- Conversion verified on the smoke model: `mlx_lm convert -q --q-bits 4
+  --q-group-size 64` in 5 s, 839 MB.
+- `eval_v2.py` ready (reproduces v1 numbers). `dpo.py` (hand-written loss, 6
+  tests), `dpo_data.py` (judge-labelled pairs), `notebooks/dpo_sample.py`,
+  `notebooks/dpo_train.py` (β sweep + TRL loss check) written, not yet run.
+
+**Next (in order)**
+1. When the SFT run ends: `uv run python scripts/kaggle_job.py output --job sft --mode full`;
+   convert `merged/` to `data/models/sft-v2-mlx`; `eval_v2 import-kaggle`,
+   `generate` (with and without context), `report`; judge sft_v2 vs v1 (~$0.25).
+   Commit the learning curve (log_history, valid predictions per checkpoint).
+2. M3: push `--job sample` (smoke, then full) → `dpo_data label` (~$1.60) →
+   `dataset --which pairs` → `--job dpo` (smoke, then full) → choose β on the 300
+   validation diffs with the judge → test table → 50-pair human spot check.
+3. M4: backends (MLX + llama.cpp), CLI + hardened hook + feedback, HF model + card,
+   Gradio Space (needs an HF account/token), README + blog draft.
