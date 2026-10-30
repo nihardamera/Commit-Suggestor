@@ -26,3 +26,7 @@ Repo context: SFT-v2 repeated one of the shown subjects in 2.89 [1.56, 4.44]% of
 
 - sft_v2: same subject as fp16 in 21.33 [17.56, 25.11]%; ROUGE-L change -0.25 [-1.92, 1.45] points.
 - sft_v2_ctx: same subject as fp16 in 21.11 [17.33, 24.89]%; ROUGE-L change -0.33 [-2.0, 1.3] points.
+
+## LLM judge (Claude Haiku 5.5, both orders, held-out kappa 0.23)
+
+- sft_v2_vs_v1: sft_v2 wins 148, v1 wins 149, ties 153; sft_v2 win rate excluding ties 49.8 [44.2, 55.5]%.
