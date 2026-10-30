@@ -138,3 +138,13 @@ class TestCommandLine:
         (isolated / "heldout.json").write_text("{}")
         with pytest.raises(SystemExit, match="already scored"):
             judge_module.main(["calibrate", "--split", "heldout", "--final"])
+
+
+def test_the_committed_judge_summary_recomputes_from_the_cache_alone(tmp_path):
+    from pathlib import Path
+
+    eval_dir = Path(__file__).resolve().parent.parent / "eval"
+    out, md = tmp_path / "summary.json", tmp_path / "summary.md"
+    judge_module.main(["report", "--out", str(out), "--markdown", str(md)])
+    assert out.read_text() == (eval_dir / "judge" / "summary.json").read_text()
+    assert md.read_text() == (eval_dir / "judge_vs_human.md").read_text()
