@@ -92,10 +92,12 @@ SCHEMA: dict[str, Any] = {
     "additionalProperties": False,
 }
 
-#: For the cost estimate only. Code tokenises at roughly 3-4 characters per
-#: token; 3 overestimates, which is the safe side for a budget.
-CHARS_PER_TOKEN = 3.0
+#: For the cost estimate only. Measured with the token-counting endpoint on 12
+#: dev prompts (2026-10-30): Claude Haiku 5.5 averages 2.59 characters per token
+#: on these diffs, lowest 2.34. 2.2 overestimates, which is the safe side.
+CHARS_PER_TOKEN = 2.2
 #: Output allowance per call: the JSON answer plus low-effort thinking.
+#: First real calls used about 100.
 OUTPUT_TOKENS_ESTIMATE = 400
 
 
