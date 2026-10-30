@@ -40,6 +40,9 @@ subprocess.run(
      "datasets==5.1.0"],
     check=True,
 )
+# Kaggle's image ships torchao 0.10, and PEFT 0.21 refuses to load LoRA layers
+# while a torchao older than 0.16 is installed. Nothing here uses torchao.
+subprocess.run([sys.executable, "-m", "pip", "uninstall", "-q", "-y", "torchao"], check=True)
 
 import torch  # noqa: E402
 from datasets import Dataset  # noqa: E402

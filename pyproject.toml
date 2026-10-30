@@ -23,6 +23,10 @@ mlx = [
 judge = [
     "anthropic==2.3.0",
 ]
+# For the DPO loss and its tests. Training itself runs on Kaggle (notebooks/).
+train = [
+    "torch==2.15.0",
+]
 eval = [
     "numpy>=2.0",
     "rouge-score==0.1.2",
@@ -74,6 +78,7 @@ ignore_missing_imports = true
 # Modules written for v2 are checked strictly; v1 modules with the defaults.
 [[tool.mypy.overrides]]
 module = [
+    "commit_suggestor.dpo",
     "commit_suggestor.human",
     "commit_suggestor.judge",
     "commit_suggestor.metrics",
