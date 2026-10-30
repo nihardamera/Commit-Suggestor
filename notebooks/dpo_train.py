@@ -15,8 +15,8 @@ Outputs in /kaggle/working:
     adapters/beta-<b>/            DPO adapter per beta
     loss_check.json               TRL vs hand-written loss on one batch
     log_history_beta-<b>.json     loss, reward margins and accuracies
-    predictions_valid.jsonl       300 validation diffs, per beta
-    predictions_test.jsonl        450 test diffs, per beta, with and without context
+    predictions_valid.jsonl       300 validation diffs, per beta (0 = SFT-v2), no context
+    predictions_test.jsonl        450 test diffs, per beta (0 = SFT-v2), no context
     run_info.json
 """
 
@@ -81,7 +81,6 @@ tokenizer = AutoTokenizer.from_pretrained(BASE)
 pairs = load(PAIRS)
 valid_meta = load(DATA / "valid.meta.jsonl")[:N_VALID]
 tests = load(DATA / "test.jsonl")
-contexts = {c["sha"]: c["context"] for c in load(DATA / "test_context.jsonl")}
 if MODE == "smoke":
     pairs, valid_meta, tests = pairs[:32], valid_meta[:8], tests[:8]
 train_dataset = Dataset.from_list(
@@ -180,13 +179,32 @@ def generate(model, prompts: list[list[dict]], batch: int = 32) -> list[str]:
 
 
 checks, timings = [], {}
-valid_prompts = [
-    build_messages(m["diff"], m["context"] if m["with_context"] else None) for m in valid_meta
-]
+# SFT-v2 ships without repo context (eval/v2/context_decision.json), so every
+# choice and every reported number uses prompts without it.
+valid_prompts = [build_messages(m["diff"]) for m in valid_meta]
+test_prompts = [build_messages(t["diff"]) for t in tests]
+
+
+def write_predictions(fh, beta: float, rows: list[dict], preds: list[str]) -> None:
+    for row, pred in zip(rows, preds, strict=True):
+        fh.write(
+            json.dumps({"beta": beta, "sha": row["sha"], "repo": row["repo"], "prediction": pred})
+            + "\n"
+        )
+
+
 with (
     (OUT / "predictions_valid.jsonl").open("w") as valid_fh,
     (OUT / "predictions_test.jsonl").open("w") as test_fh,
 ):
+    # beta 0 is SFT-v2 itself, generated here in fp16 like the DPO models, so
+    # comparing them measures DPO and not the 4-bit conversion.
+    sft = fresh_policy()
+    sft.set_adapter("default")
+    write_predictions(valid_fh, 0.0, valid_meta, generate(sft, valid_prompts))
+    write_predictions(test_fh, 0.0, tests, generate(sft, test_prompts))
+    del sft
+    torch.cuda.empty_cache()
     for beta in BETAS:
         t0 = time.time()
         model = fresh_policy()
@@ -203,37 +221,8 @@ with (
             json.dumps(trainer.state.log_history, indent=1)
         )
         trainer.model.set_adapter("default")
-        for meta, pred in zip(valid_meta, generate(trainer.model, valid_prompts), strict=True):
-            valid_fh.write(
-                json.dumps(
-                    {
-                        "beta": beta,
-                        "sha": meta["sha"],
-                        "repo": meta["repo"],
-                        "reference": meta["subject"],
-                        "prediction": pred,
-                    }
-                )
-                + "\n"
-            )
-        for use_context in (False, True):
-            prompts = [
-                build_messages(t["diff"], contexts[t["sha"]] if use_context else None)
-                for t in tests
-            ]
-            for test, pred in zip(tests, generate(trainer.model, prompts), strict=True):
-                test_fh.write(
-                    json.dumps(
-                        {
-                            "beta": beta,
-                            "sha": test["sha"],
-                            "repo": test["repo"],
-                            "with_context": use_context,
-                            "prediction": pred,
-                        }
-                    )
-                    + "\n"
-                )
+        write_predictions(valid_fh, beta, valid_meta, generate(trainer.model, valid_prompts))
+        write_predictions(test_fh, beta, tests, generate(trainer.model, test_prompts))
         timings[name] = round(time.time() - t0)
         del trainer, model
         torch.cuda.empty_cache()
