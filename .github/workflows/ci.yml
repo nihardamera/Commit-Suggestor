@@ -13,11 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      # setup-uv publishes no floating major tag, so pin an exact release.
+      - uses: astral-sh/setup-uv@v10.3.3
         with:
           python-version: "3.12"
-      # MLX is Apple Silicon only, so CI installs the evaluation extra alone.
-      - run: uv sync --locked --extra eval
+      # MLX is Apple Silicon only, so CI installs the evaluation and judge extras.
+      - run: uv sync --locked --extra eval --extra judge
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run mypy
