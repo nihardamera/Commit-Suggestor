@@ -129,8 +129,14 @@ properly with `metrics.py` and committed under `eval/`)
 - The judge's possible lean toward short, v1-style subjects can be amplified
   by DPO. Watch mean length and generic rate.
 
+**M1 explain-back gate: passed (2026-10-30).** κ by hand correct (192/660 ≈ 0.29).
+Corrections given: flipped verdicts become ties and stay in κ (not excluded);
+the judge runs both orders, so nothing is randomised; the 10-vs-3 split is
+p ≈ 0.09 (a lean, not shown bias); v1 is *shorter*, so any length bias is
+toward brevity, partly caused by rubric v1's "prefer the shorter"; same-family
+self-preference was designed out; and tuning on the 36 held-out pairs would
+leak the test set: more labels must be new labels.
+
 **Next**
-1. M1 explain-back gate (Nihar answers unaided): pairwise vs 1–5, position
-   bias, κ by hand from a 2×2.
-2. Then M2: data audit + SFT-v2 on Kaggle. Check the Kaggle GPU quota and
+1. M2: data audit + SFT-v2 on Kaggle. Check the Kaggle GPU quota and
    the Unsloth/TRL versions first.
