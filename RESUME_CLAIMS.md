@@ -13,7 +13,7 @@ committed file that proves it.
 | Gain holds in each held-out project | `eval/results.json` `rougeL_by_repo` | v1, verified |
 | Blind human preference, fine-tuned vs base, 150 pairs: 57.5% [49.0, 65.5]; 1-5 score +0.53 [0.15, 0.90] | `eval/rouge_vs_human.md`, `eval/human/analysis.json`; `tests/test_human.py` recomputes them | measured (one rater: me) |
 | ROUGE-L picks the human winner only 60.0% [51.1, 68.3] of the time | `eval/rouge_vs_human.md` | measured |
-| Judge calibrated to my labels, Cohen's κ = … | — | pending (M1) |
+| LLM judge (Claude Haiku 5.5, pairwise, position-swapped) calibrated to my labels: held-out κ = 0.23 (ROUGE-L 0.19); target 0.6 not reached | `eval/judge_vs_human.md`, `eval/judge/summary.json`; `tests/test_judge.py` recomputes it from the cache | measured; claim it as "κ = 0.23", never as "calibrated judge" alone |
 | SFT-v2 vs v1 vs base with CIs | — | pending (M2) |
 | DPO on … judge-labelled pairs; win rate … vs SFT | — | pending (M3) |
 | v1 names an identifier absent from the diff in 0.4% of subjects (same as base; human references 4.9%) | `eval/metrics_v1.json`; `tests/test_metrics.py` recomputes it | v1, measured (rule-based; precision not yet checked by hand) |

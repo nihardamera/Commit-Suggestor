@@ -105,11 +105,32 @@ properly with `metrics.py` and committed under `eval/`)
   temperature parameter exists, so judge answers are not deterministic; the
   cache makes reruns reproducible).
 
+**Done later the same day: judge calibrated (M1 complete except the gate)**
+- API key saved in the macOS Keychain (service `anthropic-api-key`); commands
+  read it with `ANTHROPIC_API_KEY="$(security find-generic-password -s anthropic-api-key -w)"`.
+  It is never printed or committed.
+- Haiku 5.5's tokenizer packs 2.59 characters into a token on these prompts
+  (lowest 2.34), so the cost estimate now assumes 2.2.
+- Dev (100 pairs): v1 low effort κ 0.298, v2 rubric 0.246, v1 medium 0.272:
+  a plateau (κ standard error ≈ 0.08). On dev, κ is 0.17 on the A/B labels and
+  0.36 on the v2 labels. Nihar chose to freeze v1 at low effort.
+- Held-out (50 pairs, scored once, locked): **κ 0.232** vs ROUGE-L 0.185.
+  Not clearly different at this n. Judge lean toward fine-tuned vs me: +12
+  points [−6, 30]. See `eval/judge_vs_human.md`.
+- Total API spend: **$0.116 of $5.**
+- Fixed: result files now include the effort level (one would have been
+  overwritten); CI pinned `astral-sh/setup-uv@v10.3.3` (there is no `@v10` tag).
+
+**What this means for M3 (DPO)**
+- At κ ≈ 0.25 the judge's labels are noisy. "DPO on bad pairs makes things
+  worse" is a live risk. Mitigations: keep only pairs where both orders agree
+  and the judge picks a winner (on dev it then matches me 74% of the time), and
+  evaluate DPO with fresh human pairs as the deciding measure, not this judge.
+- The judge's possible lean toward short, v1-style subjects can be amplified
+  by DPO. Watch mean length and generic rate.
+
 **Next**
-1. Nihar: create an Anthropic API key with a **$5 spend limit** on the
-   account (console → Billing → Limits), then `export ANTHROPIC_API_KEY=...`
-   in the shell that runs the judge. Never commit it (gitleaks will block it).
-2. Dev calibration: `uv run python -m commit_suggestor.judge calibrate --split dev --yes`
-   (estimate $0.055). Iterate the rubric on dev only, to κ ≥ 0.6 or until it
-   stops improving. Then once: `--split heldout --final --yes`.
-3. Then the M1 explain-back gate, and M2 (data audit + SFT-v2 on Kaggle).
+1. M1 explain-back gate (Nihar answers unaided): pairwise vs 1–5, position
+   bias, κ by hand from a 2×2.
+2. Then M2: data audit + SFT-v2 on Kaggle. Check the Kaggle GPU quota and
+   the Unsloth/TRL versions first.
