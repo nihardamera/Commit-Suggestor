@@ -34,6 +34,11 @@ from pathlib import Path
 
 MODE = "smoke"  # replaced by scripts/kaggle_job.py: "smoke" or "full"
 
+# The "T4 x2" machine shows two GPUs, and with more than one visible the
+# Trainer wraps the model in nn.DataParallel, which TRL's SFTTrainer refuses.
+# This is a single-GPU job, so show it one. Must happen before torch loads.
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 subprocess.run(
     [sys.executable, "-m", "pip", "install", "-q", "--no-warn-conflicts",
      "transformers==5.22.1", "trl==1.17.0", "peft==0.21.2", "accelerate==1.15.0",
