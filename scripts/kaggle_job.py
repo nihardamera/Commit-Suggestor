@@ -80,7 +80,7 @@ def dataset(args: argparse.Namespace) -> None:
             {
                 **{
                     n: ROOT / "data" / "v2" / n
-                    for n in ("train.jsonl", "valid.jsonl", "valid.meta.jsonl")
+                    for n in ("train.jsonl", "train.meta.jsonl", "valid.jsonl", "valid.meta.jsonl")
                 },
                 **{n: ROOT / "eval" / n for n in ("test.jsonl", "test_context.jsonl")},
                 "prompt.py": ROOT / "commit_suggestor" / "prompt.py",
