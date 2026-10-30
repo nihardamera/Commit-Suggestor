@@ -305,6 +305,61 @@ def judge(args: argparse.Namespace) -> None:
     print(json.dumps(out, indent=2))
 
 
+CURVE_POINTS = (("step-600", 2400), ("step-2500", 10000), ("final", 27346))
+
+
+def curve(_: argparse.Namespace) -> None:
+    """Does more data help? The three SFT-v2 checkpoints on the 600 validation diffs."""
+    from rouge_score import rouge_scorer
+
+    valid = _load(OUT / "valid_set.jsonl")
+    preds = _load(OUT / "sft_v2_valid_predictions.jsonl")
+    repos = [v["repo"] for v in valid]
+    scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
+    per: dict[str, dict[str, list[float]]] = {}
+    result: dict[str, Any] = {"valid_examples": len(valid), "checkpoints": {}}
+    for name, examples in CURVE_POINTS:
+        by_sha = {p["sha"]: p["prediction"] for p in preds if p["checkpoint"] == name}
+        subjects = [by_sha[v["sha"]] for v in valid]
+        values = {
+            "rougeL": [
+                scorer.score(v["subject"], s)["rougeL"].fmeasure
+                for v, s in zip(valid, subjects, strict=True)
+            ],
+            **per_example(subjects, [v["diff"] for v in valid]),
+        }
+        per[name] = values
+        result["checkpoints"][name] = {
+            "training_examples": examples,
+            **{
+                m: stratified_bootstrap(vals, repos).scaled(1 if m == "words" else 100)
+                for m, vals in values.items()
+                if m
+                in (
+                    "rougeL",
+                    "specific_pct",
+                    "generic_pct",
+                    "hallucinated_pct",
+                    "well_formed_pct",
+                    "words",
+                )
+            },
+        }
+    first, last = per["step-600"], per["final"]
+    result["final_minus_step_600"] = {
+        m: stratified_bootstrap(
+            [b - a for a, b in zip(first[m], last[m], strict=True)], repos
+        ).scaled(1 if m == "words" else 100)
+        for m in ("rougeL", "specific_pct", "generic_pct", "words")
+    }
+    history = json.loads((OUT / "sft_v2_log_history.json").read_text())
+    result["eval_loss"] = [
+        [e["step"], round(e["eval_loss"], 4)] for e in history if "eval_loss" in e
+    ]
+    (OUT / "learning_curve.json").write_text(json.dumps(result, indent=2) + "\n")
+    print(json.dumps(result, indent=2))
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -317,6 +372,7 @@ def main(argv: list[str] | None = None) -> None:
     k.add_argument("--path", required=True)
     k.set_defaults(run=import_kaggle)
     sub.add_parser("report").set_defaults(run=report)
+    sub.add_parser("curve", help="SFT-v2 checkpoints on validation").set_defaults(run=curve)
     jp = sub.add_parser("judge")
     jp.add_argument("--a", required=True)
     jp.add_argument("--b", required=True)
