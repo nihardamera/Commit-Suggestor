@@ -332,7 +332,7 @@ def decide_context(_: argparse.Namespace) -> None:
     in the diff is at most 1 point higher. Otherwise ship without: simpler.
     """
     verdict = json.loads((OUT / "valid_judge_sft_v2_ctx_vs_sft_v2.json").read_text())
-    rows, _ = split_set("valid")
+    rows = split_set("valid")[0]
     diffs = [r["diff"] for r in rows]
     invented = {
         name: 100
