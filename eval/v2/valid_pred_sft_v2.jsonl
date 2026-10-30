@@ -1,0 +1,300 @@
+{"sha": "ff65c6e64549066d3da65d9fc478d7df9540caf0", "prediction": "Fix broken link to virtualenvwrapper"}
+{"sha": "d45b4c3514a326a515b1b854e254606a35a09ff0", "prediction": "Update seed-isort-config"}
+{"sha": "95238e70bb7605c210595548b9f554a64b173312", "prediction": "Add attestations: write permission"}
+{"sha": "0a08cee06960e415f735dec4cf2fb91d669e2433", "prediction": "Add benchmark for nested atomic fields"}
+{"sha": "e028c8de02a1a26f8669da9099de76f8989c2f3b", "prediction": "Add pre-commit hook to generate README.md"}
+{"sha": "095da33770a5b4478451c5ae0e793e15b4879537", "prediction": "chore: update actions-netlify"}
+{"sha": "402b8255392a841e9ae81e4df4467e174c90a06b", "prediction": "Clarify that instance_of accepts tuple of types"}
+{"sha": "edf75f2e77004e166bf5b62b672ad5e1b9cdc6b6", "prediction": "start version 17.2.0"}
+{"sha": "612a635207b2f485cf1f35fb457b6bb94d2924d3", "prediction": "Add typos to pre-commit hooks"}
+{"sha": "e9c5cd60612ff2f40d638167110229b77315270d", "prediction": "Update release notes and Typer version"}
+{"sha": "a633a7b13bafdc9e9d99571166fc36687f7bd7f5", "prediction": "Increment version to 22.2.0.dev1"}
+{"sha": "deb0133f63b560aadeaa9cf24bc7bb1a80ec6e5e", "prediction": "Fix typo in how-does-it-work.md"}
+{"sha": "d172d691893229575510c38eecc24b898e02b05b", "prediction": "Add docs for Progress Bars"}
+{"sha": "ffe49c82411fddeb5e9fda776a9cabd6c319a949", "prediction": "Remove the old RTD theme"}
+{"sha": "b950cb8d83789de9824f39808ddac64a06cc3031", "prediction": "Fix slots class cellvar updating closure in CPython 3.8+ even when `__code__` introspection is unavailable"}
+{"sha": "568aa33d56ab2c8e8b3408decc159995bea3869c", "prediction": "Skip version comparison test on Python 2"}
+{"sha": "f5b0b80b0e9322437eb3aa3bfa74923c2766353b", "prediction": "Highlight completion installation"}
+{"sha": "26ccd5f6b7bf808dd2e35dc2c89cf7333ffcff3c", "prediction": "docs: datetime: update datetime tutorial"}
+{"sha": "2d71759098125a14e3bda6c9c2de296898a31b8a", "prediction": "Add Python 3.7 to Travis CI"}
+{"sha": "c84fcae712d0b071e382be0a20fae11a21d896ca", "prediction": "Fix recursive conversion for lists"}
+{"sha": "666edb6440ddfdd1d38beaa9903316e2f41917e0", "prediction": "chore: update pre-commit hooks"}
+{"sha": "56c73081c5d767e30f529ac4f15a6bdd43e23d9f", "prediction": "Add collect_by_mro to type stubs"}
+{"sha": "8b952d5e20ff7c78398fff74fffd01d6533f2f6a", "prediction": "Add .cache to .gitignore"}
+{"sha": "5127e7ee47ea40f04d34cbe1186c78e93213b7fd", "prediction": "Fix zenodo badge"}
+{"sha": "17b1748108a97faf99f084823fb4b1fe3bc999d5", "prediction": "Add more tutorials to mkdocs.yml"}
+{"sha": "0ab229d09b9322785156e3babfdf4815a87c6fa5", "prediction": "Remove qa-bot from docs"}
+{"sha": "da4c9ca5149d563d66f0aa9fbd21e60a370906be", "prediction": "Add note about characteristic"}
+{"sha": "676b43aef91374bbd10910993b8120b0a4adbfe0", "prediction": "Remove old-style example"}
+{"sha": "2c8bd463399a1439b099d47c73f1f21c8a0bb906", "prediction": "Add local development environment instructions"}
+{"sha": "33ef692d17bbe1d9fca970ec91685292137b56fe", "prediction": "ci: test only on master"}
+{"sha": "ae29da66b7c18928682679df1285deba95183689", "prediction": "Fix examples"}
+{"sha": "355c223bcb74be127d84b96ca648cec82c19e9e8", "prediction": "Add tests for completion"}
+{"sha": "1a90857109794f27e4cf5914bb9ae4617993e880", "prediction": "Add flake8 to pre-commit hooks"}
+{"sha": "db25071eba02c05b305c776c7156b3710c466238", "prediction": "Fix link to Progress Bars docs"}
+{"sha": "5618e6fb8d8c45071b9b938fd42afad7f53c1a0f", "prediction": "Fix towncrier template"}
+{"sha": "53e21fdc09fe2ef2310a7e4a7e353f42712d5770", "prediction": "Update release notes and Typer version"}
+{"sha": "8cae2a99daea71f1a5c409c437f8ba761f8cb146", "prediction": "Clarify forward references"}
+{"sha": "829c2ff15abfce6daa8f7a8dad39323dc0183816", "prediction": "Fix Read the Docs build"}
+{"sha": "41afe6e9bf08162eb81eaf525474303f277e3ba8", "prediction": "Update Glyph's link"}
+{"sha": "ecdb117407e98dba37515e54894ed7feef2df333", "prediction": "Fix type annotation for `resolve_types()`"}
+{"sha": "9de675f4b4289b218913bd642c1c59ac376df34f", "prediction": "Fix TypeError when using property and slots=True"}
+{"sha": "2a703ccfdfb67fd6e9375779d932c57db13c9ce6", "prediction": "Fix broken links"}
+{"sha": "f87de022c7ab514f0ac7a7ba307fa9bb1730cadf", "prediction": "ci: trigger on tags"}
+{"sha": "88aefd4492696bd1afa7bdb49477dec2c29d7e77", "prediction": "Update release notes and Typer version"}
+{"sha": "0c106a169e5e3c7df6f98e32a6d8405c985b695a", "prediction": "Fix zip-docs script"}
+{"sha": "b29d9bb5f53fb0722aa75a1347057761d76d6eab", "prediction": "Fix doctest for Python 3"}
+{"sha": "f67c1273d737e840aa69e58be4ec54819d3ea226", "prediction": "Fix typo in README"}
+{"sha": "b20e1cf1ea9cde40228c7533d1f124bbec68e7ea", "prediction": "Fix broken links in docs"}
+{"sha": "5171043475900f12f80c6ec972ff3f4fdf44752e", "prediction": "Suppress warnings about non-local URIs"}
+{"sha": "523a6501bfbe3a515883e5f793286a9c3cdc47dc", "prediction": "Fix broken link"}
+{"sha": "3ec01cae97f5ec0c05d194884c1532497c43b16a", "prediction": "Remove Python 3.7 from README"}
+{"sha": "689a0e64012d1e576ebd99e786a254bc537582c6", "prediction": "Remove _SENTINEL check"}
+{"sha": "3786d5ab745ee3cf84374b17194e2c89ae36a16e", "prediction": "Update versionadded for type"}
+{"sha": "09161fc9181bf94aa3bbc5509c663d736a9553dc", "prediction": "Fix __attrs_pre_init__ with kw_only and defaults"}
+{"sha": "99666926b81a1d5db73bbb3d0bf4a7ed577d15c4", "prediction": "Fix build-docs.yml cache key"}
+{"sha": "a6cf2d5637b60f0c6d6cb0f907a785575515e5ba", "prediction": "Fix str on Python 2 when slots=True"}
+{"sha": "ada66bef24700d159acff4b72b7cb34a263ccccf", "prediction": "Fix typo in README"}
+{"sha": "4acd87c07836e40aca318b1d1e93fd4667e54d0d", "prediction": "Add changelog entry"}
+{"sha": "5eea939b64c9669b7b0beb5f15a61c0012a48e07", "prediction": "Remove python_version < \"3.13\" from optional-dependencies"}
+{"sha": "9f745505190973f4e3ebc8464aee0d1eedbb11cb", "prediction": "Remove flake8 noqa"}
+{"sha": "d69c587ce469803dbe78a4eb46bc7194483ec5a2", "prediction": "Add dependabot config for GitHub Actions"}
+{"sha": "13619fb4a35ee92a276215889c68ea03633c24dd", "prediction": "Update release notes and Typer version"}
+{"sha": "d9f65ba49d15d0789ad01d0411530294d085ed49", "prediction": "Fix typos in questions.yml"}
+{"sha": "44ea327ab7f3a9c33578b1895f65314a81858dae", "prediction": "Fix import * from attr"}
+{"sha": "06999cda0abc29e761f2476ad4c05dae583406f8", "prediction": "Clarify that `factory` is only syntactic sugar for `default=Factory(...)`"}
+{"sha": "dc07284d09f284c13cad0bec2f5ee5bebceeb31d", "prediction": "Update release notes and Typer version"}
+{"sha": "0c7510e56dff0ee7a75f924f16b0bd8b616aadc8", "prediction": "Add docs for CLI parameter types"}
+{"sha": "b0e6c2c5244b04c5725e8bf83449fd4c25679714", "prediction": "Update README to reflect classic APIs"}
+{"sha": "77172be386977bc0adece7df987485769528750e", "prediction": "Update default Python version to 3.12"}
+{"sha": "7f5a9cda85384c25305a60183655602bf84d7374", "prediction": "Update badge URL"}
+{"sha": "cf6af79d9b7bba5ba5ed8b3383d246b34f9cf5f8", "prediction": "Remove comment"}
+{"sha": "c1c1e0e25f855be68caf1d1a1dfa832a25acbf58", "prediction": "Move ruff and pre-commit to dev"}
+{"sha": "2fc51f2c334727571905932d7338872ba599074d", "prediction": "Fix typo in first-steps.md"}
+{"sha": "5edf48317324af176fca36bd8eccacb6a4fc8ae0", "prediction": "Fix docstrings"}
+{"sha": "4a19d9b14d4df0cd881b3698407c8f2a6e04842b", "prediction": "Fix test_annotations.py"}
+{"sha": "44542b20895db78fec5f3d6bbe4ce40df9c70499", "prediction": "Add release notes for"}
+{"sha": "10cb3c9411a8140d61e406b911c84a1aa9b8e3dc", "prediction": "ci: update latest-changes workflow"}
+{"sha": "f083cd7b650d1feca4e2d85ca8aa407a2c3de940", "prediction": "Clarify that auto_attribs only works with attr.ib"}
+{"sha": "56cbf826df6adf04dd176fdd5391cf8829a14aa5", "prediction": "Fix permissions for PyPI uploads"}
+{"sha": "4b302df260f702d6c55b03b8cf1bb30613817469", "prediction": "Add command to generate docs source versions"}
+{"sha": "f7f317ae4c3790f23ae027db626593d50e8a4e88", "prediction": "Fix docs for #1199"}
+{"sha": "932902c29fd813a414697fde4c40b0a7b072a83d", "prediction": "start version 21.3.0"}
+{"sha": "d85bc09366f63293a71d18e004fe97080421f61d", "prediction": "Add Privacy Solutions to sponsors"}
+{"sha": "f5c0b8a6598a3941a7f74d85649896fe3fcaa72a", "prediction": "Update release notes and Typer version"}
+{"sha": "daa654c62ac6e31fe58dbdf1c22d82dfa27632c5", "prediction": "Add Tidelift and GitHub Sponsors to AUTHORS"}
+{"sha": "3694762b8de3a812ddfc5013f5f34856822c2ebe", "prediction": "Fix deploy-docs workflow"}
+{"sha": "4db1f4ef174beecd320c00451ef5f26dcc9f8aed", "prediction": "Add example for weakref"}
+{"sha": "111a627e7023c53a86b4a7124c4a50a7cea7f847", "prediction": "Remove codecov badge"}
+{"sha": "6c6259c0faebd5dbca1e204bfe8a2b2233c669c6", "prediction": "Remove matrix strategy"}
+{"sha": "89b4b4462e5d08a0e70381ab7ef57c0c3bdc8d5c", "prediction": "Fix link to characteristic"}
+{"sha": "fe19f4b341dbba5cda14b11d6a184105891c67e5", "prediction": "Rename include and exclude"}
+{"sha": "45fb7c4739f627179db318a26c3ada2dcf57d15f", "prediction": "Add GitHub Action issue-manager to release notes"}
+{"sha": "3a5b5a2052ff74bab2071f14f51e3c5b8decb682", "prediction": "chore: update interrogate"}
+{"sha": "11760ea61e47ca712acaa90f1ed6010ffe52b0c9", "prediction": "ci: test on ubuntu 22.04"}
+{"sha": "62cb2e7347926d880137d6a5f00eea0b5d3a4c91", "prediction": "Document that attr.fields returns tuple with name accessors"}
+{"sha": "915f89b6f8f884965c25f006f19b8697e02bab4d", "prediction": "Fix typo in datetime tutorial"}
+{"sha": "14c5485cf58b6df1790dd043d6d040e8c3d02642", "prediction": "Fix _make.py"}
+{"sha": "d884af5e6d4125ade46e516859f100c194838484", "prediction": "Rename changelog entry"}
+{"sha": "a6266e6b7ee943ecad72f2e91838823a04f737c3", "prediction": "Fix typing for CliRunner env"}
+{"sha": "bf19519ece2d91f103d82fc206a122e5d514e19a", "prediction": "Add changelog for"}
+{"sha": "abb9c95232e613297ceb26558b3d691132fca08c", "prediction": "Raise TypeError for wrong type"}
+{"sha": "9cc3ebeab327f8c855b90fa9c67887c548dd7933", "prediction": "Add note about `typer.echo()` and `print()` for colors in Windows"}
+{"sha": "aaf3cdd40827e3f220476cf031400ee2c9605c9f", "prediction": "Fix release-notes.md"}
+{"sha": "1b3898a4b8f61e959a337bb38ea1ab9c21eefcef", "prediction": "Remove unnecessary if statement"}
+{"sha": "a37b556f7d762b7a6229b1fbf985965539571cd2", "prediction": "ci: fix dependabot"}
+{"sha": "d684e868576d5bf666ef54734d111b703db5aadf", "prediction": "Fix typo in docstring"}
+{"sha": "3f5a8790de030cdb4777c7ebf358a8ab55330ed2", "prediction": "remove redundant displayName"}
+{"sha": "f116bfc6ccdd57b91f78e765db8f0f7a9829811e", "prediction": "start 22.3.0"}
+{"sha": "381c90292f026ad5c932acd23a30281de61c7fd1", "prediction": "Fix Typer MkDocs Material Insiders cache key"}
+{"sha": "f7b342609f7e1f68af099409c9640a8a0d276755", "prediction": "Fix typo in README"}
+{"sha": "31f7a44a467e6e3468434703d3c18961a746939f", "prediction": "Add changelog entry"}
+{"sha": "c9554ec35640395a12af06547b75b2fed3bb6973", "prediction": "Update release notes and Typer version"}
+{"sha": "24cbcf1b543a7cbc67d74bc4a81602e81466c3fb", "prediction": "ci: use setup-python@5fda3b95a4ea91299a34e894583c3862153e"}
+{"sha": "bfd7bb49b467e7ab586deb475c23974a91df4dab", "prediction": "Fix inherited not being taken into account for hashing"}
+{"sha": "6539cede5cfefbeebdda4593b057626474b87fe5", "prediction": "Remove unnecessary branches from CodeQL workflow"}
+{"sha": "eff740c84437b79186b32c74c24e59aa9b14edb8", "prediction": "Add Typer testing utilities"}
+{"sha": "f41c6603b30f9678fe7a1c108b7e7ae7bd0667af", "prediction": "Remove duplicate mention of namedtuple"}
+{"sha": "503164f57016e54a75bd11535bfe7a70cbc4b9ad", "prediction": "towncrier: add version and date to changelog entry"}
+{"sha": "25a02bbc7b5309acebda20101125372d42c978db", "prediction": "Fix coverage report"}
+{"sha": "c5233c0c18211fd9c8c90de202b124e6fcb96e67", "prediction": "Raise KeyboardInterrupt as Exit(130)"}
+{"sha": "da27d8f1861db77f828a568ed8f108645325e9c5", "prediction": "ci: fix tox env passenv"}
+{"sha": "09757569dc23f2bc9507c1b4ea6939cac2bae245", "prediction": "Remove duplicate CONTRIBUTING link"}
+{"sha": "675afb8f73b88a3185e79832ac38da8f54894189", "prediction": "tox: fix linting env"}
+{"sha": "8e06b427087a882f2cdb4301344b246423c5af4d", "prediction": "Add required dependencies for tests"}
+{"sha": "983c2c42935ccfc2fce77d6f20dac7821bc720e8", "prediction": "Add missing re-import of `attr.AttrsInstance`"}
+{"sha": "4cb3941576cb77b29a58794590b0abf12c74f0c6", "prediction": "Move backwards-compatibility policy to SECURITY.md"}
+{"sha": "4c41099fb85ff58aec74d167935b3716557dad6d", "prediction": "Fix reference leak when slots=True"}
+{"sha": "e6f9e9fac32f2d68e597dbf6252ad4941cf3ed5a", "prediction": "Remove unnecessary exclude"}
+{"sha": "3d52548b7ee10586b49cfda2ea74099c8180e483", "prediction": "Add comment about the reason for the test to fail"}
+{"sha": "57ab275564b96cfc18cae13605819170bb60ee54", "prediction": "Add scripts to linting scripts"}
+{"sha": "5d15ea66dced76d554c9fbb9925e1be1026f1466", "prediction": "Remove coverage from .gitignore"}
+{"sha": "96e217dcd329c1447ea3bc502cb978f56f5e2f1a", "prediction": "Add changelog entry"}
+{"sha": "e458448ee418e10cf28a089704dc42ba3c8aca37", "prediction": "Add test for field-aliasing"}
+{"sha": "8e75bc3565d5dc270cd4ef3b09b5b2abf9f8491a", "prediction": "Fix typer.launch on Linux"}
+{"sha": "02f0722750904fb6f5e431b2790ec5056d0fd735", "prediction": "docs: update release notes"}
+{"sha": "1315e42fe51743fe1c3529da6792dcda2ef6cc1f", "prediction": "Performance improvement for astuple"}
+{"sha": "59ff4da98c391e70565fa366d1d5838f3ecaee9a", "prediction": "Fix typo in README"}
+{"sha": "5f7e4ea25ac97fe5cc304b1e8749b279b238d1e4", "prediction": "Fix links to pull requests"}
+{"sha": "74b31faca8d00391107d9353f3aab4fcc8454bf1", "prediction": "Fix a typo in the CODE_OF_CONDUCT.rst"}
+{"sha": "cdfac7c400308900f2a0f62f9b04f9d5a68b3cd8", "prediction": "tox: fix pypy env"}
+{"sha": "83fef48b2d540303479be6fa2f01f9fb0e47c06f", "prediction": "Add comment to ensure C objects are long-lived"}
+{"sha": "33887a699f7c9a0a0a6cac4d68e5ac06f6c668a1", "prediction": "Add pre-commit.ci commit messages"}
+{"sha": "324c3cef8a9701480232efce2a303771e03efa0c", "prediction": "Add reminder to close PR"}
+{"sha": "068cd0ba4c43a662bfd8eb2289ffcf9e4d122424", "prediction": "Make itemgetter and property legal attribute names"}
+{"sha": "24815d7a787faadfb3928781bea6f60af4a75a0c", "prediction": "Factory is hashable"}
+{"sha": "5e594ca580b23cc90929e758f190ec9a60c51f3d", "prediction": "Fix docs and README"}
+{"sha": "73455675386c2b6c1b67fe0b77918403d1ff00a2", "prediction": "Fix typo in help.md"}
+{"sha": "640fb09c6de03829a51ebc8bdab49618c5083c44", "prediction": "Fix zsh completion script"}
+{"sha": "82ab0c1d11e53eaedfff1ea94878f0866fddcff4", "prediction": "Fix test_mypy.yml"}
+{"sha": "113c13b555937f28b12271bf4dc9dc16b163f52d", "prediction": "Fix hug link"}
+{"sha": "8b4105a7e12cb6f6c5d5b26bfe83e38dcc9a6a35", "prediction": "Remove typing-extensions dependency"}
+{"sha": "ce89f5d11feb0805da9ed10bb165238cc959f1bb", "prediction": "Fix FrozenInstanceError"}
+{"sha": "0086b7b316dd48eb3e3de24d67d5319334a8a38b", "prediction": "typer: improve typer_info help inference"}
+{"sha": "a686f74d9441c53088fef6b847cd1e7404960c29", "prediction": "Fix py38 compatibility"}
+{"sha": "d75faa6be8933dc29ae7a65d0228065ae56bf4ae", "prediction": "Update release notes and Typer version"}
+{"sha": "eccd966d80aff5196efc959316961cfa780439f9", "prediction": "Fix type annotations for `attrs.validators.optional()`"}
+{"sha": "f616f732c6c5f87a8f7a762176422baed250a6be", "prediction": "Fix typo in docstring"}
+{"sha": "341839a51752374edc6d1d697c58c2f208f257ac", "prediction": "ci: remove unused branch filter"}
+{"sha": "e9c17b8292245774ac3c4efbcb2dbfef4b283a82", "prediction": "Add dependabot groups for GitHub Actions and pre-commit"}
+{"sha": "d5bc56177edcb14f159743e5eaf52cd448e622dc", "prediction": "Update release notes and Typer version"}
+{"sha": "d9c47fb58bf683813cf08aa1edf08914d645fd0a", "prediction": "ci: remove unused workflow_dispatch"}
+{"sha": "74c39b6b46d1cf019841a766c4b2646ac60bf270", "prediction": "Fix warning location for assoc"}
+{"sha": "a44357ad83a2ae9bf6eb98ec2ee6731e03504028", "prediction": "Raise TypeError on old-style classes"}
+{"sha": "2b45aeac8a7b8eceb517de3e9fa24d8a10dc891e", "prediction": "Fix release notes"}
+{"sha": "38d21a7ce6cbc3e63b6adea6fa27e6d8eaebdf9d", "prediction": "Remove changelog.d/600.change.rst"}
+{"sha": "64ff5a9fa536ef1d80016852fafcc1327b628079", "prediction": "Remove unused section"}
+{"sha": "1f04625031cbe9e15db8cddbd54273c2c6081e7b", "prediction": "ci: fix coverage report"}
+{"sha": "a2c1275d1bbdf5a8774ce76d3e7bb5a310a1179c", "prediction": "tox: show diff on failure"}
+{"sha": "82de57793276a229916f820178f0498e92fcbad0", "prediction": "Remove pypi badge"}
+{"sha": "72743d2b326ffe21e05b7b325bf91037c51c1bbb", "prediction": "Raise FrozenInstanceError when trying to delete an attribute"}
+{"sha": "62a173edeba109bb7a3a0ad5f1eca8b01432e941", "prediction": "Fix coverage 5.0 issue"}
+{"sha": "36bb1f182edd6727568b25ee3e0a3b2d3b7c95b5", "prediction": "Fix README typos"}
+{"sha": "21896916773825b0d0142fd1efef14f2f4ecd033", "prediction": "Update ruff pre-commit hook"}
+{"sha": "54de84175d67568562c7453b4b82ce4cf61e01c2", "prediction": "Update pre-commit hooks"}
+{"sha": "03dd7136cf1ccc58c9612531ba9711892830c1fb", "prediction": "Skip cloudpickle tests on PyPy3.8"}
+{"sha": "af35f2a57ea49042c382d7923db148d4c188ab93", "prediction": "Add doctest stage to Travis CI"}
+{"sha": "6ccdbb85389f8d083d9320da441a0c1e98f5e7dd", "prediction": "Fix typer main script"}
+{"sha": "75e479293574efe370fb0028d84e3c7d8c722779", "prediction": "Add dependabot groups for docker images and docker-compose"}
+{"sha": "f7d64c01900b7050348ae8e2011e42c3514811b4", "prediction": "Remove universal option from setup.py"}
+{"sha": "464d6e42b7e9a192f8ddb5e638aab9cff5196bdc", "prediction": "Fix pypi badge"}
+{"sha": "b8f5cd780bc2b00566eb6547b654ef6ebb8dc2f8", "prediction": "Fix test_mypy.yml"}
+{"sha": "4b88f924d6481b5e57bf667ea68822b1c557972b", "prediction": "Move _add_init to _make_init"}
+{"sha": "6eba265fcd2c070d580af8a626f8950454bf041e", "prediction": "Rename test files"}
+{"sha": "e25a24c77c3faaad1eef3682f749b97610b7ec9a", "prediction": "Add MIT license badge to README"}
+{"sha": "fe2aa0e2f9c853de378e60ca24ec3b256144decf", "prediction": "Update release notes and Typer version"}
+{"sha": "2afbcb2f94df503950bedc057ded1d963ac78520", "prediction": "Fix typo in example"}
+{"sha": "f588f1a5d4c9c349c98c84c8db61ba5b129fe58b", "prediction": "Add LambdaTest sponsor"}
+{"sha": "4b4da14880c19fd140388b7613fc914ca0734a7d", "prediction": "ci: fix permissions"}
+{"sha": "ac4ff7037d4669548d3b670c2f776db0a8046a76", "prediction": "Remove unused argument"}
+{"sha": "f57b6a6759827a0ec56729da27ec39e9e3b006f3", "prediction": "Fix #821: field_transformer should wrap attrs with AttrsClass"}
+{"sha": "674c31266e7115c8dafb8a31e86f84fd0fe0c22a", "prediction": "Update tox.ini and .python-version-default"}
+{"sha": "32f399a96b50aa3d66fb4df8fc557af704631979", "prediction": "Add changelog for"}
+{"sha": "c2dd82be88de147f1fc95744c28070aa7c3f20af", "prediction": "Add CodeQL analysis workflow"}
+{"sha": "87b2bb2e4850e5314a26d3dc77d29026048f7018", "prediction": "Add warning about __hash__ and cmp=False"}
+{"sha": "051da6872a1cf25d0d526b3f48a8991a151a3a9f", "prediction": "Fix changelog entry"}
+{"sha": "4d1cfd2698ec8e4809e58b51b1b32398970aa512", "prediction": "Fix tests for Rich markup mode"}
+{"sha": "abe8284315d55d68b5d23d83736a182562620f50", "prediction": "Update README.md"}
+{"sha": "78335e9b49eff2eaf2dc31d0bcc3caa0169cfc60", "prediction": "Fix typo in default_if_none docstring"}
+{"sha": "b0c2647a016520407ff81f7a8b171a61beee922e", "prediction": "Fix typo in release notes"}
+{"sha": "56a967ff8dc231966876fa6b326d217562fb319d", "prediction": "Fix mkdocs cache key"}
+{"sha": "f9835889777bbf246901a6deaf76acbf15d9cf82", "prediction": "ci: remove macos-latest from GitHub Actions"}
+{"sha": "5285cd4b2d2b00cca710445dfe72bb812fe1a643", "prediction": "Remove unnecessary types"}
+{"sha": "1c0549ce27cff9b15ebebde274f10f75bd30f881", "prediction": "Fix example"}
+{"sha": "9bacb3c74a2623080b141eb75e86ecf66bd222fd", "prediction": "Fix Python version in CI"}
+{"sha": "25cc8380ecc466b06d0ce5de76d331de52908ad0", "prediction": "Add changelog entry"}
+{"sha": "42b8aa122fe02893451f5fceb54fc7bfef817ca6", "prediction": "Fix typo in tox.ini"}
+{"sha": "dc1bf3cff6b2f696f3904db355ade3d70aa6c009", "prediction": "Fix empty param meta"}
+{"sha": "a9a6595ad74ed59805c085f9d5369e666b955818", "prediction": "Override default code font in MkDocs to Fira Code"}
+{"sha": "d056aac6bc7eafec2b75f1a4984c794e53846aec", "prediction": "Add docs for [Asking with Interactive Prompts](). PR [#22]"}
+{"sha": "90f7590abf70e1405295387cac214485af411e3e", "prediction": "ci: test against Python 3.12"}
+{"sha": "0dad78bc8af388b8d1f690b9cfc1c3fab99fb5d1", "prediction": "Add installation instructions for uvx"}
+{"sha": "c27ba27258b314e8a03506a7677d47a699130b8f", "prediction": "ci: use codspeed-macro for codspeed benchmarks"}
+{"sha": "363ccf48215c0c061a4fc2624084caa1c790ef49", "prediction": "docs: fix broken links"}
+{"sha": "7c99a4953085186790a28dd441a93dc665f61269", "prediction": "Fix broken link"}
+{"sha": "764bf92a1c96abe4615b59f3e5a7b738b0340a94", "prediction": "Fix typo in docs"}
+{"sha": "287c6cedc26cd30a3ee1420b5c25a5f3b6b1f07d", "prediction": "ci: use ubuntu 20.04"}
+{"sha": "d7d05e69fcd0401a19161ccbcf5444280285ad5c", "prediction": "Add changelog entry"}
+{"sha": "5474f0be4ef3dbd845d9eb6541a563861c9e31e4", "prediction": "Update release notes and version"}
+{"sha": "22970bdeca474022efbd7c51368d4009f67e555d", "prediction": "Fix test_metadata_proxy popitem test"}
+{"sha": "b8899cfc4f300f83ea1f00f7467fa20de2d8c9c9", "prediction": "ci: fix dev env verification"}
+{"sha": "73e54186f4cfa9d482cd48751638033d09edc03d", "prediction": "Fix typo in virtual-environments.md"}
+{"sha": "d5d3dfcdb53820b7d2760511359587aeaf82cea6", "prediction": "Fix docs for Attribute"}
+{"sha": "e83f0e51ac4d678ca909fe072006e5f42166acbe", "prediction": "start version 16.1.0"}
+{"sha": "a3a7b76b5b0738fc5cc89bcddb3b48971c2a712f", "prediction": "Update pre-commit hooks"}
+{"sha": "858f993ceffb497bee12457d1d4102339af410a4", "prediction": "Remove unused imports"}
+{"sha": "f6fbc0d0f3ccea88ac1cacdc19ab792e3a776d69", "prediction": "Update version to 17.1.0.dev0"}
+{"sha": "8079a3554544522c95b77637d68cf30932930e5f", "prediction": "Fix tox.ini"}
+{"sha": "4c085a7dda07d5ed2d0c4dbd25632ecba11b76a9", "prediction": "tox: allow passing posargs to coverage"}
+{"sha": "a169a35f4031b23527260abe40b7ba69d9ad1e93", "prediction": "Fix typos in options-autocompletion.md and options-context.md"}
+{"sha": "d3fe76ab3dcd29abb85f1622e9216e49ae5a18f9", "prediction": "Fix Typer logo"}
+{"sha": "269b9f5c6c6ccfd05e360d07d0d3b45e07bb6521", "prediction": "Fix typo in docstring"}
+{"sha": "943976926b989a1192c05bc25d88676c6b4028f1", "prediction": "ci: remove pypy from test matrix"}
+{"sha": "a62ba1a575689ae4ce24305635b4b63747950594", "prediction": "Add a testimonial"}
+{"sha": "55e3d35f81110a132f58cf4d9eab5af00e18a7ce", "prediction": "Enable attest-build-provenance-github"}
+{"sha": "f9e3c59e8595d4996c37375fa86383ce12a812df", "prediction": "Fix pymdownx.highlight linenums"}
+{"sha": "7bf84ab4bcbf0fc262fb076b7a41c648be0b545f", "prediction": "Update release notes and Typer version"}
+{"sha": "0f045cd231f01716c9c81ac78fa2c237c0dd1933", "prediction": "Fix typo in ReadTheDocs config"}
+{"sha": "fec5c465d7f9f5de9ccd870a8990c872bd89e082", "prediction": "Fix examples"}
+{"sha": "0c473b018270bcf4aade1776d4286456ae413bb3", "prediction": "Add changelog entry"}
+{"sha": "351637400a97b853993f9cae82dc8fad085b3c3f", "prediction": "Fix changelog formatting"}
+{"sha": "71cd8af3be130687e992d52ef774b687b94c328a", "prediction": "Remove deadsnakes PPA for Python 3.8"}
+{"sha": "6f5808f1f407b286216894001837e86f1c87e48f", "prediction": "Add GitHub Actions to release notes"}
+{"sha": "31e02869da10824b492c378c1dc87ccc720ee5ad", "prediction": "Fix test_matches_re for Python 3.15"}
+{"sha": "659aa48f53a109216eb13e75971741acd27e8fb0", "prediction": "Clarify hashable objects should be deeply immutable"}
+{"sha": "649a196877be1c374e4979e76a67e515a9d99ed5", "prediction": "ci: use python 3.10 for manifest"}
+{"sha": "0e9a101fc0414a53d72684a053818da96cbe4e6f", "prediction": "Add CITATION.cff"}
+{"sha": "686ee940fd4730a5cb9449f71d078cf404be36b9", "prediction": "Add Python 3.8 to classifiers"}
+{"sha": "4e6ec65460db643471eae1c51fb9b5ed4ab7c8de", "prediction": "Fix changelog entries"}
+{"sha": "2c573c1644a595b644b60989b54a4191dc6354bb", "prediction": "Add permissions: issues: write"}
+{"sha": "6879ffd11d9c382782008a515e78765e46c178d6", "prediction": "Fix mypy tox config"}
+{"sha": "104487f803d2f3bf285f1ed8f0863e39c2beb49c", "prediction": "start 15.2.0"}
+{"sha": "dc1b5a01e98a9ba49d45ad07ba6ae0ee2d9c1b8e", "prediction": "Remove sentinel for None"}
+{"sha": "2903da4b5bbd5230ae847e4086fd55eb0f450c7c", "prediction": "Add changelog entry"}
+{"sha": "12eef051c8b9649eb952838a8db2a55e64bc236a", "prediction": "Fix broken links in tutorial subcommands"}
+{"sha": "ef9beaf521047d44b0588f9f6927aa128d6b3f72", "prediction": "Update release notes and Typer version"}
+{"sha": "57f3d38e5024da91a4b80c776b39d4bd555f8e57", "prediction": "Use pypy2.7-5.8.0 for travis"}
+{"sha": "f55e62e7bbe155a3ea3ee11966b647e8e168f68c", "prediction": "Fix flit install for Python 3.6"}
+{"sha": "c6e836ee9d108c792dabe30d46b46a3c6af88c9a", "prediction": "Add repository_dispatch to GitHub Actions"}
+{"sha": "839a6054b22843943fbf6898fdcbc877fbe856fa", "prediction": "Fix changelog entries"}
+{"sha": "7decc0cdf60e2e0b6a79717f20a1f6d8cdfa05f5", "prediction": "Add comment about inspect being expensive"}
+{"sha": "82cde3781951c275c94513a76d9992ca61d1f43a", "prediction": "Rename conrner_cases.py to corner_cases.py"}
+{"sha": "cfac7463c19c7dff808d052785b551984f4072c0", "prediction": "Use twine for pypi-description"}
+{"sha": "a5e41c53783558591923337d6a9579f7f64e1152", "prediction": "Update release notes and Typer version"}
+{"sha": "6b13660dab3016f791aa9887ddb4ac50fd795787", "prediction": "Add Typer's release notes"}
+{"sha": "9a11b57e8c7bf6509c98ff93b336d1ea2767415d", "prediction": "Add Polar to sponsors"}
+{"sha": "0d1be891df91a30ce912227c261000cff47d24a2", "prediction": "Update Python versions"}
+{"sha": "3fb6f72bc3f8b44b4760acc5168c9cacdb5a3696", "prediction": "Fix Python version in Azure Pipelines"}
+{"sha": "b196adccbff59c0af716bad2115bcd914ca4470c", "prediction": "Add codecov.yml"}
+{"sha": "0cb5cd692b09e1e95993f7f3389b8664e53b1648", "prediction": "Fix typo in AI_POLICY.md"}
+{"sha": "fd627355fd359babee5d22ce1069d7034cb1ece6", "prediction": "Fix typos in _make.py"}
+{"sha": "aea6d6f5512ff1df45325a7ac51606a44d8aac18", "prediction": "Add changelog entry"}
+{"sha": "68b5e048da0992aa2139a4b39429352cbbdda65c", "prediction": "Upgrade mypy"}
+{"sha": "5dd257f8780a5575afe01f6b18e823153ea18139", "prediction": "Fix docs markup"}
+{"sha": "e91c5a4aaab7125a8ee87a2dfd1fd1014ad9e809", "prediction": "Fix broken code examples"}
+{"sha": "11066fad7c9bd5848b9c99f1908de1669d351a2d", "prediction": "Fix typo in name.md"}
+{"sha": "97f8d175656bc03c373a1c9038048a4d312c307c", "prediction": "Unimported ClassVars are recognized as ForwardRefs"}
+{"sha": "d7db2186df2dcc8d8148b396ea2325680aa873b0", "prediction": "Fix typo in coverage job name"}
+{"sha": "189ab7f806afbf7d916aca480c8ff454938d3018", "prediction": "Fix docstring for instance_of"}
+{"sha": "58fa57290aaac2196c0fa16d712c0ae1d2d17f85", "prediction": "Fix some formatting"}
+{"sha": "cf7ffa47926438ad3a1ffb56ab79f0eb8483e103", "prediction": "Fix typo in terminating.md"}
+{"sha": "f232cc8554906b41f424b606117e9086ad22511a", "prediction": "Suppress too slow tests"}
+{"sha": "2e2748aee3b704ef9022ce3d8bf70e676c07cf00", "prediction": "Document order of execution"}
+{"sha": "ac541fbe556eb8c085a9cea26616f0ebad6ef632", "prediction": "Require coverage[toml]>=5.0.2"}
+{"sha": "c5ae43f7f2e5cfb88698237ace910a5e6e76b2cf", "prediction": "changelog: fix towncrier dependency"}
+{"sha": "1327abf00b2857338b8f4cbdd96c56fb36c983a8", "prediction": "ci: combine coverage report"}
+{"sha": "e9afd24958976794a77183e66e22aa3a7d5ffb6e", "prediction": "Fix test name"}
+{"sha": "8e67bc748a1d699c2e28ab7835e5608a41915e2a", "prediction": "Add relbar to docs"}
+{"sha": "319ef68d199b44b1defc9e3ab2baa94b4c36a261", "prediction": "Increment version to 15.0.0.dev1"}
+{"sha": "5c5677b72b385753a189b8a3d2d769c5d6a454e9", "prediction": "Add StackOverflow support to README"}
+{"sha": "824567a2a774e44335ebd7056cc25affe4e4f256", "prediction": "ci: fix dev group"}
+{"sha": "27874f6f17402dcb9df9ab33bfe5966c40a08208", "prediction": "Use ruff instead of yesqa"}
+{"sha": "2bf1e4d0621ced2b2b0b5814c1e199860decaaa6", "prediction": "Update release notes and Typer version"}
+{"sha": "f426933b07dbbd56810bc35a9e816e0290c6af05", "prediction": "Fix build-docs.yml for pull requests"}
+{"sha": "fab12d5868be8d3b0dc7ffefd2caeae376d853af", "prediction": "Add deploy to Netlify workflow"}
+{"sha": "1888fa2eb494564634a0f9080f4701d71c26225d", "prediction": "Update release notes and Typer version"}
+{"sha": "52b56e3b16a661acb45406e0bce1704a2c20f84d", "prediction": "Fix build-docs workflow"}
+{"sha": "0c8057cc9093328121174c042c15333fd7c306c9", "prediction": "Clarify that __attrs_post_init__ is not the only way to circumvent"}
+{"sha": "0537788bacc6110ccabd235616e95ec4f72fa484", "prediction": "Clarify alias type in __init__.pyi"}
+{"sha": "7282f252ca26480fb4938c977fdf3cac2eb50120", "prediction": "ci: fix latest-changes workflow"}
+{"sha": "876528893a10dc7cd866e5fa0e1165cb2ac5b83b", "prediction": "Fix typo in changelog.d/1330.deprecation.md"}

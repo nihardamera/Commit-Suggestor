@@ -342,8 +342,9 @@ def decide_context(_: argparse.Namespace) -> None:
     }
     win_rate = verdict["a_win_rate_excl_ties_pct"][0]
     ship = win_rate > 50 and invented["sft_v2_ctx"] - invented["sft_v2"] <= 1
+    rule = (decide_context.__doc__ or "").split("\n\n")[1]
     decision = {
-        "rule": (decide_context.__doc__ or "").split("\n\n")[1].split("\n\n")[0],
+        "rule": " ".join(rule.split()),
         "judge_win_rate_ctx_vs_none": verdict["a_win_rate_excl_ties_pct"],
         "invented_names_pct": {k: round(v, 2) for k, v in invented.items()},
         "ship_with_context": ship,
