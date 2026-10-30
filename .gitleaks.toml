@@ -1,0 +1,13 @@
+# gitleaks config: the default rules, plus one narrow allowlist.
+[extend]
+useDefault = true
+
+# eval/judge/cache.jsonl stores each request's SHA-256 under the field "key",
+# which the generic-api-key rule takes for a credential. Ignore a finding only
+# when it is in that file AND the value is exactly a 64-character hex hash, so a
+# real key there (or anywhere else) is still caught.
+[[allowlists]]
+description = "Judge cache request hashes"
+condition = "AND"
+paths = ['''^eval/judge/cache\.jsonl$''']
+regexes = ['''^[0-9a-f]{64}$''']

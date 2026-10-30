@@ -33,3 +33,6 @@ jobs:
       - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The action's default (8.24.3) ignores .gitleaks.toml's allowlist;
+          # match the version pre-commit runs.
+          GITLEAKS_VERSION: 8.30.1
