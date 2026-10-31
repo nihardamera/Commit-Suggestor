@@ -1,0 +1,9 @@
+{
+  "a": "dpo_guarded",
+  "b": "sft_v2_guarded",
+  "test_diffs": 450,
+  "identical_subjects": 49,
+  "already_rated_excluded": 130,
+  "sheet": 50,
+  "seed": 3
+}
