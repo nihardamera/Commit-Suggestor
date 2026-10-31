@@ -508,6 +508,105 @@
         ]
       }
     },
+    "dpo_gguf": {
+      "bleu": 11.27,
+      "rougeL": {
+        "micro": [
+          32.05,
+          29.86,
+          34.25
+        ],
+        "macro": [
+          32.5,
+          30.09,
+          34.96
+        ]
+      },
+      "hallucinated_pct": {
+        "micro": [
+          1.33,
+          0.44,
+          2.44
+        ],
+        "macro": [
+          1.55,
+          0.41,
+          3.05
+        ]
+      },
+      "names_identifier_pct": {
+        "micro": [
+          55.56,
+          50.89,
+          60.22
+        ],
+        "macro": [
+          57.09,
+          51.8,
+          62.31
+        ]
+      },
+      "specific_pct": {
+        "micro": [
+          95.78,
+          93.78,
+          97.56
+        ],
+        "macro": [
+          95.82,
+          93.57,
+          97.73
+        ]
+      },
+      "generic_pct": {
+        "micro": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "macro": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "imperative_pct": {
+        "micro": [
+          99.56,
+          98.89,
+          100.0
+        ],
+        "macro": [
+          99.74,
+          99.35,
+          100.0
+        ]
+      },
+      "well_formed_pct": {
+        "micro": [
+          94.89,
+          92.67,
+          96.89
+        ],
+        "macro": [
+          95.28,
+          92.93,
+          97.28
+        ]
+      },
+      "words": {
+        "micro": [
+          6.25,
+          6.05,
+          6.46
+        ],
+        "macro": [
+          6.13,
+          5.9,
+          6.36
+        ]
+      }
+    },
     "sft_v2_guarded": {
       "bleu": 8.41,
       "rougeL": {
@@ -703,6 +802,105 @@
           6.25,
           6.03,
           6.47
+        ]
+      }
+    },
+    "dpo_gguf_guarded": {
+      "bleu": 11.74,
+      "rougeL": {
+        "micro": [
+          32.1,
+          29.92,
+          34.31
+        ],
+        "macro": [
+          32.53,
+          30.09,
+          35.02
+        ]
+      },
+      "hallucinated_pct": {
+        "micro": [
+          1.33,
+          0.44,
+          2.44
+        ],
+        "macro": [
+          1.55,
+          0.41,
+          3.05
+        ]
+      },
+      "names_identifier_pct": {
+        "micro": [
+          54.22,
+          49.56,
+          58.89
+        ],
+        "macro": [
+          56.31,
+          51.07,
+          61.55
+        ]
+      },
+      "specific_pct": {
+        "micro": [
+          95.33,
+          93.33,
+          97.11
+        ],
+        "macro": [
+          95.56,
+          93.3,
+          97.52
+        ]
+      },
+      "generic_pct": {
+        "micro": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "macro": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "imperative_pct": {
+        "micro": [
+          99.56,
+          98.89,
+          100.0
+        ],
+        "macro": [
+          99.74,
+          99.35,
+          100.0
+        ]
+      },
+      "well_formed_pct": {
+        "micro": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "macro": [
+          100.0,
+          100.0,
+          100.0
+        ]
+      },
+      "words": {
+        "micro": [
+          6.08,
+          5.9,
+          6.27
+        ],
+        "macro": [
+          5.98,
+          5.76,
+          6.19
         ]
       }
     },
@@ -1281,9 +1479,85 @@
         0.05,
         2.55
       ]
+    },
+    "dpo_gguf": {
+      "fp16": "dpo_b0.3",
+      "same_subject_as_fp16_pct": [
+        25.11,
+        21.33,
+        29.11
+      ],
+      "rougeL_minus_fp16": [
+        2.27,
+        1.16,
+        3.41
+      ]
     }
   },
   "judge": {
+    "dpo_guarded_vs_sft_v2_guarded": {
+      "a": "dpo_guarded",
+      "b": "sft_v2_guarded",
+      "split": "test",
+      "pairs": 450,
+      "a_wins": 268,
+      "b_wins": 54,
+      "ties": 128,
+      "a_win_rate_excl_ties_pct": [
+        83.2,
+        78.8,
+        86.9
+      ],
+      "position_consistent_pct": 82.9,
+      "judge": {
+        "rubric": "v1",
+        "model": "claude-haiku-5-5",
+        "effort": "low"
+      },
+      "spent_usd_total": 1.6776
+    },
+    "dpo_guarded_vs_sft_v2_guarded_rubric-v2": {
+      "a": "dpo_guarded",
+      "b": "sft_v2_guarded",
+      "split": "test",
+      "pairs": 450,
+      "a_wins": 291,
+      "b_wins": 48,
+      "ties": 111,
+      "a_win_rate_excl_ties_pct": [
+        85.8,
+        81.7,
+        89.2
+      ],
+      "position_consistent_pct": 86.7,
+      "judge": {
+        "rubric": "v2",
+        "model": "claude-haiku-5-5",
+        "effort": "low"
+      },
+      "spent_usd_total": 1.8225
+    },
+    "dpo_guarded_vs_v1": {
+      "a": "dpo_guarded",
+      "b": "v1",
+      "split": "test",
+      "pairs": 450,
+      "a_wins": 267,
+      "b_wins": 74,
+      "ties": 109,
+      "a_win_rate_excl_ties_pct": [
+        78.3,
+        73.6,
+        82.3
+      ],
+      "position_consistent_pct": 82.2,
+      "judge": {
+        "rubric": "v1",
+        "model": "claude-haiku-5-5",
+        "effort": "low"
+      },
+      "spent_usd_total": 1.9351
+    },
     "sft_v2_vs_v1": {
       "a": "sft_v2",
       "b": "v1",

@@ -28,6 +28,11 @@ def main() -> None:
     r = load("eval/v2/results.json")
     systems, paired, judge = r["systems"], r["paired"], r["judge"]
     beta = load("eval/v2/beta_decision.json")
+    beta_rule = (
+        beta["rule"]
+        .replace("the N_SELECT validation", "the 300 validation")
+        .replace("MAX_EXTRA_WORDS words", "2 words")
+    )
     ctx = load("eval/v2/context_decision.json")
     curve = load("eval/v2/learning_curve.json")
     data = load("docs/data_v2_stats.json")
@@ -158,7 +163,7 @@ rule failed a check against human ratings in v1, so treat it as a proxy.
   written by hand (`commit_suggestor/dpo.py`) and matches TRL's on trained
   models within {max(c["abs_difference"] for c in loss):.4f}.
 - **Beta** was chosen on 300 validation diffs by a rule fixed in code before
-  the results were seen: {beta["rule"]} Result: beta {beta["beta"]:g}.
+  the results were seen: {beta_rule} Result: beta {beta["beta"]:g}.
 - **Repository context** (the last five subjects as extra input) was trained in
   but not shipped: on validation the judge preferred subjects without it
   ({ci(ctx["judge_win_rate_ctx_vs_none"], "%")} win rate for context).
@@ -167,11 +172,14 @@ rule failed a check against human ratings in v1, so treat it as a proxy.
 
 - MLX 4-bit gives the same subject as fp16 in only
   {ci(conv["dpo"]["same_subject_as_fp16_pct"], "%")} of diffs (greedy decoding
-  flips on near-ties), but ROUGE-L moves by {ci(conv["dpo"]["rougeL_minus_fp16"])} points.
+  flips on near-ties); quantisation costs no quality: ROUGE-L against fp16
+  {ci(conv["dpo"]["rougeL_minus_fp16"])} points.
 - GGUF Q4_K_M ({gguf["gguf_bytes"] / 1e6:.0f} MB, llama.cpp {gguf["llama_cpp"]}):
   same subject as fp16 in {ci(conv["dpo_gguf"]["same_subject_as_fp16_pct"], "%")};
-  ROUGE-L {ci(conv["dpo_gguf"]["rougeL_minus_fp16"])} points.
-  {gguf["seconds_per_subject_cpu"]} s per subject on {gguf["cpu_count"]} Kaggle CPU cores.
+  ROUGE-L against fp16 {ci(conv["dpo_gguf"]["rougeL_minus_fp16"])} points.
+  {gguf["seconds_per_subject_cpu"]} s per subject on {gguf["cpu_count"]} Kaggle CPU cores,
+  close to the hook's 8-second limit: on a slow CPU, raise it with
+  `COMMIT_SUGGESTOR_TIMEOUT`.
 - MLX on an {mlx_bench["machine"]}: {mlx_bench["cold_load_s"]} s to load,
   {mlx_bench["warm_p50_s"]} s per subject (p95 {mlx_bench["warm_p95_s"]} s),
   {mlx_bench["peak_rss_mb"]:,} MB peak memory.
