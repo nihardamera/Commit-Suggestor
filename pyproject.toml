@@ -84,6 +84,7 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = [
     "commit_suggestor.dpo",
+    "commit_suggestor.gate",
     "commit_suggestor.human",
     "commit_suggestor.judge",
     "commit_suggestor.metrics",
