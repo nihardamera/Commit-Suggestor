@@ -4,6 +4,7 @@
     git diff HEAD~1 | commit-suggestor -   # or for any diff on stdin
     commit-suggestor install-hook [--feedback] [REPO]
     commit-suggestor stats                 # how often suggestions were kept (needs --feedback)
+    commit-suggestor download              # fetch the published model (MLX or GGUF)
 
 The model is the first of: --model, $COMMIT_SUGGESTOR_MODEL, a model installed in
 ~/.cache/commit-suggestor/, or the v1 adapter in this checkout. A model folder (MLX)
@@ -34,6 +35,9 @@ from typing import Any
 from commit_suggestor.prompt import build_messages, clean_reply
 
 V1_BASE = "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit"
+#: The published model, at a fixed revision (set by scripts/publish_hf.py's output).
+HF_REPO = "nihardamera/commit-suggestor"
+HF_REVISION: str | None = None
 V1_ADAPTER = Path(__file__).resolve().parent.parent / "adapters"
 MODEL_HOME = Path(
     os.environ.get("COMMIT_SUGGESTOR_HOME", Path.home() / ".cache" / "commit-suggestor")
@@ -187,6 +191,29 @@ def cmd_record_feedback(_: argparse.Namespace) -> None:
         )
 
 
+def cmd_download(args: argparse.Namespace) -> None:
+    """Fetch the published model at its pinned revision: MLX on Apple Silicon, else GGUF."""
+    from huggingface_hub import snapshot_download
+
+    from commit_suggestor.backends import mlx_available
+
+    if HF_REVISION is None:
+        sys.exit("no published model yet; pass --model with a local model instead")
+    use_mlx = mlx_available() if args.format == "auto" else args.format == "mlx"
+    patterns = ["mlx/*"] if use_mlx else ["*.gguf", "commit-suggestor-q4_k_m.json"]
+    target = MODEL_HOME / f"download-{HF_REVISION[:12]}"
+    # The Hub checks each file against the hash recorded in the repository.
+    snapshot_download(HF_REPO, revision=HF_REVISION, allow_patterns=patterns, local_dir=target)
+    model = target / "mlx" if use_mlx else target / "commit-suggestor-q4_k_m.gguf"
+    link = MODEL_HOME / ("commit-suggestor-mlx" if use_mlx else "commit-suggestor-q4_k_m.gguf")
+    link.unlink(missing_ok=True)
+    link.symlink_to(model)
+    if not use_mlx:
+        link.with_suffix(".json").unlink(missing_ok=True)
+        link.with_suffix(".json").symlink_to(target / "commit-suggestor-q4_k_m.json")
+    print(f"model ready: {link}")
+
+
 def cmd_stats(_: argparse.Namespace) -> None:
     from commit_suggestor.stats import wilson
 
@@ -257,7 +284,7 @@ def cmd_install_hook(args: argparse.Namespace) -> None:
 
 def main(argv: list[str] | None = None) -> None:
     argv = sys.argv[1:] if argv is None else argv
-    commands = {"install-hook", "stats", "record-feedback", "suggest"}
+    commands = {"install-hook", "stats", "record-feedback", "suggest", "download"}
     if not argv or argv[0] not in commands:
         argv = ["suggest", *argv]
     parser = argparse.ArgumentParser(
@@ -279,6 +306,9 @@ def main(argv: list[str] | None = None) -> None:
     )
     h.set_defaults(run=cmd_install_hook)
     sub.add_parser("stats", help="how often suggestions were kept").set_defaults(run=cmd_stats)
+    d = sub.add_parser("download", help="fetch the published model")
+    d.add_argument("--format", choices=["auto", "mlx", "gguf"], default="auto")
+    d.set_defaults(run=cmd_download)
     sub.add_parser("record-feedback", help=argparse.SUPPRESS).set_defaults(run=cmd_record_feedback)
     args = parser.parse_args(argv)
     args.run(args)

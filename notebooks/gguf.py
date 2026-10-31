@@ -46,7 +46,7 @@ else:
     run(sys.executable, "-m", "pip", "install", "-q", "peft==0.21.2")
     import torch
     from peft import PeftModel
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from transformers import AutoModelForCausalLM
 
     adapter = next(p.parent for p in INPUT.rglob("adapter_config.json") if p.parent.name == SOURCE)
     base = AutoModelForCausalLM.from_pretrained(
@@ -54,7 +54,21 @@ else:
     )
     merged = WORK / "merged"
     PeftModel.from_pretrained(base, adapter).merge_and_unload().save_pretrained(merged)
-    AutoTokenizer.from_pretrained("Qwen/Qwen2.5-Coder-1.5B-Instruct").save_pretrained(merged)
+
+# The converter pins transformers 4.57, which cannot read tokenizer files saved by
+# transformers 5 (extra_special_tokens became a list). Fine-tuning does not change
+# the tokenizer, so convert the fine-tuned weights with the base model's own files.
+from huggingface_hub import hf_hub_download  # noqa: E402
+
+model_dir = WORK / "model"
+model_dir.mkdir(exist_ok=True)
+for item in merged.iterdir():
+    if item.suffix in (".safetensors", ".json") and not item.name.startswith("tokenizer"):
+        (model_dir / item.name).unlink(missing_ok=True)
+        (model_dir / item.name).symlink_to(item)
+for name in ("tokenizer.json", "tokenizer_config.json", "vocab.json", "merges.txt"):
+    hf_hub_download("Qwen/Qwen2.5-Coder-1.5B-Instruct", name, local_dir=model_dir)
+merged = model_dir
 
 # 2. llama.cpp's converter and quantizer at a fixed release.
 src = WORK / "llama.cpp"

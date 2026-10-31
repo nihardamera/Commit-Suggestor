@@ -19,6 +19,11 @@ mlx = [
     "transformers==5.18.0",
     "huggingface-hub==1.33.0",
 ]
+# Any machine without Apple Silicon: the GGUF build with llama.cpp.
+cpu = [
+    "llama-cpp-python==0.3.36",
+    "huggingface-hub==1.33.0",
+]
 # The LLM judge (Claude Haiku 5.5). SDK 2.x sends API version 2026-10-21.
 judge = [
     "anthropic==2.3.0",
