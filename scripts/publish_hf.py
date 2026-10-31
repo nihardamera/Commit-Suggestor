@@ -51,7 +51,10 @@ def token() -> str:
 
 
 def model_files(mlx: Path, gguf: Path) -> dict[str, Path]:
-    files = {f"mlx/{p.name}": p for p in sorted(mlx.iterdir()) if p.is_file()}
+    # mlx_lm convert writes a stub README.md; the model card is the only one.
+    files = {
+        f"mlx/{p.name}": p for p in sorted(mlx.iterdir()) if p.is_file() and p.name != "README.md"
+    }
     files[gguf.name] = gguf
     files[gguf.with_suffix(".json").name] = gguf.with_suffix(".json")
     return files
