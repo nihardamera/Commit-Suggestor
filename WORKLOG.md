@@ -170,3 +170,41 @@ leak the test set: more labels must be new labels.
    validation diffs with the judge → test table → 50-pair human spot check.
 3. M4: backends (MLX + llama.cpp), CLI + hardened hook + feedback, HF model + card,
    Gradio Space (needs an HF account/token), README + blog draft.
+
+## 2026-10-31 (Sat): SFT-v2, DPO, shipping
+
+**Done**
+- SFT-v2 full run: 6,837 steps in 4.1 h; validation loss 2.43 → 2.23. Learning
+  curve on validation ROUGE-L 26.8 → 29.3 → 30.1 (+3.3 [1.7, 4.9]). On test it
+  ties v1: ROUGE-L −0.87 [−2.68, 0.95], judge 49.8% [44.2, 55.5].
+- Repo context: judge preferred no context on validation (27.3% for context),
+  so it is not shipped (`eval/v2/context_decision.json`). On test it cut generic
+  subjects (−2.4) but raised invented names (+1.1).
+- MLX 4-bit conversion: only 21% of subjects identical to fp16, ROUGE-L −0.25
+  [−1.9, 1.5]. Greedy decoding flips on near-ties; quality does not move.
+- DPO data: 3,000 diffs × 4 samples, listwise judge in 2 orders → 2,198 pairs
+  ($1.31 so far). Chosen only 0.38 words longer than rejected.
+- DPO full sweep (β 0.05 / 0.1 / 0.3, 2.1 h on a T4). Hand-written loss matches
+  TRL within 0.001 after training. At low β chosen log-probs fell 12 → 27 nats
+  (likelihood displacement); at β 0.3 only to 14.5.
+- β rule committed before the results (`choose_beta`). Validation win rates vs
+  SFT-v2 82.1 / 81.1 / 82.9%; only 0.3 kept length under +2 words → β 0.3, ships.
+- Test: DPO vs SFT-v2 83.2% (rubric v1) and 85.8% (rubric v2, which labelled
+  nothing); vs v1 78.3%. Specific +16.2, generic 8.4% → 0%, ROUGE-L +1.0 (n.s.).
+- **Miss:** DPO writes > 72 chars in 5.6% of test subjects (2.3% on validation,
+  visible but not in the rule). Cause: DPO pairs were not length-filtered,
+  while SFT data was (12–72 chars). Fix without touching the test set: a
+  clause-boundary guard `prompt.fit_subject` in CLI / Space / gate, designed on
+  the 7 validation cases. Raw and guarded both reported.
+- Merged the DPO adapter locally with MLX (`scripts/merge_lora.py`, W + 20·BA);
+  checked against Kaggle's fp16 subjects by log-prob, not exact match.
+- Serving: MLX 4-bit on M4, 2.7 s cold, 0.43 s p50, 0.98 s p95, 1.4 GB.
+- README rewritten (results first, "What ROUGE missed"), model card generator,
+  blog draft, RESUME_CLAIMS filled. API spend $1.94 of $5.
+
+**Waiting on the user**
+- Rate `eval/dpo/spot` (judge's DPO labels) and `eval/human/dpo` (DPO vs
+  SFT-v2, fresh test diffs) with `scripts/rate.py --set ...`.
+- Approve publishing to Hugging Face (public).
+- Write "Design decisions" in the README.
+- M2/M3 explain-back gates.
