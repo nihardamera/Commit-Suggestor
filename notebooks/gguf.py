@@ -44,6 +44,8 @@ if SOURCE == "sft":
     merged = next(p.parent for p in INPUT.rglob("config.json") if p.parent.name == "merged")
 else:
     run(sys.executable, "-m", "pip", "install", "-q", "peft==0.21.2")
+    # Kaggle's torchao 0.10 makes peft refuse to load LoRA layers; see sft_v2.py.
+    run(sys.executable, "-m", "pip", "uninstall", "-q", "-y", "torchao")
     import torch
     from peft import PeftModel
     from transformers import AutoModelForCausalLM

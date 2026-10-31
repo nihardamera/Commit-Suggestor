@@ -1,0 +1,450 @@
+{"sha": "6c723e04f579e3a9f5a78489f60c3a3099222c59", "prediction": "Add a JavaScript domain to AUTHORS and CHANGES"}
+{"sha": "f082f2f2fd9ba499a6b38d6887f0d75245d033eb", "prediction": "Upgrade pytest-pretty to 0.0.1"}
+{"sha": "27683bcdd7412eb4d71a132dd2f19fca7be92da9", "prediction": "Remove redundant 'module' option from ObjectDescription"}
+{"sha": "40e1ae143fb2c7c3927e6bea1a1b6a02f81879ae", "prediction": "Add name to coverage action"}
+{"sha": "7dabcdee91f1d0d9420f4926ad12a95c3aa4422f", "prediction": "Remove unused import docutils from html.py"}
+{"sha": "53f52765fc90472a05cbeb34760b45f735a7332c", "prediction": "Raise TypeError if actions is empty when calling .as_view()"}
+{"sha": "86531aba8e09a5c821f3ba4778ce73988cc17ef7", "prediction": "doc: html_last_updated_fmt: None by default"}
+{"sha": "818895a1589bf98f7850476bfbef6945907eb592", "prediction": "Fix flake8 formatting in test_build_html.py"}
+{"sha": "155f4b0d00e72d16eed47581f2fee75e41c452cf", "prediction": "Stabilize included document paths on Windows"}
+{"sha": "5cc16335eea8ef7b4969b790dc384fe7ec4b5066", "prediction": "Add Python 3.14 to CI/CD workflows and docs"}
+{"sha": "71a36d5b339f4bf0d4ed339193f66a51126cec15", "prediction": "Add xetex to travis build"}
+{"sha": "937c6849608f2a9da0ef456a58463c37975e13b9", "prediction": "Fix rst:directive -> emphasize-lines typo in directives.rst"}
+{"sha": "c57325d7762cc0327b89f84d90a5ddedf5bd72dd", "prediction": "Update intro.rst to mention that Sphinx depends on 3rd party libraries"}
+{"sha": "fe95ab675bef1b185324be4b1b7fc7100c41c823", "prediction": "Remove redundant docstring from `Request.authenticate`"}
+{"sha": "e3aff6a5678d48a2e328c9bb44b7c3de81caffd5", "prediction": "Fix typo in test_get_form_with_wrong_authorization_header_token_missing docstring"}
+{"sha": "d02d07e992d258898151247e49a63a2a0458a880", "prediction": "Don't show pagerefs in production list"}
+{"sha": "0a9f5a058aa5f1ce627ca7d7d1c00ea9dfb48c9b", "prediction": "Use only first two digits of Python version in pickle filename"}
+{"sha": "aad7eacce6ed894c84b0b49567eaccbbe6bf0813", "prediction": "Use unicode instead of str in ModelResource.render()"}
+{"sha": "1b085350788e08422f14de38898e2098855fb415", "prediction": "Remove docutils.conf from sphinx.testing.util.build()"}
+{"sha": "097f4c6962330c0fd550a9c7ada8344472e0a443", "prediction": "Add changelog entry for bugfix with FileField validation with files=None"}
+{"sha": "31536aafa2bf9c5af6a20f9bebc99145cb8390f8", "prediction": "Add links to all domains in doc/domains.rst"}
+{"sha": "fd48a0016cc65389dfba71615e60fd52ea24fb9b", "prediction": "Add reteisi and sqlkit to EXAMPLES"}
+{"sha": "4d061f2b4919c47029d5fd69b35055793fca69e6", "prediction": "Update documentation about 'default' highlight_language"}
+{"sha": "7d836e16aba8a48525dd731ea3db65b8e895b72c", "prediction": "Add support for virtual bases in C++ classes"}
+{"sha": "872f35f1139670025164e13456e056c9c1f1c7c6", "prediction": "Remove ConfigWarning class from errors.py"}
+{"sha": "6207791af1702ec4a80d689b39ca4e4d1c9d8157", "prediction": "Add test suite to setup.py"}
+{"sha": "f0f127f11610797fcef9caa1a6dd8a8a3265ab21", "prediction": "Use `pathlib.Path` instead of `os.path` in build.py"}
+{"sha": "d118cee7ddf6f685a2a938dbfe03af1a7d8a94b6", "prediction": "Remove Home link from docs_theme/nav.html"}
+{"sha": "3b5d2afb9a20f1bfa9a6828209fc10151905cea3", "prediction": "Add newline before closing </a> tag in scaled_image_link test"}
+{"sha": "c1191e4f54b0e10257d58868388133322238f309", "prediction": "Add changelog entry for #3789: Do not require typing module for python>=3.5"}
+{"sha": "a8a3658d41b4cfa19ee94d458d4690ca3d5a326f", "prediction": "Remove redundant autodocumenters from sphinx.ext.autodoc"}
+{"sha": "e8ba78c9d894d60a674291a69eb1c20ad8e40eea", "prediction": "Add section on conversion from other systems to reST/Sphinx"}
+{"sha": "9bd306840fdca63014038e0bdb8ce9b46358a86b", "prediction": "Update sphinx translation page link to point to 1.3 docs"}
+{"sha": "277588f2f9f444c79dd95997f7ab657d4bb4dfea", "prediction": "Document sphinx.math extension's behavior regarding third-party resources"}
+{"sha": "bd1a83c1ec5db4c99ab211acb9fa163ba8c4fd61", "prediction": "Add note about sphinxdoc being an adjusted version of sphinxdoc"}
+{"sha": "2eb8927b89767d6ffb887f5f8833aa5448319563", "prediction": "Use compound class in <kbd>docutils literal</kbd> test"}
+{"sha": "34a08b862e4c97c4ad530effcdf652434330490f", "prediction": "Document autodata and autoattribute docstrings in autodoc docs"}
+{"sha": "ae1d9d8ff7bbc2bf4166cb5fef15cdacad4ac3e0", "prediction": "Add changelog for #1480 and #2188"}
+{"sha": "455b43680c7c8b5ac21abee94d8095fe92fe4720", "prediction": "Raise error on recursive models with model fields unset"}
+{"sha": "dd53cd2f8c78737aac1ae38a3d4ab8470fb875fe", "prediction": "Move doc_field_types to a separate variable"}
+{"sha": "e710a21d9407833cb3561a6167876553357fac77", "prediction": "Fix Annotated link in why.md"}
+{"sha": "7b4604a5f231a35911371dd2a8a8587da5cc3835", "prediction": "Fix docstring formatting in io.new_document()"}
+{"sha": "fe2975302ab21ca950b9f04f94942bbd06ee6f5b", "prediction": "Add type: ignore to avoid mypy errors on pop/astext"}
+{"sha": "972aaffc40aa93c74750d68cc0c3d9d8297df250", "prediction": "Remove redundant included set addition from merge_info_from()"}
+{"sha": "1418d104a86a0c861a9d3b9831f7bb98b0891f57", "prediction": "Document default queryset behavior for Serializer classes"}
+{"sha": "2a4a6d0cdaad38ac57f07d6f216db38ab13177e9", "prediction": "Fix return type of get_full_modname()"}
+{"sha": "a919068c5df3677469064fa2e300d27ae4d6e39f", "prediction": "Use 'as' keyword to catch exception"}
+{"sha": "5f82825e273dfc5df3c4ef499876def8b024fa81", "prediction": "Add comment start/end strings to Template environment"}
+{"sha": "85c588b0c18abe2be7dce407c5b93d520d56553c", "prediction": "Use super() to call get_attribute on RelatedField"}
+{"sha": "3efc8e957a0261a7f6a02f986831ab4bc1d1097a", "prediction": "Use `scheme` instead of `id` in dc:identifier"}
+{"sha": "cd3c67204751167209a05025a9b46036feaeee62", "prediction": "Add codeflash config for alias generators"}
+{"sha": "d4d9cc1d53fa38fdf6b38e2a64b4aa3a71a9760c", "prediction": "Move login and logout to separate if statements in compat.py"}
+{"sha": "f4a3ee2eafdf90a2c56161bb4141c3cc19506876", "prediction": "Allow string styles to be passed directly to HtmlFormatter"}
+{"sha": "3e20b0110cc30c112906cc473e04e837737ff4f5", "prediction": "Add missing newlines in test descriptions"}
+{"sha": "89a4cdb6733b8ab152a9fc33d61db6ab716ca3c2", "prediction": "Add LaTeX code to disable href in test-root objects.txt"}
+{"sha": "643b5d455564becb5c49265c5e2c9d4f1eeb747b", "prediction": "Add changelog entry about versionadded/deprecated/css classes for directives"}
+{"sha": "582f6fdd4b0fb12a7c0d1fefe265499a284c9b79", "prediction": "Use _get_class_mapping to traverse inheritance hierarchy"}
+{"sha": "8b88a9e257fc1ae65caa358180c986bd94e3d3bf", "prediction": "Make `Field` kwargs compatible with `dataclasses.field`"}
+{"sha": "0a2377e6eba9127e5debe5fda96dfd64a5b2030f", "prediction": "Mark failing tests as xfail due to pydantic-core release"}
+{"sha": "f5d1e3e7379ad59b3d674108d881c091abf5c879", "prediction": "Skip examples that may contain arbitrary values or references"}
+{"sha": "36d3db1447f57f0f33a5c1d1d266b2b2499697f8", "prediction": "Update CHANGELOG for URLObject 2.0"}
+{"sha": "34c8a68e744e21a06f672e3558b999e59c9235ee", "prediction": "Simplify graphviz error handling"}
+{"sha": "1eeb225c67f1131f948c5f129f5c2e56a4c2c6b7", "prediction": "Add `NameEmail.__eq__` to evaluate as equal duplicate instances"}
+{"sha": "8225225139e675e7b0b4ed8bc998816d63273a1b", "prediction": "Upgrade easy_install to -U in indexsidebar.html"}
+{"sha": "185e03a41c2f4ed8a9011fab3a39388a176ffda3", "prediction": "Use `Annotated` to annotate `StringConstraints` in models"}
+{"sha": "1ac0f63aa9a6ceed5e4221926929117528af2714", "prediction": "Use `startswith` instead of `startswith('_')`"}
+{"sha": "045ad73f69388decff4c26a79ce191bc825672fd", "prediction": "Document content negotiation methods and global settings"}
+{"sha": "e7ba2abfb2416115fb5ed96eee1f3b27cd263c6f", "prediction": "Remove unused docstring from _parse_expression_fallback"}
+{"sha": "4b8bb7b3019db18726bcd5dbeac60e1897f3e9c0", "prediction": "Simplify logic for determining whether to use rtype"}
+{"sha": "c1437d5f7981d1d807c9702b93eebd440466a279", "prediction": "Use monkeypatch to set REQUESTS_CA_BUNDLE environment variable"}
+{"sha": "c3198ed1ff2c84baa9dd08e48b2c8e6205fa939f", "prediction": "Update CHANGES about newfloat being no longer used"}
+{"sha": "276fc659b0e15eb67e6c889b02b4b5214a4bbee7", "prediction": "Add link to latest development version docs in index sidebar"}
+{"sha": "80cd8846081b50bf4e482824b2f81e32bbf7ce1e", "prediction": "Increment version to 2.7.0"}
+{"sha": "fad48a6a0fe9c25fd30eb630cb684d4d6ac9a497", "prediction": "warn on unparseable C++ definitions"}
+{"sha": "d6140fa7c533f71c1e57599d3f15000f05b1d20e", "prediction": "Move deprecation warning to top level in config accessors"}
+{"sha": "fd003fcefaee964e744ded0aec1ae76715889378", "prediction": "Warn about deprecation of `exception_handler(exc)` call signature"}
+{"sha": "294c83d8f0df265497240ecb22f6ebdab48becbb", "prediction": "doc(toctree): fix indentation in warnings"}
+{"sha": "1436e8dd4d4875b11db97b92f2fb052bd9ab2f2f", "prediction": "Document no-nested inline markup in rest doc"}
+{"sha": "743224d000bbc178dafcff1e9315f1d74bee44de", "prediction": "Add support for reverse many-to-many create"}
+{"sha": "d36bb74e83f5c8f1fd073d39d935f34876af6da4", "prediction": "Add arm64 binaries suitable for MacOS with an M1 CPU to PyPI"}
+{"sha": "e83892ae55226423387dfffb046542e91c20187a", "prediction": "Remove PLW0211 from .ruff.toml ignore list"}
+{"sha": "bd5f3aa9cdef6f7e2b5edbb74909652a169eb932", "prediction": "Add changelog entry for PR #3342"}
+{"sha": "869552d616a3b99119844da9d312af9c09336ef2", "prediction": "Add rfc.net base URL to environment configuration"}
+{"sha": "2f883b9509817315413e89f1bb587b0b8464cd77", "prediction": "Add #requires python3.10 to models_structural_pattern_matching.py"}
+{"sha": "73bebbba64ddd287b7eb7c27047abe889b69f67e", "prediction": "Add .eot, .svg, .ttf, .woff to MANIFEST.in"}
+{"sha": "075b8c1037588a590360ab5290b25648367a26c5", "prediction": "Add import for User in authentication tutorial"}
+{"sha": "dd176e436810a55fc9c86f9ac5ef8796b1e469f1", "prediction": "Fix fuzzy translations in fr/LC_MESSAGES/sphinx.po"}
+{"sha": "e7777cb1ee98c0215a5f1f082a88290eefa3e293", "prediction": "Use quotes around basename in router.register()"}
+{"sha": "3ce9b13630b42813ab9ddf5c58fce110541e83a8", "prediction": "Handle `None` values in `Interval` constraints"}
+{"sha": "a8bae1ce0438d5ff43a924e0d5fd0a7c4664f3b0", "prediction": "Update link to theoretical physics reference book"}
+{"sha": "07c74b5ff446e54738e3964a15bfe45a876c536a", "prediction": "Rename nested name tests to functions"}
+{"sha": "3b71be725a727be802eb2e43d4d155b734320023", "prediction": "Use `encoding` parameter in `QueryDict` constructor"}
+{"sha": "d3aa06c3ce705ca5035c760e82fcea4aeb878907", "prediction": "Warn about html_use_opensearch being non-string"}
+{"sha": "c59e63252f0da33b2160d043ab83c38c0a86d576", "prediction": "Add xmlrunner to .hgignore"}
+{"sha": "4d4123bbceecb55b6b73f188fd46d6f76915d914", "prediction": "doc: clarify sphinx-apidoc's --implicit-namespaces behavior"}
+{"sha": "7395b05b1c03cd675b1d9a232a103934c2348225", "prediction": "Add flake8-type-checking errors to ignore list"}
+{"sha": "90e99572401a99546fd1eb8ee83609f0ddb4ef7a", "prediction": "Improve wording in config.rst about levenshtein calculation"}
+{"sha": "cd1eeff70a336f9543e45f2c8bb71a2d3e6da545", "prediction": "remove duplicate code to set slovene as iso639 to babel language codes"}
+{"sha": "69083c3668b363bd9cb85674255d260808bbeeff", "prediction": "Remove redundant print statement in urlpatterns.py"}
+{"sha": "b2b833d39e5835f6f2177f312507a699a1acdb4c", "prediction": "Add changelog entry about `content` arg of `guess_mimetype()` deprecation"}
+{"sha": "63e6bbfd367c78a38e77e5ec25081e34389c5bef", "prediction": "Add \"we highly recommend\" to README and docs about patch releases"}
+{"sha": "498533046816c2c8599e01d98999f7702fecc728", "prediction": "move \\spx@ifundefined to its own command"}
+{"sha": "721bc00d2bd0a7956d4014459cb9a859ebdee24f", "prediction": "Use requests.readthedocs.io instead of docs.python-requests.org"}
+{"sha": "304c99598346c7168e951bcd9f144b9adb537914", "prediction": "Use 'requires' instead of 'install_requires' in setup.py"}
+{"sha": "aaecc9376d0662aeca5d3bd7c9d9fa36d6398478", "prediction": "Remove unused regexes from roles.py"}
+{"sha": "ea739fcb22dba1f378bf883cb71786648075323f", "prediction": "Add mypy version 0.960 to CI matrix"}
+{"sha": "b0dad7ec6a224334e03ab47c6977343603166d01", "prediction": "Fix texinfo index formatting for parens"}
+{"sha": "6123ea49e53b57e200138744dc618a797633d4d6", "prediction": "Move context pop to visit_caption"}
+{"sha": "0f1d9217f03c263ea9e29c0b1c5c1b846be793a6", "prediction": "Print isort failure message with fix instructions"}
+{"sha": "b915c1d4d81fc459ed7c79ee5264ef7467963c3f", "prediction": "Check for None before checking for hasattr"}
+{"sha": "b5935fda614d68bcf4a473bd497dbdea4d16d6d1", "prediction": "Add lig to reviewers list in pyproject.toml"}
+{"sha": "a0904c2e7a0eb53245b408225ddc1d97f4c90949", "prediction": "Allow JSON keys to be big integers in dict type schema"}
+{"sha": "955c3d388be01600aad6043c609c5fda01d96ebf", "prediction": "Update skipif to use py34 instead of py35"}
+{"sha": "d924a0b3e13a4f9628e089be2ef03fc82c0d2180", "prediction": "Use parametrize instead of fixture for Self"}
+{"sha": "4e156328752a19f6251a166de4f8a2de0b45da7d", "prediction": "Move form definition into example app"}
+{"sha": "d328f1827dcb53a92b11f3f146bad4db3ca83d89", "prediction": "Fix indentation in comment about eventual errors in pre-save validation"}
+{"sha": "219f024595fa77dcafbd2aed254259578482dd46", "prediction": "Add tests for pygments styles in html build"}
+{"sha": "38157be037e4a20f6e0e3243f5cb16b4247179ca", "prediction": "docs: replace uvx with uv tool in contributing guide"}
+{"sha": "68bc916cf48e1025692d3fd83fb817a283ec418c", "prediction": "Add du19pre to tox envs and CI workflow"}
+{"sha": "0b7c73a98133236883f1c80afbd6acf530928e70", "prediction": "Sort files before ignoring them in epub builder"}
+{"sha": "46f7a97c4fcd4e14fd67c6830bf5c9d5884b1cb2", "prediction": "Add a flag to control whether we should add a module name"}
+{"sha": "9e58bf650055f53f58d5d5f11f9de7447ce5801b", "prediction": "Add django-rest-multiple-models to generic views docs page"}
+{"sha": "271b638df10c0cf498cbc69847f388e978c4da78", "prediction": "Document validation errors in exception docs"}
+{"sha": "fae9eb778446c44df0f0ad4173542f3cb97dccc1", "prediction": "Use mock for linkcheck.request.session.head"}
+{"sha": "5290045a3271389a403b8886d9e48fab329e928e", "prediction": "Invalidate mypy cache if plugin config changes"}
+{"sha": "caa318c9089e1ffe2ef5d3fdcf2623885f8bd2a8", "prediction": "Remove extra blank lines in docs/usage/schema.md"}
+{"sha": "233320691e3b75d164e39ede7d63c29ac6c554d4", "prediction": "Add note about browsable API display control"}
+{"sha": "2d9e7f9baafc5426e5d8efb41121b74e9ec9db6e", "prediction": "Fallback to None when LC_MESSAGES is not defined"}
+{"sha": "fa6d6ee5cccb94f8cfd649e13d4636c4046ce4e1", "prediction": "Update version to 1.6.8+ and 1.6.8 for release"}
+{"sha": "3deed9c53127cc05651221dca56ed412271a5d9b", "prediction": "Remove @ from AUTHORS"}
+{"sha": "3e44f788b194e74777013841d18a2a035df0757d", "prediction": "docs: fix typo in customizing-field-mappings link"}
+{"sha": "05d5e2f3601fbce7e90d24d57ac340b8543d6aae", "prediction": "Install known good Ruff and mypy in CI"}
+{"sha": "7acafa991b1da7f7ce1d8c179b0bba3ddf4feab6", "prediction": "Add changelog entry for #8665: Could not override globaltoc_maxdepth in theme.conf"}
+{"sha": "fc18f8ef3490c5f0940de12268fb45e6ac9642d1", "prediction": "Make `resolve_annotations` more lenient, allowing for missing modules"}
+{"sha": "ec8dd32e3576f9ec22ccae7145d38a1642cfa049", "prediction": "Add an example for printindex in config.rst"}
+{"sha": "cdd15f3769294dcc6d12a0c4e2a81369ace85442", "prediction": "Remove duplicate merge marker from release-notes.md"}
+{"sha": "d995742afc09ff8d387751a6fe47b9686845740b", "prediction": "Add documentation about AllowAny permission class"}
+{"sha": "f4ea187b84cacc24a2e0b8f9766f33e3423607e6", "prediction": "Add non-minified-js directory to CHANGES"}
+{"sha": "ac6de0a2d9d1b7a81a0dbbc61decca7b54ec91a9", "prediction": "Install graphviz on travis"}
+{"sha": "f404fda29c3c88e344db20f85cab7c51ef44ccdf", "prediction": "Enable codecov patch and changes statuses"}
+{"sha": "2f03870ae12479cbfdce68db1a30bad6fa15b311", "prediction": "Use rest_framework.compat instead of compat in ImageField"}
+{"sha": "56fd7fb8ae1e11937285f6607c43552b9e729ba6", "prediction": "Use shutil.get_terminal_size to get terminal width"}
+{"sha": "fcd0b78afa01c2bbf6672b463ad78736f9f3681b", "prediction": "Use IS_PYTHON env var to determine which command to run"}
+{"sha": "0003c6a79dcdb9a9d43597203bc8bf2d9cab6689", "prediction": "Add changelog entry for #11529: Line Block in LaTeX builder outputs spurious empty token"}
+{"sha": "3b81453fd1e3f6570586dcedab16a52fdec577e6", "prediction": "Use DEFAULT_RENDERERS instead of static list"}
+{"sha": "036b69b9bb75a8294fd54c2e6f00f4106d5c450b", "prediction": "Fix typo in deprecation warning for html4_writer"}
+{"sha": "3e1360299d064eeedad40dbd30421f5adb0eec1e", "prediction": "Cache pip in Travis CI"}
+{"sha": "7c8b32a85d4e2a65ae13cc8d2b0ad2e0e209d02d", "prediction": "Remove reference to sphinx.ext.todo env-purge-doc example"}
+{"sha": "a22dfabe03b15f98e81f602124668ee460e5fdce", "prediction": "Add source_code_parser type to suppress_warnings for grouping issues related to the C/C++ parsers"}
+{"sha": "1a69059295e297f987b58918bd40a6c93771f1d8", "prediction": "Fix type annotations in `test_util.display` tests"}
+{"sha": "61556e34103c93ca6ce8d29c78002fd763dd19d0", "prediction": "Pass maxdepth to CSignature.copy()"}
+{"sha": "3be4affae3cccb563417aeb58b9ee313979d2087", "prediction": "Remove unused import"}
+{"sha": "fde02ae6ebfe3414e3f3f305c10f28a7f65ebd3e", "prediction": "Use input type=password for password field in AuthTokenSerializer"}
+{"sha": "08ca934fffbf8e118a2e8aa58e98ba460c50c422", "prediction": "Add CHANGES header to 6.1.0 release notes"}
+{"sha": "f13fcba9a9f41f7e00e0ea8956fcc65ca168c76c", "prediction": "Remove unused import in formatting.py"}
+{"sha": "5506d8ec19725b4d1964b348d4c12fd074bdd6e7", "prediction": "Update `create_model` return type annotation to inherit from `__base__` argument"}
+{"sha": "8090e9040f9ed62ffb31614ed9df8010977c20a8", "prediction": "Add env.todo_all_todos list to avoid duplicate entries"}
+{"sha": "71df21dd4f2365f64a057c4495718946ede003f5", "prediction": "Add changelog entry for i18n: allow to translate heading syntax in MyST-Parser"}
+{"sha": "7ecc2531f9a11a8d70b850b1f9a4ae80d6891fe1", "prediction": "Add missing changelog entries for #4055"}
+{"sha": "6438cf54dbc0316ee7d4191eb9719971c62648de", "prediction": "Fix example of config file in doc"}
+{"sha": "5cfefdf2c14e405d706fcdd09c36c2afabb5207c", "prediction": "Add changelog entry for apidoc move to sphinx.ext.apidoc"}
+{"sha": "e309a4f0b8fc78eab5a9d0a111c02c3e47ccdf0c", "prediction": "Normalise path for any provided mount url"}
+{"sha": "7b86a2f3c281bb56758bffd9433497935659d5e7", "prediction": "Use $(BUILDDIR) instead of %(rbuilddir)s in quickstart.py"}
+{"sha": "58a60707b4254238377344764f3ab6d038c7820b", "prediction": "Use % for percentage in string format of colors"}
+{"sha": "cb5e094c0aee9cbfce56991c78dfe95a688ed5ab", "prediction": "Add :confval:`coverage_show_missing_items` to show coverage result to console"}
+{"sha": "6ffe881f55939d2ee3b67b0ace09e9255199ea60", "prediction": "Add two meta fields to test info field list"}
+{"sha": "b81e54ff7a6f45be6f9f5f79a29ce1721b4b30f4", "prediction": "Remove `&` from formatting keys in `LookupKey` and `PathItemString`"}
+{"sha": "a847df0606ea32b77d9a712f585f3f0b1232d713", "prediction": "Remove serde_json preserve_order feature from Cargo.toml"}
+{"sha": "4f96951be9800cfc1fc67795a26d11ac66abc60d", "prediction": "Add patch support to View.http_method_names"}
+{"sha": "08d7b4de2e69527a6840123232031705fbefc72a", "prediction": "Use `citnode['classes']` instead of `set_class()`"}
+{"sha": "591cf8a48c6e5ce37d205c4b7e418fb7d2c31b0f", "prediction": "Fix test_maxvaluevalidator_validation.test_broken_json_response"}
+{"sha": "d347149f55a7957c58881fba34b54f42047b99c7", "prediction": "Document IndexEntry"}
+{"sha": "db259e24a4433239ea91dc303c9e106fdd3f5626", "prediction": "Add current version to index sidebar"}
+{"sha": "d8eb9e6d45c227582559ec4318b1f92562c718da", "prediction": "Fix indentation in docs/api-guide/generic-views.md"}
+{"sha": "d5b28997f29e220e2daa13f74f228e2412b8a3c2", "prediction": "Add Python 3.11 to tox envlist and classifiers"}
+{"sha": "d44efd6254d0fec3bcd8ac9e40de16825e6cdc76", "prediction": "Use default value for verbosity option in sphinx.builders and cmdline"}
+{"sha": "68729fb975d38000d304e2db1eb121fb194a0e04", "prediction": "Use `flags` argument to `re.sub` instead of `re.UNICODE`"}
+{"sha": "372e945097f8e5e9ba3637eff84ee119c46c2276", "prediction": "Remove simple request mixin example from examples/sandbox views.py"}
+{"sha": "71aa5f3c455db9bea5163dca70bfe6f3b3c924be", "prediction": "Add custom validation method to ShouldValidateModelSerializer"}
+{"sha": "d0418f912943b5fa436ea27dedd730191b99114f", "prediction": "Add test for latex index"}
+{"sha": "86ea969e1154de20a53fc5b853e8340508648e98", "prediction": "Fix regression test ticket number in docstring"}
+{"sha": "4ba85181177e732b032486324cc64a0f3bc1ac3d", "prediction": "Use type annotations in githubpages extension"}
+{"sha": "56b340ae2aa5fb6e6e37b1cabd4d6eeaed208e4c", "prediction": "Add markdownlint to .git-blame-ignore-revs"}
+{"sha": "a57c0c5aaecfbeaf900e6740fa60630f073d717b", "prediction": "Document that read permissions are always allowed for GET, HEAD and OPTIONS"}
+{"sha": "e65287ec9c10ffb706017dc671db20a4bfdaede6", "prediction": "Add support for char32_t and char16_t to cpp domain"}
+{"sha": "41ac59ef6bababfd516929c1e68985916b4da7f5", "prediction": "Fix spelling of \"language\" in config warning message"}
+{"sha": "c3eaadbaa2c36d349393159dcc61cb2658da3886", "prediction": "environment: set env on apply_post_transforms and set_document"}
+{"sha": "cd093fb0cac764e57b4dd71a31fd2cc3f5b8f9e8", "prediction": "Use `px` instead of ignoring `width`/`height` without unit"}
+{"sha": "98827290b6fdf2632ad5aa44eab8a32a71ef1c97", "prediction": "Increment version to 2.12.0b1+dev"}
+{"sha": "ac249284616890d91c746dc890fb0f6407df2843", "prediction": "Increment pydantic-core version to 2.44.0"}
+{"sha": "55e2f29170ba5ec3f4f6b9ac810d84317dfeb89c", "prediction": "Fix indentation in test-autosummary tests"}
+{"sha": "184c00e38cb65a604a104c12986d731ea5ee8487", "prediction": "Add notes about string use in LatinRules.xdy"}
+{"sha": "8cd677f92935b49506f56a6f2b9fbf1d59c1d4ad", "prediction": "Add test for file checksums in HTML build"}
+{"sha": "07b7f64072376922f8e40b22b8af2c5ebb353687", "prediction": "Use `is_annotated` instead of `isinstance(obj, _AnnotatedType)`"}
+{"sha": "b85ea529b88c6b38494523654b3b57552727648b", "prediction": "#4094: C++, allow empty template argument lists"}
+{"sha": "03cc72eea0af4285275f5c7059fc66ab3d914803", "prediction": "only add a template param declaration if we're from a declaration"}
+{"sha": "261c4ce9aff6725a4e069cf45d0f57ec97a27bdb", "prediction": "Delete requirements.txt"}
+{"sha": "a4102a7507166460318a86a2d127d3cc9d257982", "prediction": "Use `encoding` parameter in `assert` statements"}
+{"sha": "520797a5e8c52f9bdcdcf8cd85484b4c7d0ed21f", "prediction": "Use Python 3.5 for CircleCI tests"}
+{"sha": "11610e7c3c4330b863c9da5d843b6d874c2958e9", "prediction": "Remove redundant imports from rest_framework relations and templatetags"}
+{"sha": "724906c516b71f3ec5bc2005c66a6145c77c3739", "prediction": "Add test for queryset nested traversal"}
+{"sha": "7c6e34c14f54f1bf0d46ff34dc9a823215987c95", "prediction": "Fix typo in accepted_renderer docs"}
+{"sha": "3d4389f867a6d90ea7c2a614bb2c667afd68a9e2", "prediction": "Default napoleon_include_special_with_doc to False"}
+{"sha": "a38d9d5b24501ae0e279c9afbea08e423112ba34", "prediction": "Add ChoiceField.metadata() method to return choices"}
+{"sha": "b733f49085c81d27d2bbe4680c0d8d226d46e020", "prediction": "Define chaptermark with \\@chappos when \\@chappos is available for Japanese"}
+{"sha": "b9f1fbb5d2a3a303968d3afbe72751219583b28b", "prediction": "Add @xordoquy to credits page"}
+{"sha": "017f124be5f357fcda7ec254b63c6559a8259956", "prediction": "Move mypy config to setup.cfg"}
+{"sha": "ef4fa3682bc54ca3f389c6c9c856e1be5fc006ce", "prediction": "Add Inventory type to typing.py"}
+{"sha": "8bb427537cb0a8adc0a826bc8227d1b5225f905e", "prediction": "Add docstrings to tests in authentication.py"}
+{"sha": "19e92fde7d6ece2b9fec46800394462e459d756f", "prediction": "remove TODO.md"}
+{"sha": "dd202998bd6d7292e82091554eadd995f6a199e9", "prediction": "Document `ignore_extra` and `allow_extra` options"}
+{"sha": "1fc780cd781bc71ac71bad1078c09ab71e0949a0", "prediction": "Add deadsnakes-free-threaded CI job"}
+{"sha": "78e14fb6ba92f1aa9723aee6346fd7f763b3d978", "prediction": "Add addstrut option to sphinxbox"}
+{"sha": "294870ba59b491ad8a854d58710a2c0b65b7efbb", "prediction": "Fix minwidth calculation in sphinxlatexliterals.sty"}
+{"sha": "cfadf17379e394d5f38e50015b8729d6045985dd", "prediction": "Failed to convert reST parser error to warning (refs: #4132)"}
+{"sha": "e2e907b3ee68baada5d47aabe3f507cc0b8fa6df", "prediction": "Fix tests after renaming target to test_autodoc in autodoc module"}
+{"sha": "14644b78f70f992fb7205186a399b11e2da6395a", "prediction": "Add StringList to type annotations in nested_parse_with_titles"}
+{"sha": "1b939042dfb8768fad9b45ded9272a64595322a6", "prediction": "Use \\\\d+ instead of \\\\d in warnings regexes"}
+{"sha": "a25aac7d6739c43a4997829a0ff79cce12e8c0de", "prediction": "Fallback to empty kwargs in URLPathVersioning.reverse()"}
+{"sha": "3bc628edc01a6bd4feeceaefa45168549b79a31a", "prediction": "Add tests for model field mapping"}
+{"sha": "d1bab643ab249f2c18cc0e6047033ca726c51605", "prediction": "Fix cryptapi-img link in README"}
+{"sha": "d8977d3e5785b02adca5ee001b0d9cdcd6a22ef0", "prediction": "Fix Transifex links in intl docs"}
+{"sha": "3e5adaa2252326681d33c09c1585e83e54072ffb", "prediction": "Add changelog entries for #6232 and #6303"}
+{"sha": "f3ab0b2b1d5734314dbe3cdd13cd7c4f0531bf7d", "prediction": "Change cookie name to 'tabstyle'"}
+{"sha": "26ac2656e5e0b3d01a67551910113a305d2a2820", "prediction": "Use `to_representation` instead of `__init__` in `DefaultObjectSerializer`"}
+{"sha": "3cadc825593718a150db95d20caa6a2218237735", "prediction": "Add PyDecorator* classes for decorators"}
+{"sha": "0d824dfd41302bcea5d8de831bc5f1025c465c1d", "prediction": "Add changelog entries for :confval:`smartquotes` changes"}
+{"sha": "24468eddbef2058da22110c592dbe367cb56bd04", "prediction": "Add get in touch section to README"}
+{"sha": "0f7072f028e8bfb568e4e5a8126ed0f4ee96a410", "prediction": "The ref role can now reference tables by caption"}
+{"sha": "812d3478bd4b5a218ea3496c87ae280828802f11", "prediction": "Add tutorial: Django REST with React (Django 2.0) to tutorials list"}
+{"sha": "afe46ef74ca43080010c356711193b7dde0df69c", "prediction": "Add tests for jQuery.getQueryParameters()"}
+{"sha": "cd163b77136b4f63f6967a47a450f7cc39cfc8fe", "prediction": "Add sphinx.cmdline module"}
+{"sha": "3a388148d703de69a7bc9ce8a9b72c7103e0a2d0", "prediction": "Add citation reference to bibitems"}
+{"sha": "ec2a300a2bce53486d00003e7c8e28b6147eaa27", "prediction": "Use RequestMixin instead of RequestFactory in tests"}
+{"sha": "eef4ac505ed1c2356315b59eb31b19b7ab9d4e34", "prediction": "Enum fields now support extra kwargs in schema generation"}
+{"sha": "7679af3ae401ccecf4d475bd4a1a0a1b0ee90552", "prediction": "Respect __all__ when generating documentation for modules"}
+{"sha": "eb49406b1083a38d3aeab7a1a31ccd72dff447ab", "prediction": "Use MiMalloc as global allocator in lib.rs and Cargo.toml"}
+{"sha": "a9542e742cd92753e1605dd51c7915fbaf53c0cf", "prediction": "Add project author"}
+{"sha": "72230a913ebacf8db3e7b912ba23ba14ff4f7abb", "prediction": "Remove breadcrumb active link color change"}
+{"sha": "db739afaeb6129676504e964ce287fe6becb3471", "prediction": "Add `permissions: contents: write` to deploy workflow"}
+{"sha": "2a5e5a553041f048da9de7634a67c30fb61fc58f", "prediction": "Add changelog entry for `--warning-is-error` option in `setup.py` command"}
+{"sha": "cb257ec524f82ddc8ca8e6419964737569d4df3c", "prediction": "Add coverage to tox tests"}
+{"sha": "c5dbe3c8f8eb992262c835f256d21bed1ae221a6", "prediction": "Add QuTiP to EXAMPLES list"}
+{"sha": "fbad78d08fcdf5fe55ee748f76b8483a7c3fc71f", "prediction": "Add tests for :obj:`None` in type spec docstrings"}
+{"sha": "99f76c3765c8a7e15195465149ca40e953a369dd", "prediction": "Switch pyo3 and pyo3-build-config to release branches"}
+{"sha": "57dd53d903de6a89b26347ca0ca2e54ea1816134", "prediction": "Add pypy to travis config"}
+{"sha": "92ae08207a7d588aef05eecf6826765ac6caf299", "prediction": "Cleanup unused internal `save_m2m` flag on `ModelSerializer.save()`"}
+{"sha": "c5d9ae907f4ddded2219c09a557b7f5ac365a029", "prediction": "Add `__supports_type__` to `_Pipeline`"}
+{"sha": "d7a22c2d0a93a65ec721963edb743dde3783a430", "prediction": "Add lower-bounds to sphinxcontrib-* dependencies"}
+{"sha": "4e30f494c413e8c360aac3a3a399cf12eec5c704", "prediction": "Add sphinx.make_mode module"}
+{"sha": "9a3a3df917ce1fd513b874e974f0e4f21bff6229", "prediction": "Add CSS class for not-yet-moderated comments"}
+{"sha": "fabf4451972ea3a2456657c43f3580c78d6a045c", "prediction": "Import warnings in autodoc module"}
+{"sha": "38a6838119744e3ce147d244c46ccd7eadec4403", "prediction": "Add changelog entry for #8320: make \"inline\" line numbers un-selectable"}
+{"sha": "8ea1606abf5eee6a3e97c71b3cc93a81e362d782", "prediction": "Remove compat.clean_manytomany_helptext()"}
+{"sha": "188b869fa23d43be96b64e80987d12069743b9b5", "prediction": "Add class=\"longtable\" to csv-table in latex.rst"}
+{"sha": "f44a6242be0f855d1d46b1a83b596401f6e79536", "prediction": "Add changelog entry for #6527: :confval:`last_updated` wrongly assumes timezone as UTC"}
+{"sha": "9aa37260098b5ec2750090fb035945780b35ad1d", "prediction": "Fix typo in docs/tutorial/1-serialization.md"}
+{"sha": "74a852ea4838a03519e09a9dae4806dcdc026bf5", "prediction": "Fix typo in docstring of ModelField._prepare()"}
+{"sha": "bf36a7905a3eee8fc49924b137612333454c9cb8", "prediction": "Use `Dict` instead of `dict` in `DeprecatedDict`"}
+{"sha": "6f9ae8d84b11c0a0f8fe1fc62e6b32e140dea11e", "prediction": "Remove LaTeX package ifthen from sphinx.sty"}
+{"sha": "ff6e78323f88fd58b1de5b02e2440c2fc24c9c8b", "prediction": "Add example resources to examples/modelresourceexample/"}
+{"sha": "13bd831110390c4bbd5248a376291379edbd26e9", "prediction": "Use type annotations in dirhtml builder"}
+{"sha": "ded4bee3281496508ac181ef460d66d3fece1a90", "prediction": "Add note about :dudir:`include` for simple inclusion"}
+{"sha": "d8a420bd167f98d3a97f327d0c1c486b8e2607a4", "prediction": "Rewrite issue template in markdown format"}
+{"sha": "ecc55ca8f4b7da2200074a01f5ce5264634cc30d", "prediction": "Add asfaltboy to credits page"}
+{"sha": "41ad0d5347b37dc79202dee3e551d59477d73ad6", "prediction": "Use decode() to print unicode strings in html builder"}
+{"sha": "7fe1016f5e9e8d890768a464676aabd5f4966674", "prediction": "latex: no bold checkmark (\u2714) available"}
+{"sha": "a4ccca76ec6bb0fdccabcf2177066046a0a3ae21", "prediction": "Add changelog entry for #8209: add `:no-value:` option to autoattribute and autodata directives"}
+{"sha": "5c3c4802d3dcc2436725c15c5539c63e92aed469", "prediction": "Remove unused import from authentication docs"}
+{"sha": "81d7f2ee8a5f497008bbf475234e8aa97bfb1d18", "prediction": "Update sphinx-contrib link to github.com/sphinx-contrib"}
+{"sha": "f807729ae5060538fffa9d03b6973d5652284fda", "prediction": "Use HAS_MULTIPROCESSING instead of multiprocessing"}
+{"sha": "ba42b85d2918eb311fe33864b666e8600a789381", "prediction": "Coerce `time` constraint values to `Time` instances in validation errors"}
+{"sha": "ef94861c2d31592c3760a0c0758beb084f452c03", "prediction": "Update copyright year to 2014"}
+{"sha": "dc72fb4746be0a6dfc66fd5c4de82d0b016fba34", "prediction": "docs: fix typo in source docs"}
+{"sha": "b6b490722ca1f0d602390105e9d99c2163b44041", "prediction": "Add benchmark for discriminated unions"}
+{"sha": "c9485c783a555516e41068996258f4c5e383523b", "prediction": "Rename `authenticate` to `force_authenticate` in APIClient"}
+{"sha": "76de0c185b5201718bd801fa5ddd8c67f66ed4be", "prediction": "Fix typo in CHANGES.rst"}
+{"sha": "11ef60b127d38341874989a40500fe3c61771d28", "prediction": "Add Yuri Prezument to credits page"}
+{"sha": "f22bbf668d70127b8af103a56d98b721142543b5", "prediction": "Add reversed order to test-toctree-glob index.rst and test environment"}
+{"sha": "5b5d6f1d4befbaabaff3103221addfefe9fbe77c", "prediction": "Update tox.ini to use 1.9b1 tarballs"}
+{"sha": "984d2f4b228318d03682022d52afde3aaae06d12", "prediction": "Add make target to run doclinter"}
+{"sha": "af88a5b1751da32018e8408eac01a91a5f63f8ce", "prediction": "Add assertion for invalid read-only fields in ModelSerializer"}
+{"sha": "bdc241a6785f38161424b2791b98cabd46ded74e", "prediction": "Reorder CHANGES entries"}
+{"sha": "cc1cb4826c74ac5b651ef2d80c3478428a9950ca", "prediction": "docs: fix typo in mypy plugin docs about dataclass config"}
+{"sha": "993510d531c46042849244722615a4a667010882", "prediction": "Add release date to v0.17.0 history entry"}
+{"sha": "ff940a16b61d15bb77d1d265cecd33788b5f01ec", "prediction": "Add man page for sphinx-apidoc"}
+{"sha": "bee44bedb100d325e4e9dad681521819bd774f5f", "prediction": "Add type annotation to `real_modname` assignment in autodoc"}
+{"sha": "4af50043f149c94accc2a4116485c4fccc973aa4", "prediction": "Use repr() in examples to print generic models"}
+{"sha": "7856656df0c60d038f2d2c584e3bf9a5420cc801", "prediction": "Add tests for the djangorestframework package setup"}
+{"sha": "59d0a0387d907260ef8f91bbbca618831abd75a3", "prediction": "Remove _closable_objects from rendering_attrs in Response if Django 1.3 is used"}
+{"sha": "6ea833280d26e0b97218ae256c3cd68c416efd36", "prediction": "fill lineno using image node in patches directive"}
+{"sha": "e6d1eb375cd6f8cb88138b63724ecd6b21097b28", "prediction": "Add comment about virtualenv < 14 requirement for Python 3.2 builds"}
+{"sha": "c2529e0a5e3226f37013109619cedba1cc52fe22", "prediction": "Add PLC1901 to pyproject.toml ignore list"}
+{"sha": "a34a34fe53e27c54bcbf9811b387e90192923d81", "prediction": "Fix doc changes.rst to use addtocontents in two separate commands"}
+{"sha": "9e9eeaaf841a9995653c77925075ddd8341c944d", "prediction": "Remove env from Makefile"}
+{"sha": "529c96a3c991d167edd3f7181284b1f21315a486", "prediction": "Move warning filtering to conftest.py"}
+{"sha": "5fc166c031dc3665748c5ce6c0284abd5e61c195", "prediction": "Add Pendulum docs page to API navigation"}
+{"sha": "be25138d9354f45e642bf57bfd83ddd9223866c8", "prediction": "Use `BaseAdmonition` for `seealso` directive"}
+{"sha": "dc207da14c0063d8148f999c68a409acce9a886d", "prediction": "Remove noshell styles from sphinxdoc.css"}
+{"sha": "c268ff5a3b69a98da5bf434295007bd136307727", "prediction": "Prevent classvars from being private attributes"}
+{"sha": "65f7aa021450f86eaa7d9ac1a061138a71d20737", "prediction": "Remove `**kwargs` from `BasePaginationSerializer`"}
+{"sha": "658689433eacc9ebc0bd69ff175556ff95863239", "prediction": "Add slashes to PEP URLs in role.build_uri()"}
+{"sha": "9ebfadbcadbcab571a12cfbeb9d8a96867ddd827", "prediction": "Add Theme configuration section to theming docs"}
+{"sha": "2506d0b4f2ac8bdbf35d33b3dd8a56f3e8d0da75", "prediction": "Update Django docs urls to use 4.0 instead of 1.11"}
+{"sha": "83e8bbf58b196f18bb14ecf96a1519c5fd4a15b8", "prediction": "Document numref role for cross-referencing figures by figure number"}
+{"sha": "336e7addb66fd12f53514d4a481d09363f9b1b6f", "prediction": "Add py312 to tox envs and add testenv for it"}
+{"sha": "bcd8a24db1d7022cac3d11641c563f0bfdbb8e97", "prediction": "Extract get_encoded_filename method from FileUploadParser"}
+{"sha": "4ab7bf69bb1343cbea5f886dc63d063ccac83cf3", "prediction": "Fix autosummary module template to use fullname instead of objname"}
+{"sha": "75f25bab49b9c929c270eff209378fa9e7b4cc1e", "prediction": "Remove version check in setup.py"}
+{"sha": "9a2b9a2771c6fba70cea9747c9e1ea192d5aecf4", "prediction": "Document configuration propagation rules for wrapping types"}
+{"sha": "29dc6976b2aa19b20c4a115f0e006fa3ffbe772a", "prediction": "Use \\DUspan to enclose class names in definition lists in title"}
+{"sha": "c329d2f08511dbc7660af9b8fc94e92d97c015cc", "prediction": "Add models.DecimalField to ModelSerializer's supported fields list"}
+{"sha": "86c48c4b82eddcbf3b083643b0862f59a61ec1ad", "prediction": "Disable TYPE_CHECKING in compat.py for type annotations"}
+{"sha": "c6cb0b667fb9a01e2c72d2cf06927a6600ad5edf", "prediction": "Fix indentation in exception message"}
+{"sha": "f43951e3ffd5455970436810530b01e0dd22b972", "prediction": "Use `name` instead of `modname` in `note_module`"}
+{"sha": "681ad6f5370c88c15ccde3ecd61e735cde514e1a", "prediction": "Add tests for DateField.from_native(None) returning None"}
+{"sha": "7f5e4a271faea175a9cf51e8caf64f6063af15a4", "prediction": "Simplify description types in C++ domain"}
+{"sha": "2f18cc98853884a524b40c224d501926a850bba3", "prediction": "Add render_string() method to jinja2glue and application"}
+{"sha": "4ff9e96b4c3e75b9f799c7c401a4560f97e21b3a", "prediction": "Add tests for JSONEncoder"}
+{"sha": "2efca93473a054876d42dbc71500e43d2b21c907", "prediction": "Fix line block output in the text builder"}
+{"sha": "7ca52480570300dd7f147bbe12b08f3f917223ba", "prediction": "Add a comment about invalid object is given in typing.get_type_hints()"}
+{"sha": "b221aa2cf6e13907e63311cb0c6df36dede720ea", "prediction": "Add public option to get_schema_view() docs"}
+{"sha": "d97f2a2c585e9eb1df69a2a8d5aeef1c998af2e0", "prediction": "Expose Pygments' lexer guessing as a highlight \"language\" `guess`"}
+{"sha": "5795fc7f9f7a5fe968cd11b961fc33fbd952a152", "prediction": "Rename RemovedInSphinx80Warning to RemovedInSphinx90Warning"}
+{"sha": "f42d344e2ca453b9d10b8dbbf8c6e01a4c0872e9", "prediction": "Update date to 2018/11/18 in sphinx.sty"}
+{"sha": "fae8a17026d91b5b11edb9b8413bdd2790df1b73", "prediction": "Catch AttributeError when trying to get object's __dict__"}
+{"sha": "8e353e3103b5bbeacfe447304f3b4dabfaaf5da2", "prediction": "Add warning about invalid `language = None` in config"}
+{"sha": "511f9063ec5b7551ac0949c3e57e72ac4ead21cf", "prediction": "docs: fix typo in performance tips"}
+{"sha": "52ac2199a8b332f7a485d5c22b1a53633b4be9dd", "prediction": "Add drf-ujson-renderer to list of renderers"}
+{"sha": "282d5b847d41cf062b6b84434aef903eb24a89ee", "prediction": "docs: fix heading level from `##` to `####`"}
+{"sha": "390e5a6ec211479b6024c03188aec838585ac51e", "prediction": "Remove deprecated config values for epub3 page progression direction"}
+{"sha": "a0e3c44c99a61a6dc878308bdf0890fbb10c41e4", "prediction": "Add @craigds and @pyriku to credits page"}
+{"sha": "765ca9f400c68157e5249bba9426b795095bb72e", "prediction": "Use `text_type` to convert `fullNestedName` to string before lstrip()"}
+{"sha": "b8ee3ac9a45420ca4fbd56fd1975647fdff8d650", "prediction": "Move overview tutorial to index.rst"}
+{"sha": "5bb8bd8930a86fa8fcd66cf9630c713432e757b9", "prediction": "Fix endlastfoot command in test build latex"}
+{"sha": "7637327d731cf22bbab985d03143ac6be0f3356d", "prediction": "Pin inline-snapshot to <0.21 in run_tests.py"}
+{"sha": "9fe38027b964e6b7e4fa24ec6a00266d0a78193d", "prediction": "Fix max_length validator to check length is greater than max_length"}
+{"sha": "15f797fd3ec61947aaecc05e6fd040e1e3e8776a", "prediction": "Use DjangoField instead of Field in ModelSerializer"}
+{"sha": "d5559e1ba2d6ea5648a57301067a7461c268460e", "prediction": "Add %z to html_last_updated_fmt"}
+{"sha": "34c4585c6eb9f13d89b2a7f0aa11f8a9dce0d9a2", "prediction": "Rename testenvs to py25-django12e and py26-django12e"}
+{"sha": "98965ad5125d21b2544caf74ac26bb5e1c492255", "prediction": "remove test_fastapi_changes.patch"}
+{"sha": "1313726fd6abf5e41283e6fb88c0e9b3f7836ca2", "prediction": "Fix hyperlink targets are broken in LaTeX builder"}
+{"sha": "3259d7c2f173a0d7b872adecba49ff42d8b7cc2f", "prediction": "Add schema build benchmarks test"}
+{"sha": "c5af109e5741256a757f2036ab77dda9c4f40941", "prediction": "Rename `model_name` argument of `main.create_model()` to `__model_name`"}
+{"sha": "488ee5279a7b595c2999df9b689514b8b2887b18", "prediction": "Normalize unicode subscript numbers in LaTeX"}
+{"sha": "f4fc4670ca491eabd5bcdfcef382d8373dd5e380", "prediction": "Document customizing ListSerializer initialization"}
+{"sha": "db9375363c11c31ef3e905134c5c50f125825a8d", "prediction": "Add GitLab link to third party themes page"}
+{"sha": "c64002f1bdb1c1b43326821e7e726e77be2d5207", "prediction": "Document default value for parallelism"}
+{"sha": "83f3770af12061185289ac9e4b9c0a24e82f10c3", "prediction": "Add @jonlil to credits page"}
+{"sha": "504f4b44c6dc96e1c1dd2cece3e9d3ac1052011d", "prediction": "Use assert instead of self.assertEqual in tests"}
+{"sha": "875346307f8a10892328800122ebed7fb9657562", "prediction": "Allow protocol-relative URLs in linkcheck URI regex"}
+{"sha": "144cff97fa426fe4043dce4f40272e9934bf4351", "prediction": "Add data-billing-address to all funding forms"}
+{"sha": "bd4cd571e9b63659930f81ef2758ae7fad41d2ee", "prediction": "html: Consistent and semantic CSS for signatures"}
+{"sha": "6100242ff4fbd97e51dd625bb90c6e7683371295", "prediction": "Rename deprecated `_copy_and_set_values` to `_copy_and_set_values`"}
+{"sha": "eaefbef1eb67065797f19565a2033de0c0136e7b", "prediction": "#9876: autodoc: Failed to document an imported class that is built from native binary module"}
+{"sha": "df30b345b1166d5bb50a9d880fbbff90201372a4", "prediction": "Add changelog entry for bugfix about None objects from serializers"}
+{"sha": "b80051935702ab7ffa0af7f80294f3bed1f5808d", "prediction": "Update env_version to 7 in cpp domain"}
+{"sha": "ec26c2f874dc468d614a28f9a6b10b9516c7e0a0", "prediction": "Add `objtype` to autosummary docs"}
+{"sha": "b52b790e7f3da4d249da24eafe57b460d2fa84e5", "prediction": "Add custom html_sidebars to conf.py_t"}
+{"sha": "cf671c808fba1a78bc4995e8276dd9e48876f2d9", "prediction": "Add triple backticks to docstring in `StringConstraints`"}
+{"sha": "e976059fd6ab49b1c2784445d7095c9287897724", "prediction": "Add pyglet to examples list"}
+{"sha": "efd1fefc0b546059ab49ae160556e4430e4b1525", "prediction": "Use string_types instead of str"}
+{"sha": "34f271e8fa9542a39ff0d6b41958e7b68b4d106f", "prediction": "Support `self` as a field name in `parse_obj`"}
+{"sha": "ae0fab15d3e414dda44aabc6003938f5b58dfa3e", "prediction": "Add make targets to clean up __pycache__ files"}
+{"sha": "3f8bf7acb1d9750f7e18f898c74c90e356f310f0", "prediction": "Deprecate RemovedInSphinx60Warning as RemovedInSphinx70Warning"}
+{"sha": "11d8b64ae453386c9dd8938b0cf4ab525928f7ed", "prediction": "Raise ExtensionError if jsmath is already loaded"}
+{"sha": "ad317483d2fbabea558fdb52a71aab8d5c6fa2a6", "prediction": "Use `ZipFile` instead of `zipfile` in `build_epub`"}
+{"sha": "579f77ceaa03a216a7a635c3d3a4d83b0e5868f8", "prediction": "Handle lazy strings in compat.py and fields.py"}
+{"sha": "987ebe4e1798ce6d23d4a27005ec87724f62ebd4", "prediction": "Add changelog entry about babel 'babel' key being ignored"}
+{"sha": "7daa2cd3fd24ac51cc98cb202d28faa9a4c94dd9", "prediction": "Allow `Union` to validate `timezone` type"}
+{"sha": "62594f0fb2297cd60cc1feb6bdc9659ad0d60d73", "prediction": "Add type hints to `test_events`"}
+{"sha": "02a2a8b5c010e23fd4c85af44c3cec515b44a94e", "prediction": "Support generics model with `create_model`"}
+{"sha": "9fe317b2caee8e397ae669fb0d99c5fb730f7819", "prediction": "Install django-filter as an editable package in travis"}
+{"sha": "5cbfcba51057a4e992306fcdd80273b7f0546e3c", "prediction": "docs(model_config): fix typo in doc about default_factory"}
+{"sha": "f3bb5b9cdc7cb53c27535e4817112e6d2eba08a0", "prediction": "docs: add missing commas to count field in pagination docs"}
+{"sha": "85db6a681b9d368686977a02d740c43edecfdfe2", "prediction": "Fix regex in versioning docs example"}
+{"sha": "d7d7a1cff95cff2f54f6c06a92eb45a05bf758a3", "prediction": "Add changelog entry for #3479: stub-columns have no effect in LaTeX output"}
+{"sha": "0cf8cc2c5d072a14e81513874e1ce00d2a853af3", "prediction": "Provide the standard \"class\" directive as \"cssclass\""}
+{"sha": "b443f81481815423d0f953ca41052b4993dfb12f", "prediction": "Update meta description to include current page title"}
+{"sha": "e919cb1b57a27f581c07080e341a86421df78a88", "prediction": "Add link to Django 1.5's Python compatibility"}
+{"sha": "e31885ec4c00e624580664a64382ac3d81873b6d", "prediction": "Add extra MathJax configuration to docs/extra/mathjax.js"}
+{"sha": "bec5c49437c993e6bb163485dd76c29090250725", "prediction": "Document warning about discarding sections with higher levels"}
+{"sha": "1cf7cef3dcc01c849d78fc89c5bbf81888f80c81", "prediction": "Fix typo in model_parametrized_name docstring"}
+{"sha": "4eb1a999a79d9837210e4f74fb4cad3f358fa02f", "prediction": "Remove HTML5Translator.should_be_compact_paragraph()"}
+{"sha": "ba97fd4f8d0f6c82ba44f2298093a040bde28c51", "prediction": "add custom makeindex function to latexmkjarc"}
+{"sha": "7a9cc9f95b92127281bee5e9a484c9e1e987fb75", "prediction": "Encode bib item key in latex writer"}
+{"sha": "e4a0f99dda967820e494fd80c7ec07cbc69401d1", "prediction": "Update version date in sphinx.sty"}
+{"sha": "6e86a53c922f09785869e022a7ccf51928a55382", "prediction": "Use apps.get_model instead of apps.get_model"}
+{"sha": "da5e1e9aa3f1b89d6fb2a5bea919385b1de8a944", "prediction": "Use dict.items() instead of list comprehension"}
+{"sha": "cad1b082602ce1367cae6a3a3668a64436fb4bde", "prediction": "Use super() to call str.__new__ instead of str.__new__"}
+{"sha": "9cfb1f079f04e869c2a5c06f4597d86dc972b865", "prediction": "Simplify dataclass decorator logic"}
+{"sha": "9bff8f206c178d973457adcb16ac9c55973257c0", "prediction": "Use bytes instead of str for force_decode() and qthelp.toc"}
+{"sha": "c5f68fba0638a15fa3c802f1bafc664e890611dc", "prediction": "django.setup() in conftest.py"}
+{"sha": "9ab21ce51aa7cb6a3351ba7ffdde7a3ea368e8cf", "prediction": "Move catalog compilation into separate methods"}
+{"sha": "21a45409b1acc083e3bea013c2cbf4e16ef8c576", "prediction": "Use 'this' instead of 'self' in searchtools.hasIndex()"}
+{"sha": "64c534b03b6d8dce875f614e6c5e793b9eca524f", "prediction": "Fix path to the search index for the dirhtml builder"}
+{"sha": "6681c0090c255508ab55e36e7c76a9a11db5b9f5", "prediction": "Upgrade mypy to 1.12.1"}
+{"sha": "41cafa95c5fce8e1bb7af58c0f5bccb68a6ff389", "prediction": "Add HISTORY.md for v2.12.1 release"}
+{"sha": "062492d75fd6fc2e686a2b0c5b5df67522cbc0e0", "prediction": "Rename 'all_docs' to 'read_docs' in environment.py"}
+{"sha": "13d0a829390105aa53602be7dc713092ead5a66c", "prediction": "Update docs about fields"}
+{"sha": "022fc9d3b6e93bd2a65e866db711bc2aa1c07edd", "prediction": "Remove 'fvset' from configuration documentation"}
+{"sha": "0d2bbd317743f2459ccdf2bd750edb0c10261eaf", "prediction": "Update parser and authenticator names in docs"}
+{"sha": "7c6730c7542838aa302d92de7f931973c412b14e", "prediction": "Add Cargo.lock to sdist-include in maturin config"}
+{"sha": "182f621cad11237c148c055312af47579b734ec9", "prediction": "Add changelog and AUTHORS entry for #13146"}
+{"sha": "4091fe335444236181f765adaf9e9bf0a2bcc735", "prediction": "Add changelog for release 8.2.3"}
+{"sha": "463a039957ffbbc0302004b2169949bb4673f0bb", "prediction": "Use HTTPS links in README and devguide"}
+{"sha": "3a7ce4039ac8458f64f5a77cfc820fccc28633a2", "prediction": "Add test for gettext translation in build_gettext.py"}
+{"sha": "fd977391cf022ea2566f35b89915f535b6e4894f", "prediction": "Fix typo in CHANGES entry"}
+{"sha": "04d22a53d55687defb041fffe2190978507a4bb5", "prediction": "Use shutil.rmtree instead of sys.path.insert"}
+{"sha": "e35770f023370d48922361f33e66c90fa69dc0aa", "prediction": "Add changelog entry for #8519: Prevent page brake in the middle of a seealso"}
+{"sha": "19585962a2105ae93e3d17439baaa00c288163be", "prediction": "Add changelog entry for #4834: ensure set object descriptions are reproducible"}
+{"sha": "f839721eab806e812d9b5276c961cfd78a056812", "prediction": "Fix typo in docstring for exclude_computed_fields"}
+{"sha": "373e521f3685c48eb22e6fbb1d7079f161a4a67b", "prediction": "Add ProhibitSurrogateCharactersValidator"}
+{"sha": "dd2de9649839d36faea6a9e7d2e02b8d00c56a24", "prediction": "determine tzdelta once to remain unaffected by DST change during build"}
+{"sha": "28f9ce78b0074c70a3b849c7f9eb7a4dabf6bece", "prediction": "Add changelog entry for #10493: html theme: :rst:dir:`topic` directive is rendered incorrectly with docutils-0.18"}
+{"sha": "32e4fab86bebd9dacce176450f1ca591e89b1229", "prediction": "Use getvalue() instead of buflist in test_gen_check_types"}
+{"sha": "ab843afba0e5353b9a58d1cf3cb977a292c8c594", "prediction": "Add validation options to mkdocs and deprecate unique_items"}
+{"sha": "215248c0421f451c2b6e64c45f511da7e60eae78", "prediction": "Document STRICT_JSON setting"}
+{"sha": "c62e3ca764d90e7b8402cc4022cffad2a07fa5be", "prediction": "Add Django 4.0 to tox environment list"}
+{"sha": "a1e6d835338f7b483a0dcca265ee52ef6bf57a45", "prediction": "Add pk parameter to routers.group_names() method"}
+{"sha": "0b7b855b5ef468c2d0f7928df7fe37f732ff18e7", "prediction": "Add `__pydantic_fields_set` to include extra after assignment"}
+{"sha": "a9e8db32869f57c140de5d1458dac47ea4a23e8e", "prediction": "Add security policy page and link to it from README and CONTRIBUTING"}
+{"sha": "963bded144baeb349adc3af5fd9848846320d9b7", "prediction": "ci: use `cargo llvm-cov` to generate coverage data"}
+{"sha": "2db7837b4addd53eeaa66432eec389559d3271e2", "prediction": "Add changelog entry for #6741: html: search result was broken with empty :confval:`html_file_suffix`"}
+{"sha": "1f83f01adfd3709dbce0059469b01d5078715a31", "prediction": "Add search.html to epub_exclude_files"}
+{"sha": "2fb9f812082f340a30586a53e75da74dc54e6740", "prediction": "Add changelog entry for linkcheck anchors ignore option"}
+{"sha": "0c26c1c4e288e0d41d2c3890d5b3befa7579455c", "prediction": "Use `<...>` in `repr`/`str` output for Python 3.10+"}
+{"sha": "ab71cc5156f5e46da49ceddcc18b882c38780c3f", "prediction": "Restore the str interface of _CascadingStyleSheet and _JavaScript"}
+{"sha": "3fba1d57ec09a402fde249c19f1cd031144726cc", "prediction": "Remove redundant calls to super() in BuiltInTheme"}
+{"sha": "6ccab6c1504cbc8fb29d31bf1900b8bbe9413589", "prediction": "Add --verbosity option to setup command"}
+{"sha": "3edf80bcb987ec0d59b335b62abb3529189d0cec", "prediction": "Remove `--deselect` from third-party.yml"}
+{"sha": "0f76788c576d907a32c2b945f383c97c3705e95c", "prediction": "Fix the handling of nested lists in the text writer"}
+{"sha": "54aebdd28ec896b7bbad1b56db22a52a20bc66c8", "prediction": "Fix typo in docstring for is_instance_schema()"}
+{"sha": "ad0fea04de0b51657adc1cbc677034f562727684", "prediction": "Add support for ipaddress objects in JSONEncoder"}
+{"sha": "3b760d393e6d047e760c530a2bb10140c7619ffd", "prediction": "Move monthly PyPI install badge to top of README"}
+{"sha": "6f058ba173712f260b37c600d0a0bd94438b59d0", "prediction": "Try reading properties directly when accessing them"}
+{"sha": "93189ec27d53d3216d452abdc2711e973a888d0c", "prediction": "Add format_suffix_patterns"}
+{"sha": "bcfb46eedc8fd7184e73a1fa6cecb1a359d1ef1f", "prediction": "Remove extra newline in docs/tutorial/3-class-based-views.md"}
+{"sha": "72dc6d1d5cae32353e87b7724e666afbd8f04312", "prediction": "Add drf-proxy-pagination to docs/api-guide/pagination.md"}
+{"sha": "d465ec5542a611ffefab45736859f37b0b251eb8", "prediction": "Update to 2.5.0 and update HISTORY.md to show pre-release"}
+{"sha": "0edeba7acb187c9f6a229b05c0342c4e693a3b3c", "prediction": "Move main call to ModuleAnalyzer.find_attrs() to __init__.py"}
+{"sha": "2c58eef1d1f77e1bd44ba38f039c8fc80d7aecb7", "prediction": "Use None instead of '' for html_last_updated_fmt"}
+{"sha": "5d21e42206938f840cbaeb08829d74644e84fc5d", "prediction": "Change base URL to Django REST Framework"}
+{"sha": "39bd7dff922f283e1ac05939120e5ab77a8bbdd7", "prediction": "graphviz expects UTF-8 by default"}
+{"sha": "249ee22c4dbbfff9ab46fb69de48b9308cdd1f5a", "prediction": "Add missing {% endblock %} in epub cover page"}
+{"sha": "5e5bd748e6531d57e978fc7730cf6232bd2485e3", "prediction": "Fix typo in doctest block example"}
+{"sha": "cf026c28f74182d4af3d78b0d6261fb61decfc9b", "prediction": "Use setdefault to update defaults"}
+{"sha": "788775f07204831707127648916fa43664c2a915", "prediction": "Use transition element in latex writer"}
+{"sha": "84d9c4b46eacda54b31a3779c623554758f4dccc", "prediction": "Update contributing docs to use mkdocs commands"}
+{"sha": "ccdf8e12cd59f92e0fc362e7485c09918b1b5cac", "prediction": "fix truncate for types"}
