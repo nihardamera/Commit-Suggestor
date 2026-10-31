@@ -89,12 +89,13 @@ train_dataset = Dataset.from_list(
 
 
 def fresh_policy() -> PeftModel:
-    """SFT-v2 as a trainable adapter, plus a frozen copy named "ref" for TRL."""
+    """SFT-v2 as a trainable adapter.
+
+    DPOTrainer copies this "default" adapter into a frozen one named "ref" and
+    uses it as the reference (trl 1.17, dpo_trainer.py), so it is not added here.
+    """
     base = AutoModelForCausalLM.from_pretrained(BASE, dtype=torch.float16, device_map={"": 0})
-    model = PeftModel.from_pretrained(base, SFT_ADAPTER, is_trainable=True)
-    model.load_adapter(SFT_ADAPTER, adapter_name="ref")
-    model.set_adapter("default")
-    return model
+    return PeftModel.from_pretrained(base, SFT_ADAPTER, is_trainable=True)
 
 
 def make_trainer(model: PeftModel, beta: float) -> DPOTrainer:
