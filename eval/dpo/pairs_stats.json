@@ -1,0 +1,29 @@
+{
+  "diffs_sampled": 3000,
+  "pairs_judged": 2983,
+  "reasons": {
+    "fewer than two distinct samples": 17,
+    "kept": 2198,
+    "orders disagree": 648,
+    "winner names an identifier not in the diff": 86,
+    "winner is generic": 15,
+    "judged a tie": 36
+  },
+  "pairs_kept": 2198,
+  "chosen_minus_rejected_words": [
+    0.38,
+    0.27,
+    0.5
+  ],
+  "chosen_longer_pct": [
+    49.14,
+    47.04,
+    51.23
+  ],
+  "judge": {
+    "rubric": "v1",
+    "model": "claude-haiku-5-5",
+    "effort": "low"
+  },
+  "spent_usd_total": 1.313
+}
