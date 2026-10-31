@@ -15,7 +15,7 @@ short_description: Paste a git diff, get a commit subject line
 # Commit Suggestor demo
 
 Paste a diff, get a commit subject. The model is
-[nihardamera/commit-suggestor](https://huggingface.co/nihardamera/commit-suggestor),
+[nihar-damera/commit-suggestor](https://huggingface.co/nihar-damera/commit-suggestor),
 a LoRA fine-tune of Qwen2.5-Coder-1.5B-Instruct, run here as a 4-bit GGUF with
 llama.cpp on a free CPU. Source, evaluation and limitations:
 [github.com/nihardamera/Commit-Suggestor](https://github.com/nihardamera/Commit-Suggestor).

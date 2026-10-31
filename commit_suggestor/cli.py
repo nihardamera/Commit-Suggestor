@@ -36,7 +36,7 @@ from commit_suggestor.prompt import build_messages, clean_reply
 
 V1_BASE = "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit"
 #: The published model, at a fixed revision (set by scripts/publish_hf.py's output).
-HF_REPO = "nihardamera/commit-suggestor"
+HF_REPO = "nihar-damera/commit-suggestor"
 HF_REVISION: str | None = None
 V1_ADAPTER = Path(__file__).resolve().parent.parent / "adapters"
 MODEL_HOME = Path(

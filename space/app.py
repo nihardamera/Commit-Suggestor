@@ -20,7 +20,7 @@ import gradio as gr
 from commit_suggestor.prepare import clean_diff
 from commit_suggestor.prompt import build_messages, clean_reply
 
-MODEL_REPO = os.environ.get("MODEL_REPO", "nihardamera/commit-suggestor")
+MODEL_REPO = os.environ.get("MODEL_REPO", "nihar-damera/commit-suggestor")
 MODEL_FILE = "commit-suggestor-q4_k_m.gguf"
 MODEL_REVISION = os.environ.get("MODEL_REVISION", "main")
 MAX_INPUT_CHARS = 20_000
