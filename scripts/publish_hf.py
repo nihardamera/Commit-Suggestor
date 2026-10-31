@@ -67,7 +67,7 @@ def space_files() -> dict[str, Path]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     parser.add_argument("--user", required=True, help="Hugging Face user name")
-    parser.add_argument("--mlx", type=Path, default=ROOT / "data/models/sft-v2-mlx")
+    parser.add_argument("--mlx", type=Path, default=ROOT / "data/models/dpo-mlx")
     parser.add_argument(
         "--gguf",
         type=Path,

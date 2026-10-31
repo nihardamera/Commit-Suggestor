@@ -5,8 +5,9 @@ Fails (exit 1) if, compared with eval/gate_baseline.json:
   - more subjects name an identifier that is not in the diff,
   - mean ROUGE-L falls more than TOLERANCE points.
 
-The baseline holds the same model's subjects for the same diffs, from the
-GGUF check on Kaggle (notebooks/gguf.py), so a change to the prompt, the diff
+Subjects pass through the CLI's length guard (prompt.fit_subject) first, as
+they do when shipped. The baseline holds the same model's subjects for the same
+diffs, from the GGUF check on Kaggle (notebooks/gguf.py), so a change to the prompt, the diff
 cleaning, the runtime or the model that makes things worse fails the build.
 
     uv run python -m commit_suggestor.gate --model commit-suggestor-q4_k_m.gguf
@@ -23,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from commit_suggestor.metrics import check
-from commit_suggestor.prompt import build_messages, clean_reply
+from commit_suggestor.prompt import build_messages, clean_reply, fit_subject
 
 EVAL = Path(__file__).resolve().parent.parent / "eval"
 BASELINE = EVAL / "gate_baseline.json"
@@ -96,7 +97,7 @@ def main(argv: list[str] | None = None) -> None:
                 f"{args.source} lacks {len(missing)} of the {N_GATE} gate diffs; "
                 "use the full GGUF run's predictions"
             )
-        baseline = summarise([by_sha[e["sha"]] for e in examples], examples)
+        baseline = summarise([fit_subject(by_sha[e["sha"]]) for e in examples], examples)
         BASELINE.write_text(json.dumps(baseline, indent=2) + "\n")
         print(json.dumps({k: v for k, v in baseline.items() if k != "subjects"}))
         return
@@ -106,7 +107,9 @@ def main(argv: list[str] | None = None) -> None:
     from commit_suggestor.backends import load_backend
 
     backend = load_backend(args.model)
-    subjects = [clean_reply(backend.generate(build_messages(e["diff"]))) for e in examples]
+    subjects = [
+        fit_subject(clean_reply(backend.generate(build_messages(e["diff"])))) for e in examples
+    ]
     now = summarise(subjects, examples)
     baseline = json.loads(BASELINE.read_text())
     changed = sum(a != b for a, b in zip(now["subjects"], baseline["subjects"], strict=True))

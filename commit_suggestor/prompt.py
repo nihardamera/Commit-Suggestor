@@ -73,3 +73,54 @@ def clean_reply(text: str) -> str:
         if line:
             return line.rstrip(".")
     return ""
+
+
+MAX_SUBJECT_CHARS = 72
+#: Where a long subject can end and still read as a whole: before the clause
+#: that adds detail ("... in docs/x.rst", "... instead of y", "...: details").
+CUT_BEFORE = (
+    ": ",
+    ", ",
+    " in ",
+    " for ",
+    " to ",
+    " with ",
+    " instead of ",
+    " from ",
+    " when ",
+    " so ",
+    " and ",
+    " because ",
+    " by ",
+    " on ",
+    " via ",
+)
+
+
+def fit_subject(subject: str, limit: int = MAX_SUBJECT_CHARS) -> str:
+    """Shorten a subject over the limit by dropping its last clauses.
+
+    The DPO model sometimes writes past 72 characters (2% of validation
+    subjects). Rather than cut mid-word, end before the last connective that
+    leaves at most `limit` characters, at least three words, and no inline
+    code left open; failing that, at the last word boundary that fits.
+    Subjects within the limit are returned unchanged.
+    """
+    if len(subject) <= limit:
+        return subject
+
+    def ok(prefix: str) -> bool:
+        return len(prefix.split()) >= 3 and prefix.count("`") % 2 == 0
+
+    cuts = [
+        i
+        for sep in CUT_BEFORE
+        for i in range(len(subject))
+        if subject.startswith(sep, i) and i <= limit and ok(subject[:i])
+    ]
+    if cuts:
+        return subject[: max(cuts)].rstrip(" .,:;-")
+    words = subject[: limit + 1].rsplit(" ", 1)[0]
+    if words.count("`") % 2:
+        words = words.rsplit("`", 1)[0]
+    return words.rstrip(" .,:;-")

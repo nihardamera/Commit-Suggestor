@@ -10,6 +10,8 @@ Systems and where their subjects come from:
                       generated in the same job, so DPO is compared like for like
   dpo, dpo_gguf       the chosen beta as shipped: MLX 4-bit (generated here) and
                       GGUF Q4_K_M under llama.cpp (the Kaggle GGUF job)
+  <name>_guarded      <name> after the CLI's length guard (prompt.fit_subject):
+                      what a user is actually shown
 
     uv run python -m commit_suggestor.eval_v2 generate --model data/models/sft-v2-mlx --name sft_v2
     uv run python -m commit_suggestor.eval_v2 generate --model ... --name sft_v2_ctx --context
@@ -43,12 +45,13 @@ from commit_suggestor.judge import (
     estimate_usd,
 )
 from commit_suggestor.metrics import per_example
-from commit_suggestor.prompt import build_messages, clean_reply
+from commit_suggestor.prompt import build_messages, clean_reply, fit_subject
 from commit_suggestor.stats import stratified_bootstrap, wilson
 
 EVAL = Path(__file__).resolve().parent.parent / "eval"
 OUT = EVAL / "v2"
 FROM_V1 = {"base": "base", "v1": "finetuned"}
+GUARDED = "_guarded"
 
 
 def _load(path: Path) -> list[dict[str, Any]]:
@@ -79,6 +82,8 @@ def pred_path(name: str, split: str) -> Path:
 
 def predictions(name: str, split: str = "test") -> list[str]:
     """One subject per example of the split, in its file order."""
+    if name.endswith(GUARDED):
+        return [fit_subject(s) for s in predictions(name.removesuffix(GUARDED), split)]
     rows_in_order, _ = split_set(split)
     if name in FROM_V1 and split == "test":
         rows = _load(EVAL / "predictions.jsonl")
@@ -185,6 +190,7 @@ def score_system(name: str) -> tuple[dict[str, Any], dict[str, list[float]]]:
 #: The DPO beta chosen on validation (eval/v2/beta_decision.json).
 SHIPPED_BETA = 0.3
 PAIRED = (
+    ("dpo_guarded", "sft_v2_guarded"),
     ("dpo", "sft_v2"),
     ("dpo", "v1"),
     ("sft_v2", "v1"),
@@ -207,11 +213,14 @@ def available() -> list[str]:
         "sft_v2_ctx",
         "dpo",
         "dpo_gguf",
+        "sft_v2_guarded",
+        "dpo_guarded",
+        "dpo_gguf_guarded",
         "sft_v2_fp16",
         "sft_v2_ctx_fp16",
         f"dpo_b{SHIPPED_BETA:g}",
     ):
-        if (OUT / f"pred_{name}.jsonl").exists():
+        if (OUT / f"pred_{name.removesuffix(GUARDED)}.jsonl").exists():
             names.append(name)
     return names
 

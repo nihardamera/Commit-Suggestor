@@ -32,7 +32,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from commit_suggestor.prompt import build_messages, clean_reply
+from commit_suggestor.prompt import build_messages, clean_reply, fit_subject
 
 V1_BASE = "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit"
 #: The published model, at a fixed revision (set by scripts/publish_hf.py's output).
@@ -99,7 +99,7 @@ def suggest(diff: str, model: Path | None, info: dict[str, Any], context: list[s
     else:
         sys.exit("no model: run 'commit-suggestor download', or pass --model")
     use_context = context if info.get("repo_context") else None
-    return clean_reply(backend.generate(build_messages(cleaned, use_context)))
+    return fit_subject(clean_reply(backend.generate(build_messages(cleaned, use_context))))
 
 
 def cmd_suggest(args: argparse.Namespace) -> None:

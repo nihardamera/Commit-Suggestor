@@ -12,6 +12,7 @@ from commit_suggestor.prompt import (
     SYSTEM,
     build_messages,
     clean_reply,
+    fit_subject,
     truncate_diff,
 )
 
@@ -152,3 +153,26 @@ class TestEvaluationHelpers:
     def test_bootstrap_interval_brackets_a_clear_improvement(self):
         low, high = paired_bootstrap([0.2] * 50, [0.5] * 50)
         assert low == high == 30.0
+
+
+def test_a_subject_within_72_characters_is_kept():
+    subject = "Add retries to connect()"
+    assert fit_subject(subject) == subject
+
+
+def test_a_long_subject_ends_before_its_last_clause_that_fits():
+    long = "Remove redundant `displayName` from `run tox` step in azure-pipelines.yml"
+    assert fit_subject(long) == "Remove redundant `displayName` from `run tox` step"
+
+
+def test_the_cut_never_leaves_inline_code_open():
+    long = "Update build-docs workflow to use `github.event_name` instead of `github.event.x.y`"
+    short = fit_subject(long)
+    assert short == "Update build-docs workflow to use `github.event_name`"
+    assert short.count("`") % 2 == 0
+
+
+def test_without_a_connective_the_cut_is_at_a_word_boundary():
+    long = " ".join(["word"] * 30)
+    short = fit_subject(long)
+    assert len(short) <= 72 and short.endswith("word")

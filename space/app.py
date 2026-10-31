@@ -18,7 +18,7 @@ from functools import lru_cache
 import gradio as gr
 
 from commit_suggestor.prepare import clean_diff
-from commit_suggestor.prompt import build_messages, clean_reply
+from commit_suggestor.prompt import build_messages, clean_reply, fit_subject
 
 MODEL_REPO = os.environ.get("MODEL_REPO", "nihar-damera/commit-suggestor")
 MODEL_FILE = "commit-suggestor-q4_k_m.gguf"
@@ -70,7 +70,7 @@ def suggest(
     if not files:
         cleaned = diff  # no `diff --git` headers: use it as given
     started = time.time()
-    subject = clean_reply((generate or model())(build_messages(cleaned)))
+    subject = fit_subject(clean_reply((generate or model())(build_messages(cleaned))))
     note = f"{time.time() - started:.1f} s on a shared CPU."
     if len(subject) > 72:
         note += " Longer than 72 characters: worth shortening."
