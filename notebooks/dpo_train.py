@@ -5,7 +5,7 @@ dataset (commit_suggestor.dpo_data), and the SFT-v2 job's output.
 
 For each beta the policy starts from the SFT-v2 adapter, and a frozen copy of
 the same adapter (named "ref", which TRL uses as the reference) gives the
-reference log-probs. Before training, TRL's loss and commit_suggestor.dpo's
+reference log-probs. After training, TRL's loss and commit_suggestor.dpo's
 are computed on the same batch with dropout off, and both are saved.
 
 Beta is chosen afterwards, on validation only (eval_v2 / judge); test
@@ -125,29 +125,38 @@ def make_trainer(model: PeftModel, beta: float) -> DPOTrainer:
 
 
 def check_loss(trainer: DPOTrainer, beta: float) -> dict:
-    """TRL's loss and the hand-written one on the same batch, dropout off."""
+    """TRL's loss and the hand-written one on the same batch, dropout off.
+
+    Run after training, when the policy and its reference differ: before it
+    they are equal, every margin is 0 and any implementation gives log 2.
+    Our log-probs are computed one sequence at a time, since full-vocabulary
+    logits for the whole batch do not fit next to the trained model.
+    """
     model = trainer.model
     model.eval()
+    torch.cuda.empty_cache()
     batch = trainer._prepare_inputs(next(iter(trainer.get_train_dataloader())))
     with torch.no_grad():
         trl_loss = float(trainer.compute_loss(model, batch))
-        mask = batch["completion_mask"]
-        model.set_adapter("default")
-        policy = sequence_logps(
-            model(input_ids=batch["input_ids"], attention_mask=batch["attention_mask"]).logits,
-            batch["input_ids"],
-            mask,
-        )
-        model.set_adapter("ref")
-        reference = sequence_logps(
-            model(input_ids=batch["input_ids"], attention_mask=batch["attention_mask"]).logits,
-            batch["input_ids"],
-            mask,
-        )
+
+        def logps(adapter: str) -> torch.Tensor:
+            model.set_adapter(adapter)
+            rows = []
+            for i in range(batch["input_ids"].shape[0]):
+                ids = batch["input_ids"][i : i + 1]
+                logits = model(
+                    input_ids=ids, attention_mask=batch["attention_mask"][i : i + 1]
+                ).logits
+                rows.append(sequence_logps(logits, ids, batch["completion_mask"][i : i + 1]))
+                del logits
+            return torch.cat(rows)
+
+        policy, reference = logps("default"), logps("ref")
         model.set_adapter("default")
     pc, pr = policy.chunk(2)
     rc, rr = reference.chunk(2)
-    ours = float(dpo_loss(pc, pr, rc, rr, beta).loss)
+    out = dpo_loss(pc, pr, rc, rr, beta)
+    ours = float(out.loss)
     model.train()
     return {
         "beta": beta,
@@ -155,6 +164,7 @@ def check_loss(trainer: DPOTrainer, beta: float) -> dict:
         "trl_loss": trl_loss,
         "our_loss": ours,
         "abs_difference": abs(trl_loss - ours),
+        "mean_margin": float((out.chosen_rewards - out.rejected_rewards).mean()),
     }
 
 
@@ -210,12 +220,12 @@ with (
         t0 = time.time()
         model = fresh_policy()
         trainer = make_trainer(model, beta)
+        trainer.train()
         try:
             checks.append(check_loss(trainer, beta))
         except Exception as error:  # the check must not cost the run
             checks.append({"beta": beta, "error": repr(error)})
         print("loss check:", checks[-1], flush=True)
-        trainer.train()
         name = f"beta-{beta}"
         trainer.model.save_pretrained(OUT / "adapters" / name, selected_adapters=["default"])
         (OUT / f"log_history_{name}.json").write_text(
