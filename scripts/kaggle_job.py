@@ -6,7 +6,8 @@
     uv run python scripts/kaggle_job.py output --job sft --mode full
 
 Jobs: sft (notebooks/sft_v2.py), sample (dpo_sample.py: candidates for DPO
-pairs) and dpo (dpo_train.py). `--job` defaults to sft.
+pairs), dpo (dpo_train.py) and gguf (gguf.py, CPU: the llama.cpp build).
+`--job` defaults to sft.
 
 The Kaggle token is read from the macOS Keychain (service "kaggle-api-token")
 or from KAGGLE_API_TOKEN, and passed to the CLI in its environment only.
@@ -117,6 +118,14 @@ JOBS: dict[str, dict[str, Any]] = {
         "datasets": [DATASET, PAIRS_DATASET],
         "after": [f"{USER}/commit-suggestor-sft-v2"],
     },
+    # CPU only: converts the shipped model to GGUF and checks it with llama.cpp.
+    "gguf": {
+        "code": "gguf.py",
+        "kernel": f"{USER}/commit-suggestor-gguf",
+        "datasets": [DATASET],
+        "after": [f"{USER}/commit-suggestor-sft-v2"],  # + the DPO job for a DPO --source
+        "gpu": False,
+    },
 }
 
 
@@ -130,7 +139,12 @@ def push(args: argparse.Namespace) -> None:
     marker = 'MODE = "smoke"'
     if marker not in source:
         sys.exit(f"notebooks/{code} no longer sets MODE as expected")
-    (stage / code).write_text(source.replace(marker, f'MODE = "{args.mode}"', 1))
+    source = source.replace(marker, f'MODE = "{args.mode}"', 1)
+    if args.source:
+        if 'SOURCE = "sft"' not in source:
+            sys.exit(f"notebooks/{code} has no SOURCE to set")
+        source = source.replace('SOURCE = "sft"', f'SOURCE = "{args.source}"', 1)
+    (stage / code).write_text(source)
     (stage / "kernel-metadata.json").write_text(
         json.dumps(
             {
@@ -140,11 +154,12 @@ def push(args: argparse.Namespace) -> None:
                 "language": "python",
                 "kernel_type": "script",
                 "is_private": True,
-                "enable_gpu": True,
+                "enable_gpu": job.get("gpu", True),
                 "enable_internet": True,
                 "machine_shape": "NvidiaTeslaT4",
                 "dataset_sources": job["datasets"],
-                "kernel_sources": job["after"],
+                "kernel_sources": job["after"]
+                + ([JOBS["dpo"]["kernel"]] if args.source not in (None, "sft") else []),
             },
             indent=2,
         )
@@ -172,6 +187,7 @@ def main() -> None:
     p = sub.add_parser("push")
     p.add_argument("--job", choices=sorted(JOBS), default="sft")
     p.add_argument("--mode", choices=["smoke", "full"], required=True)
+    p.add_argument("--source", help='gguf job only: "sft" or a DPO adapter, e.g. beta-0.1')
     p.set_defaults(run=push)
     st = sub.add_parser("status")
     st.add_argument("--job", choices=sorted(JOBS), default="sft")
