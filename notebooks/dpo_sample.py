@@ -62,16 +62,13 @@ tokenizer.padding_side = "left"
 base = AutoModelForCausalLM.from_pretrained(BASE, dtype=torch.float16, device_map={"": 0})
 model = PeftModel.from_pretrained(base, ADAPTER).eval()
 
-with (OUT / "dpo_samples.jsonl").open("w") as fh, torch.no_grad():
-    for i in range(0, len(rows), 16):
-        batch = rows[i : i + 16]
-        prompts = [
-            build_messages(r["diff"], r["context"] if r["with_context"] else None) for r in batch
-        ]
-        texts = [
-            tokenizer.apply_chat_template(p, add_generation_prompt=True, tokenize=False)
-            for p in prompts
-        ]
+
+@torch.no_grad()
+def sample(texts: list[str]) -> list[str]:
+    """N_SAMPLES replies per text, grouped by text. A batch that runs out of GPU
+    memory (16 prompts x 4 samples, padded to the longest diff) is split in half
+    and retried: the first full run died that way after 1,760 diffs."""
+    try:
         enc = tokenizer(texts, return_tensors="pt", padding=True).to(model.device)
         out = model.generate(
             **enc,
@@ -82,9 +79,26 @@ with (OUT / "dpo_samples.jsonl").open("w") as fh, torch.no_grad():
             num_return_sequences=N_SAMPLES,
             pad_token_id=tokenizer.pad_token_id,
         )
-        decoded = tokenizer.batch_decode(
-            out[:, enc["input_ids"].shape[1] :], skip_special_tokens=True
-        )
+        return tokenizer.batch_decode(out[:, enc["input_ids"].shape[1] :], skip_special_tokens=True)
+    except torch.OutOfMemoryError:
+        if len(texts) == 1:
+            raise
+        torch.cuda.empty_cache()
+        half = len(texts) // 2
+        return sample(texts[:half]) + sample(texts[half:])
+
+
+with (OUT / "dpo_samples.jsonl").open("w") as fh:
+    for i in range(0, len(rows), 16):
+        batch = rows[i : i + 16]
+        prompts = [
+            build_messages(r["diff"], r["context"] if r["with_context"] else None) for r in batch
+        ]
+        texts = [
+            tokenizer.apply_chat_template(p, add_generation_prompt=True, tokenize=False)
+            for p in prompts
+        ]
+        decoded = sample(texts)
         for j, (row, prompt) in enumerate(zip(batch, prompts, strict=True)):
             samples = [clean_reply(t) for t in decoded[j * N_SAMPLES : (j + 1) * N_SAMPLES]]
             fh.write(
