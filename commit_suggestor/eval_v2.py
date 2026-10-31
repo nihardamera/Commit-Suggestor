@@ -6,10 +6,13 @@ Systems and where their subjects come from:
                       the CLI ships; _ctx adds the repo's five previous subjects
   *_fp16              the Kaggle job's fp16 predictions of the same model, kept
                       only to measure what the 4-bit conversion changed
+  dpo_b<beta>         the DPO job's fp16 predictions; dpo_b0 is SFT-v2 itself,
+                      generated in the same job, so DPO is compared like for like
 
     uv run python -m commit_suggestor.eval_v2 generate --model data/models/sft-v2-mlx --name sft_v2
     uv run python -m commit_suggestor.eval_v2 generate --model ... --name sft_v2_ctx --context
     uv run python -m commit_suggestor.eval_v2 import-kaggle --path data/kaggle-output/full
+    uv run python -m commit_suggestor.eval_v2 import-dpo --path data/kaggle-output/dpo/full
     uv run python -m commit_suggestor.eval_v2 report   # eval/v2/results.json, eval/v2_results.md
     uv run python -m commit_suggestor.eval_v2 judge --a sft_v2 --b v1          # dry run
     uv run python -m commit_suggestor.eval_v2 judge --a sft_v2 --b v1 --yes    # paid
@@ -114,6 +117,23 @@ def import_kaggle(args: argparse.Namespace) -> None:
             for r in rows:
                 if r["with_context"] is with_context:
                     fh.write(json.dumps({"sha": r["sha"], "prediction": r["prediction"]}) + "\n")
+
+
+def dpo_name(beta: float) -> str:
+    return f"dpo_b{beta:g}"
+
+
+def import_dpo(args: argparse.Namespace) -> None:
+    OUT.mkdir(parents=True, exist_ok=True)
+    for split in ("valid", "test"):
+        rows = _load(Path(args.path) / f"predictions_{split}.jsonl")
+        for beta in sorted({r["beta"] for r in rows}):
+            with pred_path(dpo_name(beta), split).open("w") as fh:
+                for r in rows:
+                    if r["beta"] == beta:
+                        fh.write(
+                            json.dumps({"sha": r["sha"], "prediction": r["prediction"]}) + "\n"
+                        )
 
 
 def copy_rate(preds: Sequence[str], contexts: Sequence[list[str]]) -> list[float]:
@@ -353,6 +373,73 @@ def decide_context(_: argparse.Namespace) -> None:
     print(json.dumps(decision, indent=2))
 
 
+DPO_BETAS = (0.05, 0.1, 0.3)
+MAX_EXTRA_WORDS = 2.0
+
+
+def choose_beta(candidates: dict[float, dict[str, Any]]) -> dict[str, Any]:
+    """Pick a DPO beta, and whether DPO ships, by a rule fixed before the results were seen.
+
+    Each beta is judged against beta 0 (SFT-v2, fp16, same job) on the N_SELECT
+    validation diffs. A beta is eligible only if, compared with beta 0, its
+    rate of names not in the diff and its generic rate are each at most 1 point
+    higher, and its mean length is at most MAX_EXTRA_WORDS words longer, since
+    length is the first thing DPO exploits. The eligible beta with the highest
+    judge win rate (ties excluded) is chosen. It ships instead of SFT-v2 only
+    if the lower end of that win rate's 95% Wilson interval is above 50%.
+
+    candidates maps beta to {"win_rate": [estimate, low, high],
+    "extra_invented_pts", "extra_generic_pts", "extra_words"}.
+    """
+    eligible = {
+        b: c
+        for b, c in candidates.items()
+        if c["extra_invented_pts"] <= 1
+        and c["extra_generic_pts"] <= 1
+        and c["extra_words"] <= MAX_EXTRA_WORDS
+    }
+    if not eligible:
+        return {"beta": None, "ship_dpo": False}
+    best = max(eligible, key=lambda b: eligible[b]["win_rate"][0])
+    return {"beta": best, "ship_dpo": eligible[best]["win_rate"][1] > 50}
+
+
+def decide_beta(_: argparse.Namespace) -> None:
+    rows = split_set("valid")[0]
+    diffs = [r["diff"] for r in rows]
+
+    def means(name: str) -> dict[str, float]:
+        values = per_example(predictions(name, "valid"), diffs)
+        return {
+            k: (1 if k == "words" else 100) * sum(values[k]) / len(rows)
+            for k in ("hallucinated_pct", "generic_pct", "words")
+        }
+
+    reference = means(dpo_name(0))
+    candidates: dict[float, dict[str, Any]] = {}
+    for beta in DPO_BETAS:
+        verdict = json.loads(
+            (OUT / f"valid_judge_{dpo_name(beta)}_vs_{dpo_name(0)}.json").read_text()
+        )
+        m = means(dpo_name(beta))
+        candidates[beta] = {
+            "win_rate": verdict["a_win_rate_excl_ties_pct"],
+            "wins_losses_ties": [verdict["a_wins"], verdict["b_wins"], verdict["ties"]],
+            "extra_invented_pts": round(m["hallucinated_pct"] - reference["hallucinated_pct"], 2),
+            "extra_generic_pts": round(m["generic_pct"] - reference["generic_pct"], 2),
+            "extra_words": round(m["words"] - reference["words"], 2),
+        }
+    rule = (choose_beta.__doc__ or "").split("\n\n")[1]
+    decision = {
+        "rule": " ".join(rule.split()),
+        "beta_0": {k: round(v, 2) for k, v in reference.items()},
+        "candidates": {f"{b:g}": c for b, c in candidates.items()},
+        **choose_beta(candidates),
+    }
+    (OUT / "beta_decision.json").write_text(json.dumps(decision, indent=2) + "\n")
+    print(json.dumps(decision, indent=2))
+
+
 CURVE_POINTS = (("step-600", 2400), ("step-2500", 10000), ("final", 27346))
 
 
@@ -420,6 +507,12 @@ def main(argv: list[str] | None = None) -> None:
     k = sub.add_parser("import-kaggle")
     k.add_argument("--path", required=True)
     k.set_defaults(run=import_kaggle)
+    d = sub.add_parser("import-dpo", help="the DPO job's predictions, every beta")
+    d.add_argument("--path", required=True)
+    d.set_defaults(run=import_dpo)
+    sub.add_parser(
+        "decide-beta", help="choose the DPO beta, and whether DPO ships (validation only)"
+    ).set_defaults(run=decide_beta)
     sub.add_parser("report").set_defaults(run=report)
     sub.add_parser("curve", help="SFT-v2 checkpoints on validation").set_defaults(run=curve)
     sub.add_parser(
