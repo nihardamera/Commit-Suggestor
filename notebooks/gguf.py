@@ -82,15 +82,21 @@ with tarfile.open(archive) as tar:
 quantize = next((WORK / "bin").rglob("llama-quantize"))
 quantize.chmod(0o755)
 
+# The converter pins its own versions, so it gets its own environment. Kaggle's
+# Python has no ensurepip, so `python -m venv` fails there; uv makes the venv.
 venv = WORK / "convert-env"
-run(sys.executable, "-m", "venv", str(venv))
+run(sys.executable, "-m", "pip", "install", "-q", "uv")
+run(sys.executable, "-m", "uv", "venv", "-q", "--python", sys.executable, str(venv))
 py = str(venv / "bin" / "python")
 run(
-    py,
+    sys.executable,
     "-m",
+    "uv",
     "pip",
     "install",
     "-q",
+    "--python",
+    py,
     "--extra-index-url",
     "https://download.pytorch.org/whl/cpu",
     "torch==2.11.0",
