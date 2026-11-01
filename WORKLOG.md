@@ -232,5 +232,7 @@ leak the test set: more labels must be new labels.
 
 **Left (optional)**
 - Rate `eval/dpo/spot` and `eval/human/dpo`; re-run `scripts/model_card.py`.
-- "Design decisions" in the README.
 - Explain-back gates (interview prep).
+
+"Design decisions" (13 entries) was written by Claude at Nihar's request, from the
+committed eval files and this log.

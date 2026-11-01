@@ -148,7 +148,94 @@ on malformed subjects, more invented names, or a ROUGE-L drop.
 
 ## Design decisions
 
-_To be written by me._
+Each choice below was made against an alternative. Where I could, I settled
+it by measuring rather than by preference.
+
+**1. Rate by hand before building anything.** v2 began with 150 blind ratings,
+not with a new model. They changed the project: ROUGE-L had reported v1 as a
++10-point win, but I preferred v1 only 57.5% of the time, and ROUGE picked
+my winner 60% of the time. Every later step was then aimed at what ROUGE
+couldn't see, rather than at moving ROUGE.
+
+**2. Change one thing at a time.** SFT-v2 keeps v1's base model and exact LoRA
+setup (rank 8, alpha 160, top 16 layers) and changes only the data. A newer
+base, a new framework and more data at once would have left any gain
+unexplained. The result made the point: 11× more data tied v1 on test,
+which a combined change would have hidden.
+
+**3. Split by project and report per project.** Commits from one project share
+names, style and sometimes near-identical diffs, so a split by commit leaks.
+Training, validation and test are separate projects, and MinHash removes near
+duplicates. Each project is capped. The test set is 57% sphinx, so every
+interval is a bootstrap stratified by project, and macro averages sit beside
+micro ones.
+
+**4. Partner metrics for what the users would notice.** Invented identifiers
+were the planned metric, but v1 already had almost none (0.4%), so there was
+nothing to move. "Specific" (names a changed file or symbol) and "generic"
+(would fit any diff) measure the real weakness instead. Both are rules, and
+"specific" failed a check against my "vague" flags, so I report it as a proxy,
+never as the deciding number.
+
+**5. A judge is measured like a model.** Claude Haiku 5.5 judges pairs in both
+orders, and a split verdict counts as a tie. It's from a different model
+family from the Qwen model it judges, and it was the cheapest candidate I
+priced. I fixed the dev and held-out labels before writing the first prompt,
+tuned on dev, and scored held-out once behind a lock: κ 0.23, below the 0.6 I
+aimed for. I kept it as a noisy instrument with a known error bar. I skipped
+re-rating my own labels, so there is no self-agreement ceiling to compare that
+κ against.
+
+**6. DPO pairs only where the judge agrees with itself.** Ranking 4 samples
+in one listwise call, run in 2 orders, needs 6,000 calls instead of about
+36,000 for every pair in both orders. Of 3,000 diffs, 648 were dropped because
+the two orders disagreed, and 101 more because the winner invented a name or
+was generic. Chosen subjects are only 0.38 words longer than rejected ones,
+so the pairs don't just teach "longer". I also wrote the DPO loss by hand and
+checked it against TRL's to within 0.001, to be sure what was being optimised.
+
+**7. Choose on validation, by rules written before the results.** β and repo
+context were chosen on 300 validation diffs, by functions committed before
+the results came in (`choose_beta`, `decide_context`). The test set was
+scored once. That cost me a feature: repo-style context, one of the two
+innovations I planned, lost on validation (27% win rate) and is not shipped.
+
+**8. A second judge against Goodhart.** The judge that labelled the DPO pairs
+would naturally prefer DPO's subjects. So DPO is also scored by a
+length-neutral rubric that labelled nothing (85.8%, against 83.2% for the
+labelling rubric). Both rubrics run on the same model and share its biases,
+which is why a blind human comparison is part of the evaluation.
+
+**9. Fix a miss in the product, not on the test set.** DPO writes past 72
+characters on 5.6% of test subjects. My β rule capped mean length, not the
+hard limit. Re-choosing β after seeing the test set would have tuned on it, so
+the fix is a clause-boundary guard in the CLI, designed on the 7 validation
+cases. Raw and guarded numbers are both reported.
+
+**10. Evaluate what ships.** Every headline number is for the 4-bit model
+behind the length guard, as users run it, not the fp16 model on the training
+GPU. That checking mattered: conversion changed the exact subject on 75–80%
+of diffs (greedy decoding flips on near-ties), yet ROUGE-L stayed level or
+rose, so the drift is real but harmless.
+
+**11. The hook must never cost a commit.** It acts only on a plain
+`git commit`, never downloads, skips huge diffs, and gives up on a time limit,
+leaving the message as it was. Running it for real showed that the 8-second
+limit I designed was too short on my own M4: each commit loads the model
+afresh. So the limit is now 20 s, and the docs give per-commit wait and
+per-subject speed separately. Feedback (kept, edited or replaced) is opt-in
+and stays on the machine, and with one user it is dogfooding, not a metric.
+
+**12. CI runs the real model.** The model gate downloads the published GGUF
+at the CLI's pinned revision and runs it on 25 fixed diffs with the same
+llama.cpp wheel that made the baseline. It reproduces the baseline exactly, so
+a change to the prompt, the diff cleaning, the runtime or the model that makes
+things worse fails the pull request.
+
+**13. A static demo over a hosted one.** Hugging Face needs PRO for Gradio
+Spaces. The public page shows all 450 test diffs with each version's subject,
+so anyone can check the subjects against real diffs. The live
+demo (`space/app.py`) runs locally.
 
 ## Reproduce
 
