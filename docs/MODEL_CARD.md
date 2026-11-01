@@ -11,13 +11,16 @@ Code, data pipeline and every evaluation file:
 ## Use
 
 ```console
-$ pipx install "git+https://github.com/nihardamera/Commit-Suggestor[mlx]"   # [cpu] off a Mac
+$ pipx install "commit-suggestor[mlx] @ git+https://github.com/nihardamera/Commit-Suggestor"
+$ # off a Mac: commit-suggestor[cpu] instead of [mlx]
 $ commit-suggestor download
 $ git add -p && commit-suggestor suggest
 ```
 
-`commit-suggestor install-hook` pre-fills the message on `git commit`, with an
-8-second limit and never a download inside a commit. The prompt is
+`commit-suggestor install-hook` pre-fills the message on `git commit`, with a
+20-second limit (`COMMIT_SUGGESTOR_TIMEOUT`) and never a download inside a
+commit. The hook loads the model afresh for each commit, so it waits several
+seconds on a Mac and more on a CPU. The prompt is
 `commit_suggestor/prompt.py` (prompt version 2, without repository context);
 asking the model any other way is testing a prompt it was not trained on.
 Subjects over 72 characters are shortened at a clause boundary
@@ -97,10 +100,10 @@ rule failed a check against human ratings in v1, so treat it as a proxy.
   same subject as fp16 in 25.11% [21.33, 29.11];
   ROUGE-L against fp16 2.27 [1.16, 3.41] points.
   7.73 s per subject on 4 Kaggle CPU cores,
-  close to the hook's 8-second limit: on a slow CPU, raise it with
-  `COMMIT_SUGGESTOR_TIMEOUT`.
+  after loading. On a slow CPU the hook can pass its 20-second limit; raise it
+  with `COMMIT_SUGGESTOR_TIMEOUT`.
 - MLX on an Apple M4, 16 GB: 2.68 s to load,
-  0.433 s per subject (p95 0.978 s),
+  then 0.433 s per subject (p95 0.978 s),
   1,446 MB peak memory.
 
 ## Limitations
@@ -120,5 +123,5 @@ rule failed a check against human ratings in v1, so treat it as a proxy.
 ## Privacy
 
 The CLI runs locally and sends nothing anywhere. The opt-in feedback log
-(accepted / edited / replaced) stays on your machine. The demo Space does not
-store inputs.
+(accepted / edited / replaced) stays on your machine. The demo Space is a static
+page of stored test-set subjects: it runs no model and takes no input.

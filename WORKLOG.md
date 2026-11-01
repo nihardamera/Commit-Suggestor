@@ -208,3 +208,29 @@ leak the test set: more labels must be new labels.
 - Approve publishing to Hugging Face (public).
 - Write "Design decisions" in the README.
 - M2/M3 explain-back gates.
+
+## 2026-11-02 (Mon): published
+
+**Done**
+- Model published (approved): `nihar-damera/commit-suggestor`, MLX 4-bit + GGUF,
+  card from `scripts/model_card.py`. CLI pinned to revision `79452231`;
+  `commit-suggestor download` checked from a clean directory.
+- Demo Space is **static** (`scripts/static_space.py`): the 450 test diffs with
+  the author's, v1, SFT-v2 and DPO subjects. Hugging Face needs PRO for Gradio
+  Spaces; `space/app.py` stays as the local live demo.
+- **Found by running the hook for real:** the 8 s default timed out on the M4.
+  Each commit starts a new process, which imports MLX, loads the model and
+  warms Metal before the first subject (several seconds; more with torch in the
+  environment). Default raised to 20 s; the 0.43 s figure is per subject once
+  loaded and is now labelled so. The hook also printed the shell's
+  "Terminated" notice on every commit; fixed, with a test.
+- `bench_serving.py` now also times fresh processes (what a commit waits for).
+  Not yet measured: the machine was busy (another job + iCloud), so no number
+  committed.
+- CI: model-gate job downloads the GGUF at the pinned revision and runs
+  `commit_suggestor.gate`.
+
+**Left (optional)**
+- Rate `eval/dpo/spot` and `eval/human/dpo`; re-run `scripts/model_card.py`.
+- "Design decisions" in the README.
+- Explain-back gates (interview prep).

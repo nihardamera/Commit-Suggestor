@@ -99,13 +99,16 @@ Code, data pipeline and every evaluation file:
 ## Use
 
 ```console
-$ pipx install "git+https://github.com/nihardamera/Commit-Suggestor[mlx]"   # [cpu] off a Mac
+$ pipx install "commit-suggestor[mlx] @ git+https://github.com/nihardamera/Commit-Suggestor"
+$ # off a Mac: commit-suggestor[cpu] instead of [mlx]
 $ commit-suggestor download
 $ git add -p && commit-suggestor suggest
 ```
 
-`commit-suggestor install-hook` pre-fills the message on `git commit`, with an
-8-second limit and never a download inside a commit. The prompt is
+`commit-suggestor install-hook` pre-fills the message on `git commit`, with a
+20-second limit (`COMMIT_SUGGESTOR_TIMEOUT`) and never a download inside a
+commit. The hook loads the model afresh for each commit, so it waits several
+seconds on a Mac and more on a CPU. The prompt is
 `commit_suggestor/prompt.py` (prompt version 2, without repository context);
 asking the model any other way is testing a prompt it was not trained on.
 Subjects over 72 characters are shortened at a clause boundary
@@ -178,10 +181,10 @@ rule failed a check against human ratings in v1, so treat it as a proxy.
   same subject as fp16 in {ci(conv["dpo_gguf"]["same_subject_as_fp16_pct"], "%")};
   ROUGE-L against fp16 {ci(conv["dpo_gguf"]["rougeL_minus_fp16"])} points.
   {gguf["seconds_per_subject_cpu"]} s per subject on {gguf["cpu_count"]} Kaggle CPU cores,
-  close to the hook's 8-second limit: on a slow CPU, raise it with
-  `COMMIT_SUGGESTOR_TIMEOUT`.
+  after loading. On a slow CPU the hook can pass its 20-second limit; raise it
+  with `COMMIT_SUGGESTOR_TIMEOUT`.
 - MLX on an {mlx_bench["machine"]}: {mlx_bench["cold_load_s"]} s to load,
-  {mlx_bench["warm_p50_s"]} s per subject (p95 {mlx_bench["warm_p95_s"]} s),
+  then {mlx_bench["warm_p50_s"]} s per subject (p95 {mlx_bench["warm_p95_s"]} s),
   {mlx_bench["peak_rss_mb"]:,} MB peak memory.
 
 ## Limitations
@@ -201,8 +204,8 @@ rule failed a check against human ratings in v1, so treat it as a proxy.
 ## Privacy
 
 The CLI runs locally and sends nothing anywhere. The opt-in feedback log
-(accepted / edited / replaced) stays on your machine. The demo Space does not
-store inputs.
+(accepted / edited / replaced) stays on your machine. The demo Space is a static
+page of stored test-set subjects: it runs no model and takes no input.
 """
     (ROOT / "docs" / "MODEL_CARD.md").write_text(card)
     print(f"wrote docs/MODEL_CARD.md ({len(card.split())} words)")

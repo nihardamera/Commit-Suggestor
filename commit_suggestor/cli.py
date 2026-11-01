@@ -37,7 +37,7 @@ from commit_suggestor.prompt import build_messages, clean_reply, fit_subject
 V1_BASE = "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit"
 #: The published model, at a fixed revision (set by scripts/publish_hf.py's output).
 HF_REPO = "nihar-damera/commit-suggestor"
-HF_REVISION: str | None = None
+HF_REVISION: str | None = "79452231401ffdb5c32e91a5acc26fbe2481c54e"
 V1_ADAPTER = Path(__file__).resolve().parent.parent / "adapters"
 MODEL_HOME = Path(
     os.environ.get("COMMIT_SUGGESTOR_HOME", Path.home() / ".cache" / "commit-suggestor")
@@ -234,17 +234,19 @@ PREPARE_HOOK = """#!/bin/sh
 # commit-suggestor: pre-fill the commit message with a suggested subject line.
 # Installed by `commit-suggestor install-hook`. Acts only on a plain `git commit`
 # (no -m, merge, squash or amend) and never blocks one: on any failure, or after
-# $COMMIT_SUGGESTOR_TIMEOUT seconds (default 8), the message is left as it was.
+# $COMMIT_SUGGESTOR_TIMEOUT seconds (default 20), the message is left as it was.
+# The model loads afresh for each commit: about 6-8 s on an M4, more on a CPU.
 MSG_FILE="$1"; SOURCE="$2"
 [ -n "$SOURCE" ] && exit 0
 [ -n "$COMMIT_SUGGESTOR_DISABLE" ] && exit 0
 OUT=$(mktemp) || exit 0
 "__PYTHON__" -m commit_suggestor.cli --hook > "$OUT" 2>/dev/null &
 PID=$!
-( sleep "${COMMIT_SUGGESTOR_TIMEOUT:-8}"; kill -9 "$PID" 2>/dev/null ) &
+( sleep "${COMMIT_SUGGESTOR_TIMEOUT:-20}"; kill -9 "$PID" 2>/dev/null ) &
 WATCH=$!
 wait "$PID" 2>/dev/null; STATUS=$?
-kill "$WATCH" 2>/dev/null
+# Reaping the watcher here keeps the shell's "Terminated" notice off the terminal.
+{ kill "$WATCH"; wait "$WATCH"; } 2>/dev/null
 if [ "$STATUS" -eq 3 ]; then
   echo "commit-suggestor: no model installed yet; run 'commit-suggestor download'" >&2
 fi

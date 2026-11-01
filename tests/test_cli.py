@@ -41,6 +41,10 @@ class TestPrepareHook:
         assert run_hook(hook, message).returncode == 0
         assert message.read_text().startswith("Add retries\n# Suggested by x\n\n# Please")
 
+    def test_a_fast_model_leaves_no_job_notice(self, tmp_path):
+        hook, message = hook_with(tmp_path, 'echo "Add retries"')
+        assert run_hook(hook, message).stderr == ""
+
     def test_a_slow_model_is_killed_and_the_commit_goes_on(self, tmp_path):
         hook, message = hook_with(tmp_path, 'sleep 30; echo "too late"')
         before = message.read_text()

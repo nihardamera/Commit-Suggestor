@@ -5,7 +5,11 @@
 Loads the model through commit_suggestor.backends, as the CLI does, then times
 one subject per test diff on the first N diffs (one untimed warm-up first).
 Run in a fresh process, so the load time includes the import and the read from
-disk. Writes or updates eval/serving.json, one entry per runtime and machine.
+disk. Then times what a `git commit` waits for with the hook installed: a new
+`commit-suggestor` process per diff, which imports, loads and generates once.
+Run it with the interpreter of a clean install (`pip install .[mlx]`), since a
+development environment with torch installed makes the import slower.
+Writes or updates eval/serving.json, one entry per runtime and machine.
 """
 
 from __future__ import annotations
@@ -47,6 +51,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--n", type=int, default=50)
+    parser.add_argument("--n-cold", type=int, default=5, help="fresh-process runs")
     args = parser.parse_args()
 
     tests = [json.loads(line) for line in (ROOT / "eval" / "test.jsonl").open()][: args.n + 1]
@@ -65,6 +70,17 @@ def main() -> None:
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     rss_mb = rss / 2**20 if sys.platform == "darwin" else rss / 2**10
     q = statistics.quantiles(seconds, n=20)
+    cold = []
+    for t in tests[1 : args.n_cold + 1]:
+        t0 = time.perf_counter()
+        subprocess.run(
+            [sys.executable, "-m", "commit_suggestor.cli", "--model", str(args.model), "-"],
+            input=t["diff"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        cold.append(time.perf_counter() - t0)
     entry = {
         "runtime": backend.name,
         "model": args.model.name,
@@ -75,6 +91,9 @@ def main() -> None:
         "warm_p95_s": round(q[18], 3),
         "warm_max_s": round(max(seconds), 3),
         "peak_rss_mb": round(rss_mb),
+        "fresh_process_runs": len(cold),
+        "fresh_process_median_s": round(statistics.median(cold), 2),
+        "fresh_process_max_s": round(max(cold), 2),
         "measured": datetime.now(UTC).isoformat(timespec="seconds"),
     }
     results = json.loads(OUT.read_text()) if OUT.exists() else {}

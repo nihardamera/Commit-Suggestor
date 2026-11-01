@@ -1,9 +1,9 @@
 # Commit Suggestor
 
 A 1.5B code model that writes the subject line of a git commit from the diff.
-It runs locally (MLX on Apple Silicon, llama.cpp anywhere else), answers in
-under a second on an M4, and can pre-fill the message whenever you run
-`git commit`.
+It runs locally (MLX on Apple Silicon, llama.cpp anywhere else), writes a
+subject in about half a second once loaded on an M4, and can pre-fill the
+message whenever you run `git commit`.
 
 ```console
 $ git add -p
@@ -84,15 +84,20 @@ commit-suggestor stats
 ```
 
 The hook only acts on a plain `git commit` (not `-m`, merges or amends), gives
-up after 8 seconds, skips very large diffs, never downloads inside a commit,
-and is off with `COMMIT_SUGGESTOR_DISABLE=1`. With `--feedback`, a
+up after 20 seconds (`COMMIT_SUGGESTOR_TIMEOUT`), skips very large diffs, never
+downloads inside a commit, and is off with `COMMIT_SUGGESTOR_DISABLE=1`. It
+loads the model afresh for every commit, so expect a wait of several seconds
+on a Mac and more on a CPU. With `--feedback`, a
 `post-commit` hook records whether the suggestion was kept, edited or replaced,
 in `~/.local/share/commit-suggestor/feedback.jsonl`. Nothing leaves the machine.
 
-Model and demo on Hugging Face:
-[nihar-damera/commit-suggestor](https://huggingface.co/nihar-damera/commit-suggestor),
-[Space](https://huggingface.co/spaces/nihar-damera/commit-suggestor-demo).
-Model card: [`docs/MODEL_CARD.md`](docs/MODEL_CARD.md).
+Model on Hugging Face:
+[nihar-damera/commit-suggestor](https://huggingface.co/nihar-damera/commit-suggestor)
+(MLX 4-bit and GGUF; card: [`docs/MODEL_CARD.md`](docs/MODEL_CARD.md)). The
+[demo Space](https://huggingface.co/spaces/nihar-damera/commit-suggestor-demo)
+is a static page with all 450 test diffs and the subject each version wrote:
+Hugging Face needs PRO for Gradio Spaces, so it runs no model.
+[`space/app.py`](space/app.py) is the live demo, to run locally.
 
 ## How it was built
 
@@ -136,10 +141,10 @@ and GGUF Q4_K_M. Conversion changes the exact subject on most diffs (greedy
 decoding flips on near-ties), but not the quality
 ([`eval/v2_results.md`](eval/v2_results.md)). MLX on an M4: 2.7 s cold
 start, 0.43 s per subject at p50 ([`eval/serving.json`](eval/serving.json)).
-CI runs lint, types, 125 tests and a secret scan. A model gate
-([`commit_suggestor/gate.py`](commit_suggestor/gate.py)) runs the GGUF on 25
-fixed diffs and fails on malformed subjects, more invented names, or a
-ROUGE-L drop.
+CI runs lint, types, the tests and a secret scan. A model gate
+([`commit_suggestor/gate.py`](commit_suggestor/gate.py)) downloads the GGUF
+from the Hub at the CLI's pinned revision, runs it on 25 fixed diffs and fails
+on malformed subjects, more invented names, or a ROUGE-L drop.
 
 ## Design decisions
 

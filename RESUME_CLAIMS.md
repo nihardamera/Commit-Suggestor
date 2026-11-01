@@ -24,4 +24,5 @@ committed file that proves it.
 | DPO vs SFT-v2: specific +16.2 pts [12.7, 19.8], generic 8.4% → 0% (−8.4 [−11.1, −6.0]), ROUGE-L +0.97 [−0.79, 2.75] (no change), names not in diff +0.44 [−0.67, 1.78] | `eval/v2/results.json` `paired.dpo_guarded_minus_sft_v2_guarded` | measured (proxy metrics) |
 | DPO length regression caught and guarded: 5.6% of raw test subjects > 72 chars; 100% well-formed after `fit_subject` (designed on validation) | `eval/v2/results.json` (`dpo` vs `dpo_guarded`) | measured |
 | Serving: MLX 4-bit on M4, 2.7 s cold load, 0.43 s p50 / 0.98 s p95 per subject, 1.4 GB peak | `eval/serving.json` | measured (50 diffs) |
-| Model and live demo on Hugging Face | — | pending (M4) |
+| Model on Hugging Face (MLX 4-bit + GGUF), pinned revision `79452231` | `commit_suggestor/cli.py` `HF_REVISION`; https://huggingface.co/nihar-damera/commit-suggestor | published 2026-11-02 |
+| Demo Space | https://huggingface.co/spaces/nihar-damera/commit-suggestor-demo | **static** (stored test-set subjects; Gradio Spaces need PRO). Say "demo page", not "live demo" |
