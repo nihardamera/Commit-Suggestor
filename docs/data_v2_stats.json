@@ -1,0 +1,119 @@
+{
+  "prompt_version": 2,
+  "settings": {
+    "per_project_cap": 4000,
+    "min_shingles": 5,
+    "max_valid": 600,
+    "context_dropout": 0.5,
+    "near_dup_jaccard": 0.8,
+    "context_subjects": 5,
+    "seed": 0
+  },
+  "mined_per_repo": {
+    "python-attrs/attrs": 1834,
+    "fastapi/typer": 1753,
+    "psf/requests": 15976,
+    "pallets/flask": 3829,
+    "pallets/click": 2172,
+    "pallets/jinja": 2175,
+    "pallets/werkzeug": 4539,
+    "encode/httpx": 1482,
+    "encode/starlette": 1721,
+    "Textualize/rich": 8083,
+    "pytest-dev/pytest": 13264,
+    "psf/black": 2471,
+    "pypa/pip": 12143,
+    "pre-commit/pre-commit": 1793,
+    "python-poetry/poetry": 3764,
+    "marshmallow-code/marshmallow": 3033,
+    "aio-libs/aiohttp": 13603
+  },
+  "filter_reasons": {
+    "train": {
+      "kept": 27356,
+      "subject length": 23102,
+      "diff size": 9133,
+      "bot author": 7452,
+      "too many files": 6960,
+      "kept: too little text for the near-duplicate check": 6353,
+      "over the per-project cap": 5122,
+      "merge/revert/release/bump": 4394,
+      "not imperative": 3881,
+      "generic subject": 1416,
+      "no text diff": 466,
+      "duplicate of a train diff": 425,
+      "near-duplicate of a train diff": 336,
+      "near-duplicate of a valid diff": 4,
+      "duplicate of a valid diff": 1
+    },
+    "valid": {
+      "bot author": 1074,
+      "over the validation cap": 938,
+      "kept": 600,
+      "kept: too little text for the near-duplicate check": 356,
+      "too many files": 335,
+      "diff size": 251,
+      "subject length": 214,
+      "merge/revert/release/bump": 83,
+      "generic subject": 35,
+      "not imperative": 24,
+      "no text diff": 18,
+      "near-duplicate of a valid diff": 15
+    }
+  },
+  "kept_per_repo": {
+    "train": {
+      "pytest-dev/pytest": 4000,
+      "aio-libs/aiohttp": 4000,
+      "pypa/pip": 4000,
+      "psf/requests": 2516,
+      "pallets/werkzeug": 1752,
+      "python-poetry/poetry": 1710,
+      "pallets/flask": 1697,
+      "marshmallow-code/marshmallow": 1339,
+      "psf/black": 1237,
+      "Textualize/rich": 1237,
+      "pallets/click": 916,
+      "pre-commit/pre-commit": 832,
+      "pallets/jinja": 774,
+      "encode/starlette": 759,
+      "encode/httpx": 587
+    },
+    "valid": {
+      "python-attrs/attrs": 406,
+      "fastapi/typer": 194
+    }
+  },
+  "train": {
+    "examples": 27356,
+    "subject_words": {
+      "p10": 3,
+      "median": 5.0,
+      "p90": 9,
+      "mean": 5.6
+    },
+    "diff_chars": {
+      "p10": 351,
+      "median": 858.5,
+      "p90": 2250,
+      "mean": 1087.4
+    },
+    "with_context_pct": 49.9
+  },
+  "valid": {
+    "examples": 600,
+    "subject_words": {
+      "p10": 3,
+      "median": 5.0,
+      "p90": 9,
+      "mean": 5.4
+    },
+    "diff_chars": {
+      "p10": 327,
+      "median": 716.5,
+      "p90": 1994,
+      "mean": 961.7
+    },
+    "with_context_pct": 48.0
+  }
+}

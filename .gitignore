@@ -1,8 +1,12 @@
-.venv/
-data/
+.venv
+data
+*.nosync/
 adapters/
 __pycache__/
 *.pyc
 .DS_Store
 eval/cache/
 train.log
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/

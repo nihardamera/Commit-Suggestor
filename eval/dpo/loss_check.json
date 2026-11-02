@@ -1,0 +1,26 @@
+[
+  {
+    "beta": 0.05,
+    "pairs_in_batch": 4,
+    "trl_loss": 0.5331379175186157,
+    "our_loss": 0.5331307053565979,
+    "abs_difference": 7.212162017822266e-06,
+    "mean_margin": 0.664523720741272
+  },
+  {
+    "beta": 0.1,
+    "pairs_in_batch": 4,
+    "trl_loss": 0.4336225986480713,
+    "our_loss": 0.4346582293510437,
+    "abs_difference": 0.0010356307029724121,
+    "mean_margin": 1.0837886333465576
+  },
+  {
+    "beta": 0.3,
+    "pairs_in_batch": 4,
+    "trl_loss": 0.3730586767196655,
+    "our_loss": 0.3736358880996704,
+    "abs_difference": 0.0005772113800048828,
+    "mean_margin": 1.5492324829101562
+  }
+]

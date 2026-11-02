@@ -1,0 +1,10 @@
+{
+  "mode": "full",
+  "source": "beta-0.3",
+  "llama_cpp": "b11701",
+  "gguf_bytes": 986048128,
+  "test_examples": 450,
+  "seconds_per_subject_cpu": 7.73,
+  "cpu_count": 4,
+  "total_seconds": 3688
+}

@@ -1,0 +1,25 @@
+{
+  "mode": "full",
+  "base": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+  "gpu": "Tesla T4",
+  "versions": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.22.1",
+    "trl": "1.17.0",
+    "peft": "0.21.2",
+    "datasets": "5.1.0"
+  },
+  "train_examples": 27346,
+  "dropped_over_max_length": {
+    "train": 10,
+    "valid": 0
+  },
+  "trainable_parameters": 5275648,
+  "steps": 6837,
+  "train_seconds": 14612,
+  "total_seconds": 15377,
+  "seed": 0,
+  "env": {
+    "KAGGLE_KERNEL_RUN_TYPE": "Batch"
+  }
+}

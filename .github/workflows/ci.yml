@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches: [main, v2]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # setup-uv publishes no floating major tag, so pin an exact release.
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          python-version: "3.12"
+      # MLX is Apple Silicon only, so CI installs the evaluation and judge extras.
+      - run: uv sync --locked --extra eval --extra judge
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+      - run: uv run pytest -q
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The action's default (8.24.3) ignores .gitleaks.toml's allowlist;
+          # match the version pre-commit runs.
+          GITLEAKS_VERSION: 8.30.1
+
+  # The shipped GGUF model, from the Hub at the CLI's pinned revision, on 25
+  # fixed test diffs against eval/gate_baseline.json (commit_suggestor/gate.py).
+  model-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          python-version: "3.12"
+      - run: uv sync --locked --extra eval
+      # The prebuilt CPU wheel the baseline was made with (notebooks/gguf.py),
+      # rather than a source build tuned to the runner's CPU.
+      - run: >-
+          uv pip install llama-cpp-python==0.3.36 huggingface-hub==1.33.0
+          --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+      - id: revision
+        run: echo "sha=$(uv run --no-sync python -c 'from commit_suggestor.cli import HF_REVISION; print(HF_REVISION)')" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/commit-suggestor
+          key: gguf-${{ steps.revision.outputs.sha }}
+      - run: uv run --no-sync commit-suggestor download --format gguf
+      - run: uv run --no-sync python -m commit_suggestor.gate --model ~/.cache/commit-suggestor/commit-suggestor-q4_k_m.gguf

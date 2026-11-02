@@ -18,6 +18,7 @@ the CLI uses at inference time.
 Usage:
     python -m commit_suggestor.prepare --raw data/raw --out data/mlx
 """
+
 from __future__ import annotations
 
 import argparse
@@ -40,11 +41,13 @@ BOT = re.compile(r"bot\b|\[bot\]|dependabot|renovate|pre-commit-ci|github-action
 REJECT_SUBJECT = re.compile(
     r"^(merge|revert|bump|release|prepare|version|v?\d+\.\d+|wip\b|fixup!|squash!|amend!)"
     r"|pre-commit autoupdate|\[pre-commit\.ci\]|changelog$|^update (history|changes)$",
-    re.I)
+    re.I,
+)
 TRAILING_PR = re.compile(r"\s*\((?:#|gh-)\d+\)\s*$|\s+#\d+\s*$")
 LEADING_TAG = re.compile(r"^\s*\[(?:skip ci|ci skip|skip-ci|svn r\d+)\]\s*", re.I)
 SKIP_FILE = re.compile(
-    r"(\.lock|poetry\.lock|package-lock\.json|yarn\.lock|\.min\.(js|css)|\.svg|\.png|\.jpg|\.ico)$")
+    r"(\.lock|poetry\.lock|package-lock\.json|yarn\.lock|\.min\.(js|css)|\.svg|\.png|\.jpg|\.ico)$"
+)
 
 
 def clean_subject(subject: str) -> str:
@@ -66,8 +69,11 @@ def clean_diff(diff: str) -> tuple[str, int]:
         header = section.splitlines()[0]
         if SKIP_FILE.search(header) or "\nBinary files " in section:
             continue
-        lines = [ln for ln in section.splitlines()
-                 if not ln.startswith(("index ", "similarity index", "dissimilarity index"))]
+        lines = [
+            ln
+            for ln in section.splitlines()
+            if not ln.startswith(("index ", "similarity index", "dissimilarity index"))
+        ]
         kept.append("\n".join(lines))
     return "\n".join(kept).strip(), len(kept)
 
@@ -93,8 +99,12 @@ def keep(row: dict) -> tuple[bool, str]:
 
 
 def to_example(row: dict) -> dict:
-    return {"messages": build_messages(row["diff_clean"])
-            + [{"role": "assistant", "content": row["subject_clean"]}]}
+    return {
+        "messages": [
+            *build_messages(row["diff_clean"]),
+            {"role": "assistant", "content": row["subject_clean"]},
+        ]
+    }
 
 
 def main() -> None:
@@ -139,9 +149,17 @@ def main() -> None:
         # Keep the provenance for evaluation and for inspecting examples.
         with (args.out / f"{name}.meta.jsonl").open("w") as fh:
             for row in rows:
-                fh.write(json.dumps({"repo": row["repo"], "sha": row["sha"],
-                                     "subject": row["subject_clean"],
-                                     "diff": row["diff_clean"]}) + "\n")
+                fh.write(
+                    json.dumps(
+                        {
+                            "repo": row["repo"],
+                            "sha": row["sha"],
+                            "subject": row["subject_clean"],
+                            "diff": row["diff_clean"],
+                        }
+                    )
+                    + "\n"
+                )
 
     total = sum(reasons.values())
     print(f"mined {total} commits")

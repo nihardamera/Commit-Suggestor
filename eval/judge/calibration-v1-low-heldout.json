@@ -1,0 +1,56 @@
+{
+  "rubric": "v1",
+  "model": "claude-haiku-5-5",
+  "effort": "low",
+  "split": "heldout",
+  "pairs": 50,
+  "kappa_3class": 0.232,
+  "agreement_pct": [
+    52.0,
+    38.5,
+    65.2
+  ],
+  "agreement_when_both_pick_a_winner_pct": [
+    63.9,
+    47.6,
+    77.5
+  ],
+  "confusion_rows_me_cols_judge": {
+    "labels": [
+      "finetuned",
+      "base",
+      "tie"
+    ],
+    "matrix": [
+      [
+        14,
+        3,
+        5
+      ],
+      [
+        10,
+        9,
+        2
+      ],
+      [
+        4,
+        0,
+        3
+      ]
+    ]
+  },
+  "position_consistent_pct": 82.0,
+  "errors": 0,
+  "inconsistent_first_slot_won_both_times": 4,
+  "judge_finetuned_win_rate_excl_ties_pct": [
+    70.0,
+    54.6,
+    81.9
+  ],
+  "my_finetuned_win_rate_excl_ties_pct": [
+    51.2,
+    36.8,
+    65.4
+  ],
+  "spent_usd_total": 0.1159
+}

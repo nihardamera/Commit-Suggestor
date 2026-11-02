@@ -1,0 +1,32 @@
+{
+  "subjects": [
+    "Add a JavaScript domain to AUTHORS and CHANGES",
+    "Add pytest-pretty to requirements.txt",
+    "Remove 'module' option from ObjectDescription",
+    "Add name to coverage job",
+    "Remove sphinx.util.docutils import",
+    "Raise TypeError if actions is empty when calling .as_view()",
+    "doc: html_last_updated_fmt: default to None",
+    "Remove unnecessary indentation in test_build_html.py",
+    "Stabilize included document path on Windows",
+    "Add Python 3.14 to test matrix and docs",
+    "Add texlive-xetex to travis config",
+    "Fix rst:directive:option typo in directives.rst",
+    "Update intro.rst to mention 3rd party libraries needed for Sphinx",
+    "Remove redundant comment from Request.authenticate",
+    "Fix test name to reflect intent",
+    "Don't show pagerefs in productionlist",
+    "Use only the first two digits of sys.version_info",
+    "Use unicode instead of str for ModelResource.render()",
+    "Remove docutils.conf from sphinx.testing.util if it does not exist",
+    "Add bugfix for FileField validation with files=None",
+    "Add links to the domains in the documentation",
+    "Add Reteisi and Sqlkit to EXAMPLES",
+    "Update highlight_language default to 'default'",
+    "Add support for virtual bases",
+    "Remove ConfigWarning class"
+  ],
+  "malformed": 0,
+  "invented_names": 1,
+  "rougeL": 31.74
+}

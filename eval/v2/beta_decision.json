@@ -1,0 +1,57 @@
+{
+  "rule": "Each beta is judged against beta 0 (SFT-v2, fp16, same job) on the N_SELECT validation diffs. A beta is eligible only if, compared with beta 0, its rate of names not in the diff and its generic rate are each at most 1 point higher, and its mean length is at most MAX_EXTRA_WORDS words longer, since length is the first thing DPO exploits. The eligible beta with the highest judge win rate (ties excluded) is chosen. It ships instead of SFT-v2 only if the lower end of that win rate's 95% Wilson interval is above 50%.",
+  "beta_0": {
+    "hallucinated_pct": 1.0,
+    "generic_pct": 15.0,
+    "words": 4.98
+  },
+  "candidates": {
+    "0.05": {
+      "win_rate": [
+        82.1,
+        76.7,
+        86.5
+      ],
+      "wins_losses_ties": [
+        193,
+        42,
+        65
+      ],
+      "extra_invented_pts": 0.0,
+      "extra_generic_pts": -15.0,
+      "extra_words": 2.65
+    },
+    "0.1": {
+      "win_rate": [
+        81.1,
+        75.8,
+        85.6
+      ],
+      "wins_losses_ties": [
+        198,
+        46,
+        56
+      ],
+      "extra_invented_pts": -0.67,
+      "extra_generic_pts": -15.0,
+      "extra_words": 3.26
+    },
+    "0.3": {
+      "win_rate": [
+        82.9,
+        77.4,
+        87.4
+      ],
+      "wins_losses_ties": [
+        180,
+        37,
+        83
+      ],
+      "extra_invented_pts": -0.33,
+      "extra_generic_pts": -14.0,
+      "extra_words": 1.87
+    }
+  },
+  "beta": 0.3,
+  "ship_dpo": true
+}

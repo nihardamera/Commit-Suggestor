@@ -1,0 +1,98 @@
+[project]
+name = "commit-suggestor"
+version = "2.0.0.dev0"
+description = "A small code model that writes git commit subject lines from diffs."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Nihar Damera" }]
+# The core (prompt, filters, CLI plumbing) is standard library only. Inference
+# backends and evaluation tools are extras, so CI and other platforms install
+# only what they can run.
+dependencies = []
+
+[project.optional-dependencies]
+# Apple Silicon inference and training. MLX has no wheels elsewhere.
+mlx = [
+    "mlx==0.32.3; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "mlx-metal==0.32.3; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "mlx-lm==0.32.0; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "transformers==5.18.0",
+    "huggingface-hub==1.33.0",
+]
+# Any machine without Apple Silicon: the GGUF build with llama.cpp.
+cpu = [
+    "llama-cpp-python==0.3.36",
+    "huggingface-hub==1.33.0",
+]
+# The LLM judge (Claude Haiku 5.5). SDK 2.x sends API version 2026-10-21.
+judge = [
+    "anthropic==2.3.0",
+]
+# For the DPO loss and its tests. Training itself runs on Kaggle (notebooks/).
+train = [
+    "torch==2.15.0",
+]
+eval = [
+    "numpy>=2.0",
+    "rouge-score==0.1.2",
+    "sacrebleu==2.6.0",
+]
+
+[project.scripts]
+commit-suggestor = "commit_suggestor.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+    "ruff==0.17.2",
+    "mypy==2.4.0",
+    "pre-commit==4.7.0",
+    # Only to cross-check commit_suggestor.stats in the tests.
+    "scipy>=1.14",
+]
+
+[build-system]
+requires = ["uv_build>=0.13,<0.14"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "commit_suggestor"
+module-root = ""
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Import the package from the checkout rather than through the editable
+# install's .pth file, which Python skips on macOS when the file is hidden.
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+# Word lists read better as one split string than as a 100-line list.
+ignore = ["SIM905"]
+
+[tool.mypy]
+python_version = "3.12"
+packages = ["commit_suggestor"]
+ignore_missing_imports = true
+
+# Modules written for v2 are checked strictly; v1 modules with the defaults.
+[[tool.mypy.overrides]]
+module = [
+    "commit_suggestor.dpo",
+    "commit_suggestor.gate",
+    "commit_suggestor.human",
+    "commit_suggestor.judge",
+    "commit_suggestor.metrics",
+    "commit_suggestor.stats",
+]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_any_generics = true
+check_untyped_defs = true
+warn_return_any = true

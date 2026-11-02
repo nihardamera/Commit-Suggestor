@@ -1,0 +1,21 @@
+{
+  "a": "dpo_guarded",
+  "b": "sft_v2_guarded",
+  "split": "test",
+  "pairs": 450,
+  "a_wins": 268,
+  "b_wins": 54,
+  "ties": 128,
+  "a_win_rate_excl_ties_pct": [
+    83.2,
+    78.8,
+    86.9
+  ],
+  "position_consistent_pct": 82.9,
+  "judge": {
+    "rubric": "v1",
+    "model": "claude-haiku-5-5",
+    "effort": "low"
+  },
+  "spent_usd_total": 1.6776
+}

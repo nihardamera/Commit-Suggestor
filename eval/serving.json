@@ -1,0 +1,14 @@
+{
+  "mlx / Apple M4, 16 GB": {
+    "runtime": "mlx",
+    "model": "dpo-mlx",
+    "machine": "Apple M4, 16 GB",
+    "diffs_timed": 50,
+    "cold_load_s": 2.68,
+    "warm_p50_s": 0.433,
+    "warm_p95_s": 0.978,
+    "warm_max_s": 1.035,
+    "peak_rss_mb": 1446,
+    "measured": "2026-10-31T11:51:52+00:00"
+  }
+}

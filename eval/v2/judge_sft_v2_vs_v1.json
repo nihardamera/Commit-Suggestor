@@ -1,0 +1,20 @@
+{
+  "a": "sft_v2",
+  "b": "v1",
+  "pairs": 450,
+  "a_wins": 148,
+  "b_wins": 149,
+  "ties": 153,
+  "a_win_rate_excl_ties_pct": [
+    49.8,
+    44.2,
+    55.5
+  ],
+  "position_consistent_pct": 83.3,
+  "judge": {
+    "rubric": "v1",
+    "model": "claude-haiku-5-5",
+    "effort": "low"
+  },
+  "spent_usd_total": 0.248
+}

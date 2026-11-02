@@ -1,0 +1,21 @@
+{
+  "a": "dpo_b0.1",
+  "b": "dpo_b0",
+  "split": "valid",
+  "pairs": 300,
+  "a_wins": 198,
+  "b_wins": 46,
+  "ties": 56,
+  "a_win_rate_excl_ties_pct": [
+    81.1,
+    75.8,
+    85.6
+  ],
+  "position_consistent_pct": 82.3,
+  "judge": {
+    "rubric": "v1",
+    "model": "claude-haiku-5-5",
+    "effort": "low"
+  },
+  "spent_usd_total": 1.4716
+}

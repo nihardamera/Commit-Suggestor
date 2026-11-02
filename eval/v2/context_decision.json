@@ -1,0 +1,13 @@
+{
+  "rule": "Ship with context only if, on the N_SELECT validation diffs, the judge prefers it (win rate excluding ties above 50%) and its rate of names not in the diff is at most 1 point higher. Otherwise ship without: simpler.",
+  "judge_win_rate_ctx_vs_none": [
+    27.3,
+    21.0,
+    34.7
+  ],
+  "invented_names_pct": {
+    "sft_v2": 0.67,
+    "sft_v2_ctx": 1.0
+  },
+  "ship_with_context": false
+}

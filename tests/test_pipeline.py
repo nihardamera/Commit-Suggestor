@@ -2,6 +2,7 @@
 
 None of these need the model, so they run in a second.
 """
+
 from __future__ import annotations
 
 from commit_suggestor.evaluate import heuristic, normalise, paired_bootstrap, well_formed
@@ -11,6 +12,7 @@ from commit_suggestor.prompt import (
     SYSTEM,
     build_messages,
     clean_reply,
+    fit_subject,
     truncate_diff,
 )
 
@@ -33,8 +35,12 @@ index 1111111..2222222 100644
 +version = 2"""
 
 
-def row(subject: str = "Raise the default timeout to 30 seconds", diff: str = SMALL_DIFF,
-        author: str = "Jane Dev", email: str = "jane@example.com") -> dict:
+def row(
+    subject: str = "Raise the default timeout to 30 seconds",
+    diff: str = SMALL_DIFF,
+    author: str = "Jane Dev",
+    email: str = "jane@example.com",
+) -> dict:
     return {"subject": subject, "diff": diff, "author": author, "email": email}
 
 
@@ -47,13 +53,21 @@ class TestSubjects:
 
     def test_ci_tags_and_trailing_period_go(self):
         assert clean_subject("[skip ci] Update docs.") == "Update docs"
-        assert clean_subject("[svn r63149] always have a default chdir") == "always have a default chdir"
+        assert (
+            clean_subject("[svn r63149] always have a default chdir")
+            == "always have a default chdir"
+        )
 
     def test_merges_releases_and_bumps_are_rejected(self):
-        for subject in ("Merge branch 'main' into dev", "Release 2.31.0",
-                        "Bump urllib3 from 1.26 to 2.0", "Revert \"Add cache\"",
-                        "fixup! tidy imports", "2.31.0"):
-            ok, why = keep(row(subject=subject))
+        for subject in (
+            "Merge branch 'main' into dev",
+            "Release 2.31.0",
+            "Bump urllib3 from 1.26 to 2.0",
+            'Revert "Add cache"',
+            "fixup! tidy imports",
+            "2.31.0",
+        ):
+            ok, _ = keep(row(subject=subject))
             assert not ok, subject
 
     def test_bots_are_rejected(self):
@@ -117,7 +131,8 @@ class TestPrompt:
 
     def test_inline_code_at_the_end_of_a_subject_is_kept_whole(self):
         assert clean_reply("Add note about :dudir:`include`") == "Add note about :dudir:`include`"
-        assert clean_reply("Deprecate `unique_items` in `conlist`") == "Deprecate `unique_items` in `conlist`"
+        subject = "Deprecate `unique_items` in `conlist`"
+        assert clean_reply(subject) == subject
 
     def test_a_reply_wrapped_in_backticks_is_unwrapped(self):
         assert clean_reply("`Bump the timeout`") == "Bump the timeout"
@@ -138,3 +153,26 @@ class TestEvaluationHelpers:
     def test_bootstrap_interval_brackets_a_clear_improvement(self):
         low, high = paired_bootstrap([0.2] * 50, [0.5] * 50)
         assert low == high == 30.0
+
+
+def test_a_subject_within_72_characters_is_kept():
+    subject = "Add retries to connect()"
+    assert fit_subject(subject) == subject
+
+
+def test_a_long_subject_ends_before_its_last_clause_that_fits():
+    long = "Remove redundant `displayName` from `run tox` step in azure-pipelines.yml"
+    assert fit_subject(long) == "Remove redundant `displayName` from `run tox` step"
+
+
+def test_the_cut_never_leaves_inline_code_open():
+    long = "Update build-docs workflow to use `github.event_name` instead of `github.event.x.y`"
+    short = fit_subject(long)
+    assert short == "Update build-docs workflow to use `github.event_name`"
+    assert short.count("`") % 2 == 0
+
+
+def test_without_a_connective_the_cut_is_at_a_word_boundary():
+    long = " ".join(["word"] * 30)
+    short = fit_subject(long)
+    assert len(short) <= 72 and short.endswith("word")

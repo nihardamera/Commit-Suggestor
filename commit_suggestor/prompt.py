@@ -4,6 +4,7 @@ If the model is trained on one wording and asked with another at inference
 time, any difference in quality is partly a prompt mismatch rather than the
 fine-tune. Keeping a single builder rules that out.
 """
+
 from __future__ import annotations
 
 SYSTEM = "You write concise, accurate git commit messages."
@@ -30,11 +31,28 @@ def truncate_diff(diff: str, limit: int = MAX_DIFF_CHARS) -> str:
     return cut + "\n... (diff truncated)"
 
 
-def build_messages(diff: str) -> list[dict[str, str]]:
+#: 1: the diff alone (v1). 2: optionally preceded by the repository's recent
+#: subjects. Without them, version 2 builds exactly the version 1 prompt.
+PROMPT_VERSION = 2
+
+CONTEXT_INTRO = (
+    "Recent commit subjects in this repository, newest first. Follow their style, "
+    "but describe only the diff below:"
+)
+
+
+def build_messages(diff: str, recent_subjects: list[str] | None = None) -> list[dict[str, str]]:
     """Chat messages for one diff, without the answer."""
+    context = ""
+    if recent_subjects:
+        listed = "\n".join(f"- {s}" for s in recent_subjects)
+        context = f"{CONTEXT_INTRO}\n{listed}\n\n"
     return [
         {"role": "system", "content": SYSTEM},
-        {"role": "user", "content": f"{INSTRUCTION}\n\n```diff\n{truncate_diff(diff)}\n```"},
+        {
+            "role": "user",
+            "content": f"{INSTRUCTION}\n\n{context}```diff\n{truncate_diff(diff)}\n```",
+        },
     ]
 
 
@@ -55,3 +73,54 @@ def clean_reply(text: str) -> str:
         if line:
             return line.rstrip(".")
     return ""
+
+
+MAX_SUBJECT_CHARS = 72
+#: Where a long subject can end and still read as a whole: before the clause
+#: that adds detail ("... in docs/x.rst", "... instead of y", "...: details").
+CUT_BEFORE = (
+    ": ",
+    ", ",
+    " in ",
+    " for ",
+    " to ",
+    " with ",
+    " instead of ",
+    " from ",
+    " when ",
+    " so ",
+    " and ",
+    " because ",
+    " by ",
+    " on ",
+    " via ",
+)
+
+
+def fit_subject(subject: str, limit: int = MAX_SUBJECT_CHARS) -> str:
+    """Shorten a subject over the limit by dropping its last clauses.
+
+    The DPO model sometimes writes past 72 characters (2% of validation
+    subjects). Rather than cut mid-word, end before the last connective that
+    leaves at most `limit` characters, at least three words, and no inline
+    code left open; failing that, at the last word boundary that fits.
+    Subjects within the limit are returned unchanged.
+    """
+    if len(subject) <= limit:
+        return subject
+
+    def ok(prefix: str) -> bool:
+        return len(prefix.split()) >= 3 and prefix.count("`") % 2 == 0
+
+    cuts = [
+        i
+        for sep in CUT_BEFORE
+        for i in range(len(subject))
+        if subject.startswith(sep, i) and i <= limit and ok(subject[:i])
+    ]
+    if cuts:
+        return subject[: max(cuts)].rstrip(" .,:;-")
+    words = subject[: limit + 1].rsplit(" ", 1)[0]
+    if words.count("`") % 2:
+        words = words.rsplit("`", 1)[0]
+    return words.rstrip(" .,:;-")
