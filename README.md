@@ -11,6 +11,11 @@ $ commit-suggestor
 Remove redundant `displayName` from `run tox` step
 ```
 
+[![The demo page stepping through held-out test diffs and the subject each model version wrote](docs/demo/demo.gif)](https://huggingface.co/spaces/nihar-damera/commit-suggestor-demo)
+
+[Demo page](https://huggingface.co/spaces/nihar-damera/commit-suggestor-demo) (stored results for all 450 test diffs) ·
+[Model on Hugging Face](https://huggingface.co/nihar-damera/commit-suggestor)
+
 ## Results
 
 450 commits from three projects never seen in training (django-rest-framework,
